@@ -1,0 +1,34 @@
+---
+title: "project title here"
+subtitle: |
+  | Project Proposal
+author:
+  - name: Mia Silva
+  - name: Louise Oh
+  - name: Lidio Jaimes
+  - name: Oliver Brown
+date: today
+
+format:
+  html:
+    toc: true
+    toc-location: left
+    embed-resources: true
+    
+execute:
+  echo: false
+  warning: false
+  message: false
+
+from: markdown+emoji 
+reference-location: margin
+citation-location: margin
+---
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+[Project 4 GitHub Repo](https://github.com/louiseoh18/project04-goldmagikarp.git)
+
+:::
