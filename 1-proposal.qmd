@@ -71,7 +71,7 @@ The dashboard will then display these in multiple. The top panel will show the p
 
 - Prediction and Modelling
 
-This page will focus on applying the pre-trained statistical model to recent data to generate a near-term forecast for the current president. It will display a chart showing the model's prediction for the next 3-6 months, which is calculated by feeding the latest available data into the model.
+This page will focus on applying a pre-trained statistical model to recent data to generate a near-term forecast for the current president. It will display a chart showing the model's prediction for the next 3-6 months, which is calculated by feeding the latest available data into the model.
 
 The core of this page is the interactive simulation tool. Here, the user can adjust sliders corresponding to key economic variables (e.g., "Set future inflation to...") to run their own "what-if" scenarios. As the sliders are moved, the model will instantly re-calculate and display the proportional impact of these hypothetical changes on the president's approval forecast. This section will also briefly show the model's key drivers, highlighting which features, such as unemployment or inflation, the model found to be the most significant predictors.
 
