@@ -53,9 +53,11 @@ Economic data will primarily come from the Bureau of Labor Statistics API, which
 
 # Programming Paradigms
 
-- Functional Programming
+This paradigm is used for all data cleaning and feature engineering, primarily through R's dplyr package. This approach allows for a clean, readable, and reproducible data pipeline. We use a chain of functions to transform data, such as group_by() and summarise() to resample daily polls into monthly averages, left_join() to merge approval data with economic tables. Each step takes a data frame and returns a new data frame, which is "piped" to the next function.
 
 - Supervised Machine Learning
+
+This is the paradigm used for the "Prediction and Modelling" page. We treat the time-series forecast as a supervised learning problem. This involves training a predictive model on a "labeled" historical dataset. In this context, the features are the historical economic indicators (like inflation and unemployment). The label is the corresponding presidential approval rating for that month. The model learns the mathematical relationship between these economic features and the approval rating, allowing it to predict future ratings when given new economic data.
 
 # Software and Packages
 
@@ -68,7 +70,6 @@ Economic data will primarily come from the Bureau of Labor Statistics API, which
 - ML engines (e.g. glmnet, ranger, kknn, kernlab)
 
 - DT, knitr (for tables)
-
 
 # Our Product
 
