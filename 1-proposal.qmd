@@ -47,6 +47,26 @@ The second area is the academic statistical modeling that provides the blueprint
 
 # Work Outline
 
+- Data Gathering
+
+This phase involves fetching necessary time-series data, including monthly economic indicators like CPI and unemployment from the BLS API, and scraping poll-by-poll approval ratings from The American Presidency Project and the National Election Studies.
+
+- Data Cleaning
+
+We then use dplyr to process the raw, seperate files. The primary challenge will be joining the existing approval data with the economic data in order to create a single, aligned time-series dataset.
+
+- Model Training
+
+Using the clean, aligned historical dataset, we will train a supervised machine learning model to find the mathematical relationship between the economic variables and approval ratings. This trained model object will be saved as an .rds file so the Shiny app can load it for making predictions.
+
+- Building the Dashboard
+
+This phase involves creating the R Shiny application, using a ui.R file for the layout and a server.R file for the logic. The server will load the saved .rds model and use reactive expressions to instantly update forecast charts based on user inputs.
+
+- Adding Additional Features if Time Allows
+
+If the core product is finished, this time would be used to enhance the model, such as by incorporating "major political events" data. We could also expand the dashboard's "Historical Data" page by adding more economic variables for the user to explore.
+
 # The Data
 
 Economic data will primarily come from the Bureau of Labor Statistics API, which provides key predictive features like monthly inflation and unemployment. Historical and current presidential approval rates will be sourced from The American Presidency Project. This poll data will be aggregated into a monthly average to align with the economic data.
@@ -94,7 +114,7 @@ The core of this page is the interactive simulation tool. Here, the user can adj
 # Timeline
 
 - November 19, Wednesday: finalize project plan
-- November 21, Friday: set up dashboard (template)
+- November 21, Friday: draft dashboard template
 - Week of Thanksgiving - everyone works on their portion of the dashboard
 - December 1, Monday: final draft of dashboard
 - December 8, Monday: finalize presentation pdf
