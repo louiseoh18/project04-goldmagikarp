@@ -49,6 +49,8 @@ The second area is the academic statistical modeling that provides the blueprint
 
 # The Data
 
+Economic data will primarily come from the Bureau of Labor Statistics API, which provides key predictive features like monthly inflation and unemployment. Historical and current presidential approval rates will be sourced from The American Presidency Project. This poll data will be aggregated into a monthly average to align with the economic data.
+
 # Programming Paradigms
 
 - Functional Programming
@@ -76,7 +78,7 @@ Dashboard
 
 - Historical Data 
 
-Here, the user can select a president of interest and view the approval ratings over the course of their time in office. Moreover, the user can also select variables of interest such as inflation, cost of healthcare, median salary, etc.
+Here, the user can select a president of interest and view the approval ratings over the course of their time in office. Moreover, the user can also select variables of interest such as inflation, cost of healthcare, median salary, etc. 
 
 The dashboard will then display these in multiple. The top panel will show the president's approval rating, and separate panels will appear beneath it for each selected economic variable. All charts will share the same x-axis (time), allowing the user to easily compare trends vertically across the different metrics, each with its own clear and independent y-axis.
 
@@ -84,12 +86,21 @@ The dashboard will then display these in multiple. The top panel will show the p
 
 This page will focus on applying a pre-trained statistical model to recent data to generate a near-term forecast for the current president. It will display a chart showing the model's prediction for the next 3-6 months, which is calculated by feeding the latest available data into the model.
 
-The core of this page is the interactive simulation tool. Here, the user can adjust sliders corresponding to key economic variables (e.g., "Set future inflation to...") to run their own "what-if" scenarios. As the sliders are moved, the model will instantly re-calculate and display the proportional impact of these hypothetical changes on the president's approval forecast. This section will also briefly show the model's key drivers, highlighting which features, such as unemployment or inflation, the model found to be the most significant predictors.
+The core of this page is the interactive simulation tool. Here, the user can adjust sliders corresponding to key economic variables (for example, "Set future inflation to...") to run their own "what-if" scenarios. As the sliders are moved, the model will instantly re-calculate and display the proportional impact of these hypothetical changes on the president's approval forecast. This section will also briefly show the model's key drivers, highlighting which features, such as unemployment or inflation, the model found to be the most significant predictors.
 
 - Reference Page
 
 # Timeline
 
+- November 19, Wednesday: finalize project plan
+- November 21, Friday: set up dashboard (template)
+- Week of Thanksgiving - everyone works on their portion of the dashboard
+- December 1, Monday: final draft of dashboard
+- December 8, Monday: finalize presentation pdf
+- December 9, Tuesday: draft of project write up
+- December 10, Wednesday: project presentation DUE
+- December 16, Tuesday: final draft of project write up
+- December 18, Thursday: project write up DUE
 
 
 # Task Distribution
