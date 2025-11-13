@@ -10,7 +10,7 @@ author:
 date: today
 
 format:
-  html:
+  pdf:
     toc: true
     toc-location: left
     embed-resources: true
@@ -53,9 +53,20 @@ The second area is the academic statistical modeling that provides the blueprint
 
 - Functional Programming
 
-- Machine Learning
+- Supervised Machine Learning
 
 # Software and Packages
+
+- Tidyverse (data wrangling and visualization)
+
+- Tidymodels (ML)
+
+- RShiny
+
+- ML engines (e.g. glmnet, ranger, kknn, kernlab)
+
+- DT, knitr (for tables)
+
 
 # Our Product
 
@@ -78,6 +89,8 @@ The core of this page is the interactive simulation tool. Here, the user can adj
 - Reference Page
 
 # Timeline
+
+
 
 # Task Distribution
 
