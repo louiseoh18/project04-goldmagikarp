@@ -1,5 +1,5 @@
 ---
-title: "project title here"
+title: "APPROVAL RATING DASHBOARD FOR U.S. PRESIDENTS"
 subtitle: |
   | Project Proposal
 author:
@@ -32,3 +32,46 @@ citation-location: margin
 [Project 4 GitHub Repo](https://github.com/louiseoh18/project04-goldmagikarp.git)
 
 :::
+
+# Research Question
+
+To what extent can a predictive model, using key economic indicators (like inflation and unemployment) and major political event data, accurately forecast near-term U.S. approval ratings? Furthermore, how do simulated changes in these economic indicators proportionally impact future approval scenarios?
+
+This research question seeks to quantify the economy's role in a leader’s public perception, while also examining the time lag before economic shifts actually impact approval ratings. Furthermore by building a simulative model, it aims to create a practical, forward-looking tool for testing "what-if" scenarios, moving beyond simple historical analysis to show how hypothetical future economic conditions could shape public opinion.
+
+# Existing Work
+
+Past work on presidential approval is in two main areas. The first is public-facing data dashboards. The most famous was Nate Silver's (and later owned by ABC) FiveThirtyEight, which was a statistical product in itself. Its "work" was running a proprietary weighted-averaging model on polls, giving more credibility to pollsters with better historical accuracy. Other dashboards, like The Economist's approval tracker, RealClearPolitics, and Gallup's Presidential Job Approval Center, serve as aggregators or historical archives. These present demographic breakdowns or simple rolling averages to show how support differs by group and to track the most current trends.
+
+The second area is the academic statistical modeling that provides the blueprint for these predictions. This research, from pioneers like Edward Tufte and Ray Fair, established that approval is not random. It is overwhelmingly driven by the economy (like inflation and GDP growth). These models evolved to include other key, non-economic variables. For instance, John Mueller's work identified the “rally 'round the flag” effect (a temporary spike in approval after a crisis), while Alan Abramowitz's "Time for a Change" model quantified the predictable "erosion of support" that a president experiences over time.
+
+# Work Outline
+
+# The Data
+
+# Programming Paradigms
+
+- Functional Programming
+
+- Machine Learning
+
+# Software and Packages
+
+# Our Product
+
+# Timeline
+
+# Task Distribution
+
+- Home Page & Summary of Product (Everyone)
+
+- UI (Mia)
+
+- Prediction and Modelling (Oliver and Mia)
+
+- Historical Data and Interactive Approval Rating Plots (Louise and Lidio)
+
+- Reference Page (Everyone)
+
+
+
