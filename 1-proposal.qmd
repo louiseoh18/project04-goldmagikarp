@@ -3,16 +3,14 @@ title: "APPROVAL RATING DASHBOARD FOR U.S. PRESIDENTS"
 subtitle: |
   | Project Proposal
 author:
-  - name: Mia Silva
-  - name: Louise Oh
-  - name: Lidio Jaimes
-  - name: Oliver Brown
+  - name: Team Gold MagiKarp
+  - name: Mia Silva, Louise Oh, Lidio Jaimes, Oliver Brown
 date: today
 
 format:
   pdf:
     toc: true
-    toc-location: left
+    toc-location: body
     embed-resources: true
     
 execute:
@@ -20,9 +18,7 @@ execute:
   warning: false
   message: false
 
-from: markdown+emoji 
-reference-location: margin
-citation-location: margin
+from: markdown+emoji
 ---
 
 ::: {.callout-tip icon=false}
@@ -32,6 +28,8 @@ citation-location: margin
 [Project 4 GitHub Repo](https://github.com/louiseoh18/project04-goldmagikarp.git)
 
 :::
+
+\pagebreak
 
 # Research Question
 
@@ -49,35 +47,41 @@ The second area is the academic statistical modeling that provides the blueprint
 
 - Data Gathering
 
-This phase involves fetching necessary time-series data, including monthly economic indicators like CPI and unemployment from the BLS API, and scraping poll-by-poll approval ratings from The American Presidency Project and the National Election Studies.
+  - This phase involves fetching necessary time-series data, including monthly economic indicators like CPI and unemployment from the BLS API, and scraping poll-by-poll approval ratings from The American Presidency Project and the American National Election Studies.
 
 - Data Cleaning
 
-We then use dplyr to process the raw, seperate files. The primary challenge will be joining the existing approval data with the economic data in order to create a single, aligned time-series dataset.
+  - We then use dplyr to process the raw, separate files. The primary challenge will be joining the existing approval data with the economic data in order to create a single, aligned time-series dataset.
+
+- Data Visualization
+
+  - An EDA will be performed to create interactive graphs about the data by president.
 
 - Model Training
 
-Using the clean, aligned historical dataset, we will train a supervised machine learning model to find the mathematical relationship between the economic variables and approval ratings. This trained model object will be saved as an .rds file so the Shiny app can load it for making predictions.
+  - Using the clean, aligned historical dataset, we will train a supervised machine learning model to find the mathematical relationship between the economic variables and approval ratings. This trained model object will be saved as an .rds file so the Shiny app can load it for making predictions.
 
 - Building the Dashboard
 
-This phase involves creating the R Shiny application, using a ui.R file for the layout and a server.R file for the logic. The server will load the saved .rds model and use reactive expressions to instantly update forecast charts based on user inputs.
+  - This phase involves creating the R Shiny application, using a ui.R file for the layout and a server.R file for the logic. The server will load the saved .rds model and use reactive expressions to instantly update forecast charts based on user inputs.
 
 - Adding Additional Features if Time Allows
 
-If the core product is finished, this time would be used to enhance the model, such as by incorporating "major political events" data. We could also expand the dashboard's "Historical Data" page by adding more economic variables for the user to explore.
+  - If the core product is finished, this time would be used to enhance the model, such as by incorporating "major political events" data. We could also expand the dashboard's "Historical Data" page by adding more economic variables for the user to explore.
 
 # The Data
 
-Economic data will primarily come from the Bureau of Labor Statistics API, which provides key predictive features like monthly inflation and unemployment. Historical and current presidential approval rates will be sourced from The American Presidency Project. This poll data will be aggregated into a monthly average to align with the economic data.
+Economic data will primarily come from the Bureau of Labor Statistics API, which provides key predictive features like monthly inflation and unemployment. TidyCensus may be used supplementally to pull data from the US Census API for other key predictive features of interest not included in the BLS API Historical and current presidential approval rates will be sourced from The American Presidency Project and the American National Election Studies. This poll data will be aggregated into a monthly average to align with the economic data.
 
 # Programming Paradigms
 
-This paradigm is used for all data cleaning and feature engineering, primarily through R's dplyr package. This approach allows for a clean, readable, and reproducible data pipeline. We use a chain of functions to transform data, such as group_by() and summarise() to resample daily polls into monthly averages, left_join() to merge approval data with economic tables. Each step takes a data frame and returns a new data frame, which is "piped" to the next function.
+- Functional Programming
+
+  - This paradigm is used for all data cleaning and feature engineering, primarily through R's dplyr package. This approach allows for a clean, readable, and reproducible data pipeline. We use a chain of functions to transform data, such as group_by() and summarise() to resample daily polls into monthly averages, left_join() to merge approval data with economic tables. Each step takes a data frame and returns a new data frame, which is "piped" to the next function.
 
 - Supervised Machine Learning
 
-This is the paradigm used for the "Prediction and Modelling" page. We treat the time-series forecast as a supervised learning problem. This involves training a predictive model on a "labeled" historical dataset. In this context, the features are the historical economic indicators (like inflation and unemployment). The label is the corresponding presidential approval rating for that month. The model learns the mathematical relationship between these economic features and the approval rating, allowing it to predict future ratings when given new economic data.
+  - This is the paradigm used for the "Prediction and Modelling" page. We treat the time-series forecast as a supervised learning problem. This involves training a predictive model on a "labeled" historical dataset. In this context, the features are the historical economic indicators (like inflation and unemployment). The label is the corresponding presidential approval rating for that month. The model learns the mathematical relationship between these economic features and the approval rating, allowing it to predict future ratings when given new economic data.
 
 # Software and Packages
 
@@ -93,34 +97,42 @@ This is the paradigm used for the "Prediction and Modelling" page. We treat the 
 
 # Our Product
 
-Dashboard
+*Dashboard*
 
 - Home Page (Summary of Product/Tutorial)
 
 - Historical Data 
 
-Here, the user can select a president of interest and view the approval ratings over the course of their time in office. Moreover, the user can also select variables of interest such as inflation, cost of healthcare, median salary, etc. 
-
-The dashboard will then display these in multiple. The top panel will show the president's approval rating, and separate panels will appear beneath it for each selected economic variable. All charts will share the same x-axis (time), allowing the user to easily compare trends vertically across the different metrics, each with its own clear and independent y-axis.
+  - Here, the user can select a president of interest and view the approval ratings over the course of their time in office. Moreover, the user can also select variables of interest such as inflation, cost of healthcare, median salary, etc. 
+  
+  - The dashboard will then display these in multiple panels. The top panel will show the president's approval rating, and separate panels will appear beneath it for each selected economic variable. All charts will share the same x-axis (time), allowing the user to easily compare trends vertically across the different metrics, each with its own clear and independent y-axis.
 
 - Prediction and Modelling
 
-This page will focus on applying a pre-trained statistical model to recent data to generate a near-term forecast for the current president. It will display a chart showing the model's prediction for the next 3-6 months, which is calculated by feeding the latest available data into the model.
-
-The core of this page is the interactive simulation tool. Here, the user can adjust sliders corresponding to key economic variables (for example, "Set future inflation to...") to run their own "what-if" scenarios. As the sliders are moved, the model will instantly re-calculate and display the proportional impact of these hypothetical changes on the president's approval forecast. This section will also briefly show the model's key drivers, highlighting which features, such as unemployment or inflation, the model found to be the most significant predictors.
+  - This page will focus on applying a pre-trained statistical model to recent data to generate a near-term forecast for the current president. It will display a chart showing the model's prediction for the next 3-6 months, which is calculated by feeding the latest available data into the model.
+  
+  - The core of this page is the interactive simulation tool. Here, the user can adjust sliders corresponding to key economic variables (for example, "Set future inflation to...") to run their own "what-if" scenarios. As the sliders are moved, the model will instantly re-calculate and display the proportional impact of these hypothetical changes on the president's approval forecast. This section will also briefly show the model's key drivers, highlighting which features, such as unemployment or inflation, the model found to be the most significant predictors.
 
 - Reference Page
 
 # Timeline
 
 - November 19, Wednesday: finalize project plan
+
 - November 21, Friday: draft dashboard template
+
 - Week of Thanksgiving - everyone works on their portion of the dashboard
+
 - December 1, Monday: final draft of dashboard
+
 - December 8, Monday: finalize presentation pdf
+
 - December 9, Tuesday: draft of project write up
+
 - December 10, Wednesday: project presentation DUE
+
 - December 16, Tuesday: final draft of project write up
+
 - December 18, Thursday: project write up DUE
 
 
