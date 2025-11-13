@@ -59,6 +59,24 @@ The second area is the academic statistical modeling that provides the blueprint
 
 # Our Product
 
+Dashboard
+
+- Home Page (Summary of Product/Tutorial)
+
+- Historical Data 
+
+Here, the user can select a president of interest and view the approval ratings over the course of their time in office. Moreover, the user can also select variables of interest such as inflation, cost of healthcare, median salary, etc.
+
+The dashboard will then display these in multiple. The top panel will show the president's approval rating, and separate panels will appear beneath it for each selected economic variable. All charts will share the same x-axis (time), allowing the user to easily compare trends vertically across the different metrics, each with its own clear and independent y-axis.
+
+- Prediction and Modelling
+
+This page will focus on applying the pre-trained statistical model to recent data to generate a near-term forecast for the current president. It will display a chart showing the model's prediction for the next 3-6 months, which is calculated by feeding the latest available data into the model.
+
+The core of this page is the interactive simulation tool. Here, the user can adjust sliders corresponding to key economic variables (e.g., "Set future inflation to...") to run their own "what-if" scenarios. As the sliders are moved, the model will instantly re-calculate and display the proportional impact of these hypothetical changes on the president's approval forecast. This section will also briefly show the model's key drivers, highlighting which features, such as unemployment or inflation, the model found to be the most significant predictors.
+
+- Reference Page
+
 # Timeline
 
 # Task Distribution
