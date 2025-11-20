@@ -13,7 +13,8 @@ library(tidyr)
 
 president_urls <- list(
   "Trump (2nd Term)" = "https://www.presidency.ucsb.edu/statistics/data/donald-j-trump-2nd-term-public-approval",
-  "Joe Biden" = "https://www.presidency.ucsb.edu/statistics/data/joseph-r-biden-public-approval"
+  "Joe Biden" = "https://www.presidency.ucsb.edu/statistics/data/joseph-r-biden-public-approval",
+  "Trump (1st Term)" = "https://www.presidency.ucsb.edu/statistics/data/donald-j-trump-public-approval"
 )
 
 scrape_president_data <- function(name, url) {
@@ -46,11 +47,12 @@ scrape_president_data <- function(name, url) {
       End_Date = mdy(End_Date),
       Poll_Date = Start_Date + floor((End_Date - Start_Date)/2),
       Approve = as.numeric(str_remove(Approve, "%")),
-      Disapprove = as.numeric(str_remove(Disapprove, "%"))
+      Disapprove = as.numeric(str_remove(Disapprove, "%")),
+      Unsure = as.numeric(str_remove(Unsure, "%"))
     ) %>%
     filter(!is.na(Poll_Date)) %>%
     mutate(President = name) %>%
-    select(President, Poll_Date, Approve, Disapprove)
+    select(President, Poll_Date, Approve, Disapprove, Unsure)
   
   return(clean_df)
 }
@@ -67,6 +69,7 @@ monthly_approval <- all_polls %>%
   summarise(
     Approval_Rating = mean(Approve, na.rm = TRUE),
     Disapproval_Rating = mean(Disapprove, na.rm = TRUE),
+    Unsure_Rating = mean(Unsure, na.rm = TRUE),
     .groups = "drop"
   ) %>%
   arrange(desc(date))
