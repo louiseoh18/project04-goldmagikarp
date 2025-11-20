@@ -4,7 +4,7 @@
 if (!requireNamespace(c("devtools", "blsAPI"), quietly = TRUE)) {
   install.packages("devtools")
   library(devtools)
-  devtools::install_github("blsAPI")
+  devtools::install_github("mikeasilva/blsAPI")
 }
 
 library(blsAPI)
@@ -15,6 +15,8 @@ library(ggplot2)
 BLS_KEY <- "e8e14ae76cdd4f929a3e817b91126806"
 
 series_ids <- list('LNS14000000', 'CUUR0000SA0')
+# LNS14000000: Unemployment Rate
+# CUUR0000SA0: Consumer Price Index
 
 payload <- list(
   'seriesid'  = series_ids,
