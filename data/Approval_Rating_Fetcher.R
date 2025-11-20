@@ -25,10 +25,6 @@ scrape_president_data <- function(name, url) {
   approval_table <- NULL
   
   for (tbl in tables) {
-    if (nrow(tbl) > 10 && "%" %in% names(tbl)) {
-      approval_table <- tbl
-      break
-    }
     if ("Approving" %in% names(tbl) || "Disapproving" %in% names(tbl)) {
       approval_table <- tbl
       break
@@ -74,4 +70,4 @@ monthly_approval <- all_polls %>%
   ) %>%
   arrange(desc(date))
 
-print(head(monthly_approval))
+head(monthly_approval)

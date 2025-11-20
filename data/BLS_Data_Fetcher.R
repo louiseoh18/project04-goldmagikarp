@@ -2,7 +2,9 @@
 # Grabs data from the BLS API
 
 if (!requireNamespace(c("devtools", "blsAPI"), quietly = TRUE)) {
-  install_github("blsAPI")
+  install.packages("devtools")
+  library(devtools)
+  devtools::install_github("blsAPI")
 }
 
 library(blsAPI)
