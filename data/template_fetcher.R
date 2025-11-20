@@ -6,10 +6,8 @@
 
 #################### GRAB DATA ####################
 # load library
-library(blsAPI)
-library(jsonlite)
-library(dplyr)
-library(ggplot2)
+library(tidyverse)
+library(here)
 
 # add codes to grab data here
 
@@ -23,3 +21,6 @@ library(ggplot2)
 #################### SAVE DATASET INTO RDA ####################
 
 save(DATASET_YOU_WANNA_SAVE, file = here("data/DATASET_NAME.rda"))
+
+# naming: datasetname_clean
+# rda file: datasetname_clean.rda

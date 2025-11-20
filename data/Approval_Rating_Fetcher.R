@@ -10,6 +10,7 @@ library(dplyr)
 library(lubridate)
 library(stringr)
 library(tidyr)
+library(here)
 
 president_urls <- list(
   "Trump (2nd Term)" = "https://www.presidency.ucsb.edu/statistics/data/donald-j-trump-2nd-term-public-approval",
@@ -71,3 +72,11 @@ monthly_approval <- all_polls %>%
   arrange(desc(date))
 
 head(monthly_approval)
+
+
+#################### SAVE DATASET INTO RDA ####################
+
+save(monthly_approval_clean, file = here("data/monthly_approval_clean.rda"))
+
+# naming: datasetname_clean
+# rda file: datasetname_clean.rda

@@ -10,6 +10,7 @@ library(blsAPI)
 library(jsonlite)
 library(dplyr)
 library(ggplot2)
+library(here)
 
 BLS_KEY <- "e8e14ae76cdd4f929a3e817b91126806"
 
@@ -45,8 +46,15 @@ process_series <- function(series_obj) {
   return(df)
 }
 
-clean_data <- bind_rows(lapply(json_data$Results$series, process_series))
+bls_data_clean <- bind_rows(lapply(json_data$Results$series, process_series))
 
-head(clean_data)
+head(bls_data_clean)
 
-nrow(clean_data)
+nrow(bls_data_clean)
+
+#################### SAVE DATASET INTO RDA ####################
+
+save(bls_data_clean, file = here("data/bls_data_clean.rda"))
+
+# naming: datasetname_clean
+# rda file: datasetname_clean.rda
