@@ -43,3 +43,5 @@ process_series <- function(series_obj) {
 clean_data <- bind_rows(lapply(json_data$Results$series, process_series))
 
 head(clean_data)
+
+nrow(clean_data)
