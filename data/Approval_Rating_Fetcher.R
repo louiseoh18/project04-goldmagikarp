@@ -71,7 +71,7 @@ monthly_approval_clean <- all_polls %>%
   ) %>%
   arrange(desc(date))
 
-head(monthly_approval)
+head(monthly_approval_clean)
 
 
 #################### SAVE DATASET INTO RDA ####################
