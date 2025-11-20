@@ -1,11 +1,11 @@
-
 # Grabs data from the BLS API
 
 if (!requireNamespace(c("devtools", "blsAPI"), quietly = TRUE)) {
   install.packages("devtools")
   library(devtools)
-  devtools::install_github("mikeasilva/blsAPI")
 }
+
+devtools::install_github("mikeasilva/blsAPI")
 
 library(blsAPI)
 library(jsonlite)
@@ -19,10 +19,10 @@ series_ids <- list('LNS14000000', 'CUUR0000SA0')
 # CUUR0000SA0: Consumer Price Index
 
 payload <- list(
-  'seriesid'  = series_ids,
-  'startyear' = 2020, 
-  'endyear'   = 2024,
-  'registrationkey' = BLS_KEY 
+  'seriesid' = series_ids,
+  'startyear' = 2020,
+  'endyear' = 2024,
+  'registrationkey' = BLS_KEY
 )
 
 response <- blsAPI(payload, api_version = 2, return_data_frame = F)
@@ -31,7 +31,7 @@ json_data <- fromJSON(response, simplifyVector = F)
 process_series <- function(series_obj) {
   series_id <- series_obj$seriesID
   data_list <- series_obj$data
-  
+
   df <- bind_rows(data_list) %>%
     mutate(
       series_id = series_id,
@@ -40,7 +40,7 @@ process_series <- function(series_obj) {
       date = as.Date(paste0(year, "-", substr(period, 2, 3), "-01"))
     ) %>%
     select(date, series_id, value)
-  
+
   return(df)
 }
 
