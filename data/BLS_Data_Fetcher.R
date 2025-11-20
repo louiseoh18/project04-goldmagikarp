@@ -3,9 +3,8 @@
 if (!requireNamespace(c("devtools", "blsAPI"), quietly = TRUE)) {
   install.packages("devtools")
   library(devtools)
+  devtools::install_github("mikeasilva/blsAPI")
 }
-
-devtools::install_github("mikeasilva/blsAPI")
 
 library(blsAPI)
 library(jsonlite)
