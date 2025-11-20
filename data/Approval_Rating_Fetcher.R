@@ -58,7 +58,7 @@ all_polls <- bind_rows(lapply(names(president_urls), function(name) {
   scrape_president_data(name, president_urls[[name]])
 }))
 
-monthly_approval <- all_polls %>%
+monthly_approval_clean <- all_polls %>%
   mutate(
     date = floor_date(Poll_Date, "month")
   ) %>%
