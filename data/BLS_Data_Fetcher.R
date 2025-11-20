@@ -14,6 +14,8 @@ library(ggplot2)
 
 BLS_KEY <- "e8e14ae76cdd4f929a3e817b91126806"
 
+# https://data.bls.gov/registrationEngine/validateKey/9b6e09b7a14eade73379b9589fbad06788eaad9542f5c75ab891f3ba7110b96a
+
 series_ids <- list('LNS14000000', 'CUUR0000SA0')
 # LNS14000000: Unemployment Rate
 # CUUR0000SA0: Consumer Price Index
