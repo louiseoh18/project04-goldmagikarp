@@ -52,10 +52,11 @@ unmatched_dates <- anti_join(bls_dates,approval_dates)
 monthly_approval_clean |> filter(date %in% unmatched_dates$date)
 ```
 
-There are 107 months where the monthly approval rating wasn't recorded.  A lot of these are FDR and Truman
+There are 107 months where the monthly approval rating wasn't recorded.  A lot of these are FDR and Truman.
 
 ```{r}
-monthly_approval_clean |> 
+data_wide <- 
+    monthly_approval_clean |> 
     full_join(bls_data_clean, by = "date") |> 
     arrange(desc(date)) |> 
     mutate(
@@ -70,8 +71,17 @@ monthly_approval_clean |>
             date == "1977-01-01" ~ "Jimmy Carter",
             TRUE ~ President))
 
-#need to duplicate: 
-# FDR -> Truman (Truman: 1945-04-01)
-# Truman -> Eisenhower (Eisen:1953-01-01)
-# Carter -> Ford (Ford: 1977-01-01)
+missing_rows <- 
+    data_wide |> 
+    filter(date == "1945-04-01" | date == "1953-01-01" | date == "1977-01-01") |> 
+    mutate(President = case_when( # inagurations missing
+        President == "Jimmy Carter" ~ "Gerald Ford",
+        President == "Harry Truman" ~ "Dwight D. Eisenhower",
+        President == "Franklin D. Roosevelt" ~ "Harry Truman",
+    ))
+
+data_wide <-
+    data_wide |> 
+    add_row(missing_rows) |> 
+    arrange(desc(date))
 ```
