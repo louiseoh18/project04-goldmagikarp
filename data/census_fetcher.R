@@ -23,11 +23,11 @@ library(purrr)
 census_api_key("dc64291726fbe5f0b1ba6cb4562565fe33baa574")
 
 # Looking at variables to choose
-View(load_variables(year = 2009, "acs1", cache = TRUE))
+View(load_variables(year = 2005, "acs1", cache = TRUE))
 
 # ACS data only goes back to 2005
 years <- c(2005:2019, 2021:2024)
-years_mod <- c(2009:2019, 2021:2024)
+years_mod <- c(2009:2019, 2021:2024) # for health insurance data
 
 # Pulling median household income
 income_data <- map(years, ~ get_acs(
