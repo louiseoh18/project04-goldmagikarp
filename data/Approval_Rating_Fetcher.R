@@ -12,11 +12,27 @@ library(stringr)
 library(tidyr)
 library(here)
 
+# Two presidents are not working:
+# On website, Carter has an expanded table and Eisenhower is missing a column name for start date
+    # "Jimmy Carter" = "https://www.presidency.ucsb.edu/statistics/data/jimmy-carter-public-approval"
+    # "Dwight D. Eisenhower" = "https://www.presidency.ucsb.edu/statistics/data/dwight-d-eisenhower-public-approval"
+
 president_urls <- list(
   "Trump (2nd Term)" = "https://www.presidency.ucsb.edu/statistics/data/donald-j-trump-2nd-term-public-approval",
   "Joe Biden" = "https://www.presidency.ucsb.edu/statistics/data/joseph-r-biden-public-approval",
-  "Trump (1st Term)" = "https://www.presidency.ucsb.edu/statistics/data/donald-j-trump-public-approval"
-)
+  "Trump (1st Term)" = "https://www.presidency.ucsb.edu/statistics/data/donald-j-trump-public-approval",
+  "Barack Obama" = "https://www.presidency.ucsb.edu/statistics/data/barack-obama-public-approval",
+  "George W. Bush" = "https://www.presidency.ucsb.edu/statistics/data/george-w-bush-public-approval",
+  "Bill Clinton" = "https://www.presidency.ucsb.edu/statistics/data/william-j-clinton-public-approval",
+  "George Bush" = "https://www.presidency.ucsb.edu/statistics/data/george-bush-public-approval",
+  "Ronald Reagan" = "https://www.presidency.ucsb.edu/statistics/data/ronald-reagan-public-approval",
+  "Gerald Ford" = "https://www.presidency.ucsb.edu/statistics/data/gerald-r-ford-public-approval",
+  "Richard Nixon" = "https://www.presidency.ucsb.edu/statistics/data/richard-m-nixon-public-approval",
+  "Lyndon B. Johnson" = "https://www.presidency.ucsb.edu/statistics/data/lyndon-b-johnson-public-approval",
+  "John F. Kennedy" = "https://www.presidency.ucsb.edu/statistics/data/john-f-kennedy-public-approval",
+  "Harry Truman" = "https://www.presidency.ucsb.edu/statistics/data/harry-s-truman-public-approval",
+  "Franklin D. Roosevelt" = "https://www.presidency.ucsb.edu/statistics/data/franklin-d-roosevelt-public-approval"
+  )
 
 scrape_president_data <- function(name, url) {
   
