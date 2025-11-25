@@ -1,0 +1,49 @@
+---
+title: "Data Visualization"
+format: html
+---
+Datasets we will be looking at:
+```{r}
+load("./data/anes_clean.rda") #anes_data and anes_codebook
+load("./data/bls_data_clean.rda") #bls_data_clean
+load("./data/census_clean.rda") #census_clean
+load("./data/monthly_approval_clean.rda") #monthly_approval_clean
+```
+
+Looking at ANES
+```{r}
+variables_of_interest <- 
+    paste(anes_codebook$variable[-1],collapse = "|")
+
+anes_data_clean <- 
+    anes_data |> 
+    select(1, matches(variables_of_interest))
+
+visdat::vis_miss(anes_data_clean, warn_large_data = FALSE) + 
+    theme(axis.text.x = element_blank())
+
+colSums(is.na(anes_data_clean))
+```
+
+Preparing to combine data frames
+```{r}
+bls_data_clean$series_id <- NULL #run chunk 1 if series_id is wanted
+
+bls_data_clean <-
+    bls_data_clean |> 
+    filter(date >= "1941-07-01" & date <= "2025-10-01") |> 
+    pivot_wider(names_from = variable, values_from = value) |> 
+    mutate(consumer_p_index = round(consumer_p_index, 2))
+
+```
+
+```{r}
+monthly_approval_clean |> 
+    full_join(bls_data_clean, by = "date")
+
+range(monthly_approval_clean$date)
+length(monthly_approval_clean$date)
+
+range(bls_data_clean$date)
+head(bls_data_clean$date)
+```
