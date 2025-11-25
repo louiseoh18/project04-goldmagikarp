@@ -52,21 +52,26 @@ unmatched_dates <- anti_join(bls_dates,approval_dates)
 monthly_approval_clean |> filter(date %in% unmatched_dates$date)
 ```
 
-There are 107 months where the monthly approval rating wasn't recorded
-
+There are 107 months where the monthly approval rating wasn't recorded.  A lot of these are FDR and Truman
 
 ```{r}
 monthly_approval_clean |> 
     full_join(bls_data_clean, by = "date") |> 
     arrange(desc(date)) |> 
     mutate(
-        President = 
-            )
+        President = ifelse( #if NA is sandwiched by same president's then copy that value
+            zoo::na.locf(President, na.rm = FALSE) == 
+                zoo::na.locf(President, na.rm = FALSE, fromLast = TRUE),
+            zoo::na.locf(President, na.rm = FALSE),
+            NA),
+        President = case_when(
+            date >= "1941-07-01" & date <= "1945-04-01" ~ "Franklin D. Roosevelt",
+            date >= "1945-05-01" & date <= "1953-01-01" ~ "Harry Truman",
+            date == "1977-01-01" ~ "Jimmy Carter",
+            TRUE ~ President))
 
-month(unmatched_dates)
-```
-
-
-```{r}
-
+#need to duplicate: 
+# FDR -> Truman (Truman: 1945-04-01)
+# Truman -> Eisenhower (Eisen:1953-01-01)
+# Carter -> Ford (Ford: 1977-01-01)
 ```
