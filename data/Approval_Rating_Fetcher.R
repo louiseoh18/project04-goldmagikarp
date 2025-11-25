@@ -12,11 +12,6 @@ library(stringr)
 library(tidyr)
 library(here)
 
-# Two presidents are not working:
-# On website, Carter has an expanded table and Eisenhower is missing a column name for start date
-    # "Jimmy Carter" = "https://www.presidency.ucsb.edu/statistics/data/jimmy-carter-public-approval"
-    # "Dwight D. Eisenhower" = "https://www.presidency.ucsb.edu/statistics/data/dwight-d-eisenhower-public-approval"
-
 president_urls <- list(
   "Trump (2nd Term)" = "https://www.presidency.ucsb.edu/statistics/data/donald-j-trump-2nd-term-public-approval",
   "Joe Biden" = "https://www.presidency.ucsb.edu/statistics/data/joseph-r-biden-public-approval",
@@ -26,10 +21,12 @@ president_urls <- list(
   "Bill Clinton" = "https://www.presidency.ucsb.edu/statistics/data/william-j-clinton-public-approval",
   "George Bush" = "https://www.presidency.ucsb.edu/statistics/data/george-bush-public-approval",
   "Ronald Reagan" = "https://www.presidency.ucsb.edu/statistics/data/ronald-reagan-public-approval",
+  "Jimmy Carter" = "https://www.presidency.ucsb.edu/statistics/data/jimmy-carter-public-approval",
   "Gerald Ford" = "https://www.presidency.ucsb.edu/statistics/data/gerald-r-ford-public-approval",
   "Richard Nixon" = "https://www.presidency.ucsb.edu/statistics/data/richard-m-nixon-public-approval",
   "Lyndon B. Johnson" = "https://www.presidency.ucsb.edu/statistics/data/lyndon-b-johnson-public-approval",
   "John F. Kennedy" = "https://www.presidency.ucsb.edu/statistics/data/john-f-kennedy-public-approval",
+  "Dwight D. Eisenhower" = "https://www.presidency.ucsb.edu/statistics/data/dwight-d-eisenhower-public-approval",
   "Harry Truman" = "https://www.presidency.ucsb.edu/statistics/data/harry-s-truman-public-approval",
   "Franklin D. Roosevelt" = "https://www.presidency.ucsb.edu/statistics/data/franklin-d-roosevelt-public-approval"
   )
@@ -51,6 +48,13 @@ scrape_president_data <- function(name, url) {
   if (is.null(approval_table)) {
     return(data.frame())
   }
+  
+  # Handle "empty" column names
+  current_names <- names(approval_table)
+  is_unnamed <- current_names == ""
+  temp_names <- paste0("temp_", seq_along(which(is_unnamed)))
+  current_names[is_unnamed] <- temp_names
+  names(approval_table) <- current_names
   
   clean_df <- approval_table %>%
     rename_with(~ c("Start_Date", "End_Date", "Approve", "Disapprove", "Unsure"), 
