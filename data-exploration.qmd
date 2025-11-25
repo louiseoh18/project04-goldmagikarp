@@ -83,5 +83,11 @@ missing_rows <-
 data_wide <-
     data_wide |> 
     add_row(missing_rows) |> 
-    arrange(desc(date))
+    arrange(desc(date)) |> 
+    janitor::clean_names()
+
+data_wide |> 
+    filter(president %in% c("Franklin D. Roosevelt", "Harry Truman")) |> print(n=Inf)
+
+visdat::vis_miss(data_wide, warn_large_data = FALSE)
 ```
