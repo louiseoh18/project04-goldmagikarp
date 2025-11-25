@@ -37,13 +37,36 @@ bls_data_clean <-
 
 ```
 
+Checking dates of bls and monthly approval
 ```{r}
-monthly_approval_clean |> 
-    full_join(bls_data_clean, by = "date")
-
 range(monthly_approval_clean$date)
 length(monthly_approval_clean$date)
 
 range(bls_data_clean$date)
-head(bls_data_clean$date)
+length(bls_data_clean$date)
+
+bls_dates <- data.frame(date = bls_data_clean$date)
+approval_dates <- data.frame(date = monthly_approval_clean$date)
+unmatched_dates <- anti_join(bls_dates,approval_dates)
+
+monthly_approval_clean |> filter(date %in% unmatched_dates$date)
+```
+
+There are 107 months where the monthly approval rating wasn't recorded
+
+
+```{r}
+monthly_approval_clean |> 
+    full_join(bls_data_clean, by = "date") |> 
+    arrange(desc(date)) |> 
+    mutate(
+        President = 
+            )
+
+month(unmatched_dates)
+```
+
+
+```{r}
+
 ```
