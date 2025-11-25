@@ -20,15 +20,49 @@ series_ids <- list('LNS14000000', 'CUUR0000SA0')
 # LNS14000000: Unemployment Rate
 # CUUR0000SA0: Consumer Price Index
 
-payload <- list(
+# 2004-2024
+payload1 <- list(
   'seriesid' = series_ids,
-  'startyear' = 2020,
+  'startyear' = 2004,
   'endyear' = 2024,
   'registrationkey' = BLS_KEY
 )
 
-response <- blsAPI(payload, api_version = 2, return_data_frame = F)
-json_data <- fromJSON(response, simplifyVector = F)
+response1 <- blsAPI(payload1, api_version = 2, return_data_frame = F)
+json_data1 <- fromJSON(response1, simplifyVector = F)
+
+# 1983-2003
+payload2 <- list(
+  'seriesid' = series_ids,
+  'startyear' = 1983,
+  'endyear' = 2003,
+  'registrationkey' = BLS_KEY
+)
+
+response2 <- blsAPI(payload2, api_version = 2, return_data_frame = F)
+json_data2 <- fromJSON(response2, simplifyVector = F)
+
+# 1962-1982
+payload3 <- list(
+  'seriesid' = series_ids,
+  'startyear' = 1962,
+  'endyear' = 1982,
+  'registrationkey' = BLS_KEY
+)
+
+response3 <- blsAPI(payload3, api_version = 2, return_data_frame = F)
+json_data3 <- fromJSON(response3, simplifyVector = F)
+
+# 1941-1961
+payload4 <- list(
+  'seriesid' = series_ids,
+  'startyear' = 1941,
+  'endyear' = 1961,
+  'registrationkey' = BLS_KEY
+)
+
+response4 <- blsAPI(payload4, api_version = 2, return_data_frame = F)
+json_data4 <- fromJSON(response4, simplifyVector = F)
 
 process_series <- function(series_obj) {
   series_id <- series_obj$seriesID
@@ -46,7 +80,19 @@ process_series <- function(series_obj) {
   return(df)
 }
 
-bls_data_clean <- bind_rows(lapply(json_data$Results$series, process_series))
+bls_data_clean1 <- bind_rows(lapply(json_data1$Results$series, process_series))
+bls_data_clean2 <- bind_rows(lapply(json_data2$Results$series, process_series))
+bls_data_clean3 <- bind_rows(lapply(json_data3$Results$series, process_series))
+bls_data_clean4 <- bind_rows(lapply(json_data4$Results$series, process_series))
+
+# appending tables adding more descriptive variable column after series_id for ease of later analysis
+bls_data_clean <- bls_data_clean1 %>%
+  bind_rows(bls_data_clean2, bls_data_clean3, bls_data_clean4) %>%
+  mutate(variable = case_when(
+    series_id == 'LNS14000000' ~ "unemployment_rate",
+    series_id == 'CUUR0000SA0' ~ "consumer_p_index"
+  )) %>%
+  relocate(variable, .after = series_id)
 
 head(bls_data_clean)
 
