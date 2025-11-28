@@ -78,3 +78,5 @@ final_economic_data <- data_list %>%
 
 print(head(final_economic_data))
 print(tail(final_economic_data))
+
+saveRDS(final_economic_data, file = "data/BEA_economic_data.rds")
