@@ -8,6 +8,7 @@ load("./data/anes_clean.rda") #anes_data and anes_codebook
 load("./data/bls_data_clean.rda") #bls_data_clean
 load("./data/census_clean.rda") #census_clean
 load("./data/monthly_approval_clean.rda") #monthly_approval_clean
+load("./data/BEA_economic_data.rda") #final_economic_data
 ```
 
 Looking at ANES
@@ -55,6 +56,7 @@ monthly_approval_clean |> filter(date %in% unmatched_dates$date)
 There are 107 months where the monthly approval rating wasn't recorded.  A lot of these are FDR and Truman.
 
 ```{r}
+
 data_wide <- 
     monthly_approval_clean |> 
     full_join(bls_data_clean, by = "date") |> 
@@ -69,7 +71,7 @@ data_wide <-
             date >= "1941-07-01" & date <= "1945-04-01" ~ "Franklin D. Roosevelt",
             date >= "1945-05-01" & date <= "1953-01-01" ~ "Harry Truman",
             date == "1977-01-01" ~ "Jimmy Carter",
-            TRUE ~ President))
+            TRUE ~ President)) 
 
 missing_rows <- 
     data_wide |> 
@@ -90,4 +92,43 @@ data_wide |>
     filter(president %in% c("Franklin D. Roosevelt", "Harry Truman")) |> print(n=Inf)
 
 visdat::vis_miss(data_wide, warn_large_data = FALSE)
+```
+
+```{r}
+
+# Join bea data
+
+library(zoo)
+
+final_combined_data <- data_wide |> 
+    full_join(final_economic_data, by = "date") |> 
+    arrange(desc(date))
+
+colnames(final_combined_data)
+
+missing_percentages <- colSums(is.na(final_combined_data)) / nrow(final_combined_data) * 100
+print(missing_percentages)
+
+final_combined_data <- final_combined_data %>%
+  arrange(date) %>%
+  fill(Real_GDP, Disposable_Income, Corporate_Profits, Healthcare_Price_Index, .direction = "down") %>% 
+  filter(!(is.na(unemployment_rate) & is.na(approval_rating))) %>% 
+  group_by(president) %>% 
+  mutate(
+    approval_rating = na.approx(approval_rating, na.rm = FALSE),
+    disapproval_rating = na.approx(disapproval_rating, na.rm = FALSE),
+    unsure_rating = na.approx(unsure_rating, na.rm = FALSE)
+  ) %>% 
+  ungroup() %>%
+  filter(!is.na(unemployment_rate)) %>% 
+  fill(Real_GDP, Disposable_Income, Corporate_Profits, Healthcare_Price_Index, .direction = "up")
+
+colSums(is.na(final_clean_data)) / nrow(final_clean_data) * 100
+
+visdat::vis_miss(final_combined_data, warn_large_data = FALSE)
+
+```
+
+```{r}
+
 ```
