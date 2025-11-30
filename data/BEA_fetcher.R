@@ -20,7 +20,6 @@ bea_config <- list(
 )
 
 fetch_bea_variable <- function(config_item) {
-  print(paste("Fetching:", config_item$name, "from table", config_item$table, "..."))
   
   params <- list(
     UserID = BEA_KEY,
