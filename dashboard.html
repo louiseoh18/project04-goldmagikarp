@@ -77,7 +77,35 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="bslib-grid-item html-fill-item tab-content bslib-grid" data-layout="fill" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
 <div id="home" class="dashboard-page tab-pane show active html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-home">
-
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p><strong>Welcome to [name of dashboard]!</strong></p>
+<p>This dashboard is designed to provide an accessible overview of historical presidential approval ratings, and explore how different economic indicators may play a role in a leader’s public perception. The dashboard is interactive and user-friendly, allowing users to select different presidents, toggle between economic indicators of interest, and even modify values of economic indicators to predict how they will influence the approval rating of the current U.S. president.</p>
+<p><strong>Tutorial</strong></p>
+<ol type="1">
+<li><strong>Historical Data</strong>
+<ul>
+<li>Select a U.S. president you would like to examine</li>
+<li>The graph immediately below your selection will display all available approval ratings over the course of the president’s service.</li>
+<li>On the bottom graph, you can toggle between economic indicators which will display how those indicators changed over the course of the president’s service.</li>
+<li>Since both the approval rating graph and indicator graph span the same time frame, you can directly compare the two.</li>
+<li>See how approval ratings and economic indicators were different between various presidents.</li>
+</ul></li>
+<li><strong>Prediction and Modeling</strong>
+<ul>
+<li>The first graph displays our pre-trained model’s prediction for the current president’s approval rating for the next 3-6 months. This model was trained based on the historical approval ratings and economic indicators from the dashboard’s previous page.</li>
+<li>The second graph…</li>
+</ul></li>
+</ol>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
 </div>
 <div id="historical-data" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-historical-data">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, max-content) minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
@@ -110,7 +138,7 @@ Presidential Approval Ratings
 <div class="card tabset html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-header dashboard-card-no-title bslib-navs-card-title">
 
-<ul class="nav nav-tabs card-header-tabs" role="tablist" data-tabsetid="card-tabset-3"><li class="nav-item" role="presentation"><a href="#card-tabset-3-1" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Unemployment Rate" aria-selected="true" class="nav-link active">Unemployment Rate</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-3-2" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Consumer Price Index" aria-selected="false" class="nav-link">Consumer Price Index</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-3-3" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Total Jobs" aria-selected="false" class="nav-link">Total Jobs</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-3-4" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Average Hourly Wages" aria-selected="false" class="nav-link">Average Hourly Wages</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-3-5" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Real GDP" aria-selected="false" class="nav-link">Real GDP</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-3-6" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Disposable Income" aria-selected="false" class="nav-link">Disposable Income</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-3-7" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Corporate Profits" aria-selected="false" class="nav-link">Corporate Profits</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-3-8" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Healthcare Price Index" aria-selected="false" class="nav-link">Healthcare Price Index</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-3-9" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Government Spending" aria-selected="false" class="nav-link">Government Spending</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-3-10" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Personal Savings Rate" aria-selected="false" class="nav-link">Personal Savings Rate</a></li></ul></div>
+<ul class="nav nav-tabs card-header-tabs" role="tablist" data-tabsetid="card-tabset-4"><li class="nav-item" role="presentation"><a href="#card-tabset-4-1" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Unemployment Rate" aria-selected="true" class="nav-link active">Unemployment Rate</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-4-2" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Consumer Price Index" aria-selected="false" class="nav-link">Consumer Price Index</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-4-3" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Total Jobs" aria-selected="false" class="nav-link">Total Jobs</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-4-4" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Average Hourly Wages" aria-selected="false" class="nav-link">Average Hourly Wages</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-4-5" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Real GDP" aria-selected="false" class="nav-link">Real GDP</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-4-6" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Disposable Income" aria-selected="false" class="nav-link">Disposable Income</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-4-7" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Corporate Profits" aria-selected="false" class="nav-link">Corporate Profits</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-4-8" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Healthcare Price Index" aria-selected="false" class="nav-link">Healthcare Price Index</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-4-9" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Government Spending" aria-selected="false" class="nav-link">Government Spending</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-4-10" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Personal Savings Rate" aria-selected="false" class="nav-link">Personal Savings Rate</a></li></ul></div>
 
 
 
@@ -121,25 +149,25 @@ Presidential Approval Ratings
 
 
 
-<div class="tab-content html-fill-item html-fill-container" data-tabset-id="card-tabset-3"><div class="tab-pane active show html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-1"><div class="card-body html-fill-item html-fill-container flow" data-title="Unemployment Rate">
+<div class="tab-content html-fill-item html-fill-container" data-tabset-id="card-tabset-4"><div class="tab-pane active show html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-1"><div class="card-body html-fill-item html-fill-container flow" data-title="Unemployment Rate">
 
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-2"><div class="card-body html-fill-item html-fill-container flow" data-title="Consumer Price Index">
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-2"><div class="card-body html-fill-item html-fill-container flow" data-title="Consumer Price Index">
 
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-3"><div class="card-body html-fill-item html-fill-container flow" data-title="Total Jobs">
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-3"><div class="card-body html-fill-item html-fill-container flow" data-title="Total Jobs">
 
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-4"><div class="card-body html-fill-item html-fill-container flow" data-title="Average Hourly Wages">
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-4"><div class="card-body html-fill-item html-fill-container flow" data-title="Average Hourly Wages">
 
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-5"><div class="card-body html-fill-item html-fill-container flow" data-title="Real GDP">
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-5"><div class="card-body html-fill-item html-fill-container flow" data-title="Real GDP">
 
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-6"><div class="card-body html-fill-item html-fill-container flow" data-title="Disposable Income">
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-6"><div class="card-body html-fill-item html-fill-container flow" data-title="Disposable Income">
 
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-7"><div class="card-body html-fill-item html-fill-container flow" data-title="Corporate Profits">
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-7"><div class="card-body html-fill-item html-fill-container flow" data-title="Corporate Profits">
 
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-8"><div class="card-body html-fill-item html-fill-container flow" data-title="Healthcare Price Index">
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-8"><div class="card-body html-fill-item html-fill-container flow" data-title="Healthcare Price Index">
 
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-9"><div class="card-body html-fill-item html-fill-container flow" data-title="Government Spending">
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-9"><div class="card-body html-fill-item html-fill-container flow" data-title="Government Spending">
 
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-3-10"><div class="card-body html-fill-item html-fill-container flow" data-title="Personal Savings Rate">
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-4-10"><div class="card-body html-fill-item html-fill-container flow" data-title="Personal Savings Rate">
 
 </div></div></div><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
     <template>Expand</template>
@@ -150,7 +178,34 @@ Presidential Approval Ratings
 </div>
 </div>
 <div id="prediction-and-modeling" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-prediction-and-modeling">
-
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-title="Trumps 6-Month Approval Forecast" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header"><div class="card-title"><span style="display: inline">
+Trumps 6-Month Approval Forecast
+</span></div></div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-title="Interactive Simulation" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header"><div class="card-title"><span style="display: inline">
+Interactive Simulation
+</span></div></div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
 </div>
 <div id="references" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-references">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: ; grid-auto-columns: minmax(0, 1fr);">
