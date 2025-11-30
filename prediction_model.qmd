@@ -1,0 +1,71 @@
+---
+title: "prediction_model"
+format: html
+---
+
+```{r}
+
+load("./data/complete_data.rda") #final_combined_data
+
+head(final_combined_data)
+
+```
+
+```{r}
+
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+
+all_presidents_start <- final_combined_data %>%
+  group_by(president) %>%
+  summarize(
+    start_date = min(date),
+    .groups = "drop"
+  )
+
+all_trajectory_data <- final_combined_data %>%
+  left_join(all_presidents_start, by = "president") %>%
+  mutate(
+    months_in_office = interval(start_date, date) %/% months(1)
+  ) %>%
+  filter(months_in_office >= 0 & months_in_office <= 48)
+
+trump_2nd_data <- all_trajectory_data %>%
+  filter(president == "Trump (2nd Term)")
+
+historical_avg <- all_trajectory_data %>%
+  filter(president != "Trump (2nd Term)") %>%
+  group_by(months_in_office) %>%
+  summarize(avg_approval = mean(approval_rating, na.rm = TRUE))
+
+ggplot() +
+  geom_line(data = all_trajectory_data %>% filter(president != "Trump (2nd Term)"), 
+            aes(x = months_in_office, y = approval_rating, group = president), 
+            color = "gray80", size = 0.5) +
+  geom_line(data = historical_avg, 
+            aes(x = months_in_office, y = avg_approval), 
+            color = "black", linetype = "dashed", size = 0.8) +
+  geom_line(data = trump_2nd_data, 
+            aes(x = months_in_office, y = approval_rating), 
+            color = "red", size = 2) +
+  geom_point(data = trump_2nd_data, 
+             aes(x = months_in_office, y = approval_rating), 
+             color = "red", size = 3) +
+  annotate("text", x = 10, y = 35, label = "Trump (2nd Term)", color = "red", fontface = "bold") +
+  
+  labs(
+    title = "Trump (2nd Term) vs. Every President in History",
+    subtitle = "Comparing trajectories over the first 4 years (Months 0-48)",
+    x = "Months in Office",
+    y = "Approval Rating (%)",
+    caption = "Gray lines = Individual Presidents. Black Dashed = Historical Mean. Red = Trump."
+  ) +
+  theme_minimal() +
+  coord_cartesian(ylim = c(20, 90))
+
+```
+
+
+
+

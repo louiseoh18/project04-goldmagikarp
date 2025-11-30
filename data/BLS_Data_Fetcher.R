@@ -16,9 +16,11 @@ BLS_KEY <- "e8e14ae76cdd4f929a3e817b91126806"
 
 # https://data.bls.gov/registrationEngine/validateKey/9b6e09b7a14eade73379b9589fbad06788eaad9542f5c75ab891f3ba7110b96a
 
-series_ids <- list('LNS14000000', 'CUUR0000SA0')
+series_ids <- list('LNS14000000', 'CUUR0000SA0', 'CES0000000001', 'CES0500000008')
 # LNS14000000: Unemployment Rate
 # CUUR0000SA0: Consumer Price Index
+# CES0000000001: Total Nonfarm Employment
+# CES0500000008: Avg Hourly Earnings - starts 1964
 
 # 2004-2024
 payload1 <- list(
@@ -67,7 +69,10 @@ json_data4 <- fromJSON(response4, simplifyVector = F)
 process_series <- function(series_obj) {
   series_id <- series_obj$seriesID
   data_list <- series_obj$data
-
+  
+  # NECESSARY CHANGE: Stop if data is empty (prevents crash on Wages in 1941 chunk)
+  if (length(data_list) == 0) return(NULL)
+  
   df <- bind_rows(data_list) %>%
     mutate(
       series_id = series_id,
@@ -76,7 +81,7 @@ process_series <- function(series_obj) {
       date = as.Date(paste0(year, "-", substr(period, 2, 3), "-01"))
     ) %>%
     select(date, series_id, value)
-
+  
   return(df)
 }
 
@@ -90,7 +95,10 @@ bls_data_clean <- bls_data_clean1 %>%
   bind_rows(bls_data_clean2, bls_data_clean3, bls_data_clean4) %>%
   mutate(variable = case_when(
     series_id == 'LNS14000000' ~ "unemployment_rate",
-    series_id == 'CUUR0000SA0' ~ "consumer_p_index"
+    series_id == 'CUUR0000SA0' ~ "consumer_p_index",
+    # NECESSARY CHANGE: Added mapping for the 2 new variables
+    series_id == 'CES0000000001' ~ "total_nonfarm_jobs",
+    series_id == 'CES0500000008' ~ "avg_hourly_earnings"
   )) %>%
   relocate(variable, .after = series_id)
 
@@ -103,4 +111,4 @@ nrow(bls_data_clean)
 save(bls_data_clean, file = here("data/bls_data_clean.rda"))
 
 # naming: datasetname_clean
-# rda file: datasetname_clean.rda 
+# rda file: datasetname_clean.rda
