@@ -1,0 +1,113 @@
+---
+title: "U.S. Presidential Approval Ratings"
+format: 
+  dashboard:
+    theme: flatly
+    nav-buttons:
+      - icon: github
+        href: https://github.com/louiseoh18/project04-goldmagikarp.git
+server: shiny
+---
+
+```{r}
+#| context: setup
+library(shiny)
+library(ggplot2)
+library(tidyverse)
+
+```
+
+# Home
+
+
+
+# Historical Data
+
+## Selection Card
+
+::: {.card title = "Choose a President:"}
+```{r}
+# selectInput(inputID = "president", 
+#             label ="President", 
+#             choices = names("president"),
+#             selected = "")
+
+```
+:::
+
+## Approval Rating Card
+
+::: {.card title = "Presidential Approval Ratings"}
+```{r}
+
+```
+:::
+
+## Economic Indicator Card {.tabset}
+
+::: {.card title = "Unemployment Rate"}
+```{r}
+
+```
+:::
+
+::: {.card title = "Consumer Price Index"}
+```{r}
+
+```
+:::
+
+::: {.card title = "Total Jobs"}
+```{r}
+
+```
+:::
+
+::: {.card title = "Average Hourly Wages"}
+```{r}
+
+```
+:::
+
+::: {.card title = "Real GDP"}
+```{r}
+
+```
+:::
+
+::: {.card title = "Disposable Income"}
+```{r}
+
+```
+:::
+
+::: {.card title = "Corporate Profits"}
+```{r}
+
+```
+:::
+
+::: {.card title = "Healthcare Price Index"}
+```{r}
+
+```
+:::
+
+::: {.card title = "Government Spending"}
+```{r}
+
+```
+:::
+
+::: {.card title = "Personal Savings Rate"}
+```{r}
+
+```
+:::
+
+# Prediction and Modeling
+
+
+
+# References
+
