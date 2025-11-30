@@ -74,28 +74,36 @@ library(lubridate)
 library(zoo)
 library(here)
 library(broom.mixed)
-library(lme4)     
+library(lme4)
 
 load(here("data/complete_data.rda"))
 
-
+pres_starts <- final_combined_data %>%
+  group_by(president) %>%
+  summarize(Start_Date = min(date), .groups = "drop")
 
 model_data <- final_combined_data %>%
+  left_join(pres_starts, by = "president") %>%
   arrange(date) %>%
   mutate(
+    Months_in_Office  = interval(Start_Date, date) %/% months(1),
+
     Unemployment      = unemployment_rate,
     Inflation_Rate    = (consumer_p_index - lag(consumer_p_index, 12)) / lag(consumer_p_index, 12) * 100,
     Job_Growth        = (total_nonfarm_jobs - lag(total_nonfarm_jobs, 12)) / lag(total_nonfarm_jobs, 12) * 100,
     Wage_Growth       = (avg_hourly_earnings - lag(avg_hourly_earnings, 12)) / lag(avg_hourly_earnings, 12) * 100,
+    
     GDP_Growth        = (Real_GDP - lag(Real_GDP, 12)) / lag(Real_GDP, 12) * 100,
     Income_Growth     = (Disposable_Income - lag(Disposable_Income, 12)) / lag(Disposable_Income, 12) * 100,
     Profit_Growth     = (Corporate_Profits - lag(Corporate_Profits, 12)) / lag(Corporate_Profits, 12) * 100,
     Healthcare_Infl   = (Healthcare_Price_Index - lag(Healthcare_Price_Index, 12)) / lag(Healthcare_Price_Index, 12) * 100,
     Gov_Spend_Growth  = (Gov_Spending - lag(Gov_Spending, 12)) / lag(Gov_Spending, 12) * 100,
-    Savings_Rate      = Personal_Saving_Rate
+    Savings_Rate      = Personal_Saving_Rate # Already a rate
   ) %>%
+  filter(date >= "1965-01-01") %>%
   filter(!is.na(Inflation_Rate) & !is.na(Wage_Growth)) %>%
   select(date, president, approval_rating, 
+         Months_in_Office,
          Unemployment, Inflation_Rate, Job_Growth, Wage_Growth,
          GDP_Growth, Income_Growth, Profit_Growth, Healthcare_Infl,
          Gov_Spend_Growth, Savings_Rate)
@@ -104,6 +112,7 @@ full_economic_model <- lmer(
   approval_rating ~ Unemployment + Inflation_Rate + Job_Growth + Wage_Growth +
                     GDP_Growth + Income_Growth + Profit_Growth + Healthcare_Infl +
                     Gov_Spend_Growth + Savings_Rate + 
+                    Months_in_Office + 
                     (1 | president),
   data = model_data
 )
@@ -120,12 +129,10 @@ model_data$Predicted_Approval <- predict(full_economic_model, newdata = model_da
 ggplot(model_data, aes(x = date)) +
   geom_line(aes(y = approval_rating, color = "Actual Approval"), alpha = 0.6) +
   geom_line(aes(y = Predicted_Approval, color = "Hierarchical Model Prediction"), linewidth = 1) +
-  
   scale_color_manual(values = c("Actual Approval" = "gray50", "Hierarchical Model Prediction" = "darkgreen")) +
   labs(
     y = "Approval Rating (%)",
-    x = "Year",
-    caption = "Random Effects Model (Intercept varies by President)"
+    x = "Year"
   ) +
   theme_minimal() +
   theme(legend.position = "bottom")
