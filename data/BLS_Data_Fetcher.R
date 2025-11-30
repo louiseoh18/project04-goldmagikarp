@@ -70,7 +70,6 @@ process_series <- function(series_obj) {
   series_id <- series_obj$seriesID
   data_list <- series_obj$data
   
-  # NECESSARY CHANGE: Stop if data is empty (prevents crash on Wages in 1941 chunk)
   if (length(data_list) == 0) return(NULL)
   
   df <- bind_rows(data_list) %>%
@@ -90,13 +89,11 @@ bls_data_clean2 <- bind_rows(lapply(json_data2$Results$series, process_series))
 bls_data_clean3 <- bind_rows(lapply(json_data3$Results$series, process_series))
 bls_data_clean4 <- bind_rows(lapply(json_data4$Results$series, process_series))
 
-# appending tables adding more descriptive variable column after series_id for ease of later analysis
 bls_data_clean <- bls_data_clean1 %>%
   bind_rows(bls_data_clean2, bls_data_clean3, bls_data_clean4) %>%
   mutate(variable = case_when(
     series_id == 'LNS14000000' ~ "unemployment_rate",
     series_id == 'CUUR0000SA0' ~ "consumer_p_index",
-    # NECESSARY CHANGE: Added mapping for the 2 new variables
     series_id == 'CES0000000001' ~ "total_nonfarm_jobs",
     series_id == 'CES0500000008' ~ "avg_hourly_earnings"
   )) %>%

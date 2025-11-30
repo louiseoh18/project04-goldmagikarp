@@ -4,19 +4,25 @@ library(dplyr)
 library(tidyr)
 library(lubridate)
 library(purrr)
+library(here) # Added for consistent file saving
 
 BEA_KEY <- "C77A6C27-03FD-4B8A-996F-CAA388B4ABF1"
 base_url <- "https://apps.bea.gov/api/data/"
 
 bea_config <- list(
-  # Real GDP variable
-  list(name = "Real_GDP",         table = "T10106", line_desc = "Gross domestic product"),
-  # Unemployment rate variable
-  list(name = "Disposable_Income",table = "T20100", line_desc = "Disposable personal income"),
-  # Corporate profits variable
-  list(name = "Corporate_Profits",table = "T11200", line_desc = "Corporate profits"),
-  # Healthcare inflation variable
-  list(name = "Healthcare_Price_Index",table = "T20304", line_desc = "Health care")
+  # Table T10106: GDP & Government Spending
+  list(name = "Real_GDP",                   table = "T10106", line_desc = "Gross domestic product"),
+  list(name = "Gov_Spending",               table = "T10106", line_desc = "Government consumption expenditures and gross investment"),
+  
+  # Table T20100: Income & Savings
+  list(name = "Disposable_Income",          table = "T20100", line_desc = "Disposable personal income"),
+  list(name = "Personal_Saving_Rate",       table = "T20100", line_desc = "Personal saving rate"),
+  
+  # Table T11200: Corporate Profits
+  list(name = "Corporate_Profits",          table = "T11200", line_desc = "Corporate profits with inventory valuation"),
+  
+  # Table T20304: Inflation 
+  list(name = "Healthcare_Price_Index",     table = "T20304", line_desc = "Health care")
 )
 
 fetch_bea_variable <- function(config_item) {
@@ -27,14 +33,14 @@ fetch_bea_variable <- function(config_item) {
     DataSetName = "NIPA",
     TableName = config_item$table,
     Frequency = "Q",
-    Year = "ALL",
+    Year = "ALL", 
     ResultFormat = "JSON"
   )
   
   response <- GET(base_url, query = params)
   
   if (status_code(response) != 200) {
-    warning(paste("Failed to fetch", config_item$name))
+    warning(paste("Failed to fetch", config_item$name, "- Status:", status_code(response)))
     return(NULL)
   }
   
@@ -78,4 +84,4 @@ final_economic_data <- data_list %>%
 print(head(final_economic_data))
 print(tail(final_economic_data))
 
-saveRDS(final_economic_data, file = "data/BEA_economic_data.rds")
+save(final_economic_data, file = here("data/BEA_economic_data.rda"))
