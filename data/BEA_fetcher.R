@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyr)
 library(lubridate)
 library(purrr)
-library(here) # Added for consistent file saving
+library(here)
 
 BEA_KEY <- "C77A6C27-03FD-4B8A-996F-CAA388B4ABF1"
 base_url <- "https://apps.bea.gov/api/data/"
