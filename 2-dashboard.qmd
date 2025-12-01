@@ -11,7 +11,9 @@ server: shiny
 
 ```{r}
 #| context: setup
+library(here)
 library(shiny)
+library(lubridate)
 library(ggplot2)
 library(tidyverse)
 ```
@@ -37,84 +39,100 @@ This dashboard is designed to provide an accessible overview of historical presi
 
 # Historical Data
 
-## Selection Card
-
-::: {.card title = "Choose a President:"}
 ```{r}
-# selectInput(inputID = "president", 
-#             label ="President", 
-#             choices = names("president"),
-#             selected = "")
+#| context: setup
+
+load(here("data/complete_data.rda"))
 
 ```
-:::
+
+```{r}
+#| context: server
+econ_labels <- c(
+  "Unemployment Rate" = "unemployment_rate",
+  "Consumer Price Index" = "consumer_p_index",
+  "Total Jobs" = "total_nonfarm_jobs",
+  "Average Hourly Earnings" = "avg_hourly_earnings",
+  "Real GDP" = "Real_GDP",
+  "Disposable Income" = "Disposable_Income",
+  "Corporate Profits" = "Corporate_Profits",
+  "Healthcare Price Index" = "Healthcare_Price_Index",
+  "Government Spending" = "Gov_Spending",
+  "Personal Savings Rate" = "Personal_Saving_Rate"
+)
+pres_data <- reactive({
+    final_combined_data |> filter(president == input$president)
+  })
+  
+  # Approval rating plot
+output$approval_plot <- renderPlot({
+  pres_data() |>
+    ggplot(aes(x = date)) +
+    geom_line(aes(y = approval_rating, color = "Approval")) +
+    geom_line(aes(y = disapproval_rating, color = "Disapproval")) +
+    geom_line(aes(y = unsure_rating, color = "Unsure")) +
+    labs(y = "Rating (%)", x = "Date", color = "Legend") +
+    theme_minimal()
+  })
+
+output$econ_plot <- renderPlot({
+    var <- input$econ_var
+    friendly_label <- names(econ_labels)[econ_labels == var]
+    pres_data() |>
+      ggplot(aes(x = date, y = .data[[var]])) +
+      geom_line(color = "steelblue") +
+      labs(y = friendly_label, x = "Date") +
+      theme_minimal()
+  })
+```
+
+## president {.toolbar}
+
+```{r}
+selectInput(
+        inputId = "president",
+        label = "Choose a President:",
+        choices = unique(final_combined_data$president)[!is.na(unique(final_combined_data$president))],
+        selected = "Franklin D. Roosevelt"
+      )
+```
 
 ## Approval Rating Card
 
 ::: {.card title = "Presidential Approval Ratings"}
 ```{r}
-
+plotOutput("approval_plot")
 ```
 :::
 
-## Economic Indicator Card {.tabset}
+## Economic Indicator Card
 
-::: {.card title = "Unemployment Rate"}
+### Econ selection {width="20%"}
+
 ```{r}
-
+econ_labels <- c(
+  "Unemployment Rate" = "unemployment_rate",
+  "Consumer Price Index" = "consumer_p_index",
+  "Total Jobs" = "total_nonfarm_jobs",
+  "Average Hourly Earnings" = "avg_hourly_earnings",
+  "Real GDP" = "Real_GDP",
+  "Disposable Income" = "Disposable_Income",
+  "Corporate Profits" = "Corporate_Profits",
+  "Healthcare Price Index" = "Healthcare_Price_Index",
+  "Government Spending" = "Gov_Spending",
+  "Personal Savings Rate" = "Personal_Saving_Rate"
+)
+selectInput(inputId = "econ_var",
+            label = "Select Economic Indicator:",
+            choices = econ_labels
+            )
 ```
-:::
 
-::: {.card title = "Consumer Price Index"}
+### Economic Plot {width = "80%"}
+
+::: {.card title = "Economic Indicators"}
 ```{r}
-
-```
-:::
-
-::: {.card title = "Total Jobs"}
-```{r}
-
-```
-:::
-
-::: {.card title = "Average Hourly Wages"}
-```{r}
-
-```
-:::
-
-::: {.card title = "Real GDP"}
-```{r}
-
-```
-:::
-
-::: {.card title = "Disposable Income"}
-```{r}
-
-```
-:::
-
-::: {.card title = "Corporate Profits"}
-```{r}
-
-```
-:::
-
-::: {.card title = "Healthcare Price Index"}
-```{r}
-
-```
-:::
-
-::: {.card title = "Government Spending"}
-```{r}
-
-```
-:::
-
-::: {.card title = "Personal Savings Rate"}
-```{r}
+plotOutput("econ_plot")
 
 ```
 :::
