@@ -36,6 +36,7 @@ bls_data_clean <-
     pivot_wider(names_from = variable, values_from = value) |> 
     mutate(consumer_p_index = round(consumer_p_index, 2))
 
+
 ```
 
 Checking dates of bls and monthly approval
@@ -109,6 +110,8 @@ colnames(final_combined_data)
 missing_percentages <- colSums(is.na(final_combined_data)) / nrow(final_combined_data) * 100
 print(missing_percentages)
 
+# Impute missing values
+
 final_combined_data <- final_combined_data %>%
   arrange(date) %>%
   fill(Real_GDP, Disposable_Income, Corporate_Profits, Healthcare_Price_Index, .direction = "down") %>% 
@@ -120,15 +123,21 @@ final_combined_data <- final_combined_data %>%
     unsure_rating = na.approx(unsure_rating, na.rm = FALSE)
   ) %>% 
   ungroup() %>%
-  filter(!is.na(unemployment_rate)) %>% 
   fill(Real_GDP, Disposable_Income, Corporate_Profits, Healthcare_Price_Index, .direction = "up")
 
-colSums(is.na(final_clean_data)) / nrow(final_clean_data) * 100
+colSums(is.na(final_combined_data)) / nrow(final_combined_data) * 100
 
 visdat::vis_miss(final_combined_data, warn_large_data = FALSE)
+
+head(final_combined_data)
 
 ```
 
 ```{r}
 
+
+save(final_combined_data, file = "./data/complete_data.rda")
+
 ```
+
+

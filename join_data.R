@@ -77,6 +77,17 @@ final_combined_data <- final_combined_data %>%
     .direction = "up"
   )
 
+final_combined_data <- final_combined_data %>%
+  mutate(Party = case_when(
+    president %in% c("Franklin D. Roosevelt", "Harry Truman", 
+                     "John F. Kennedy", "Lyndon B. Johnson", 
+                     "Jimmy Carter", "Bill Clinton", "Barack Obama", 
+                     "Joe Biden") ~ "Democrat",
+    TRUE ~ "Republican"
+  ),
+  Party = factor(Party)
+  )
+
 print(colnames(final_combined_data))
 
 visdat::vis_miss(final_combined_data, warn_large_data = FALSE)

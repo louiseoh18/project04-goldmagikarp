@@ -9,6 +9,8 @@ load("./data/complete_data.rda") #final_combined_data
 
 head(final_combined_data)
 
+tail(final_combined_data)
+
 ```
 
 ```{r}
@@ -98,9 +100,8 @@ model_data <- final_combined_data %>%
     Profit_Growth     = (Corporate_Profits - lag(Corporate_Profits, 12)) / lag(Corporate_Profits, 12) * 100,
     Healthcare_Infl   = (Healthcare_Price_Index - lag(Healthcare_Price_Index, 12)) / lag(Healthcare_Price_Index, 12) * 100,
     Gov_Spend_Growth  = (Gov_Spending - lag(Gov_Spending, 12)) / lag(Gov_Spending, 12) * 100,
-    Savings_Rate      = Personal_Saving_Rate # Already a rate
+    Savings_Rate      = Personal_Saving_Rate
   ) %>%
-  filter(date >= "1965-01-01") %>%
   filter(!is.na(Inflation_Rate) & !is.na(Wage_Growth)) %>%
   select(date, president, approval_rating, 
          Months_in_Office,
@@ -138,6 +139,183 @@ ggplot(model_data, aes(x = date)) +
   theme(legend.position = "bottom")
 
 ```
+
+
+```{r}
+
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(zoo)
+library(here)
+library(randomForest)
+
+rf_data <- final_combined_data %>%
+  arrange(date) %>%
+  mutate(
+    Unemployment      = unemployment_rate,
+    Inflation_Rate    = (consumer_p_index - lag(consumer_p_index, 12))/lag(consumer_p_index, 12)*100,
+    Job_Growth        = (total_nonfarm_jobs - lag(total_nonfarm_jobs, 12))/lag(total_nonfarm_jobs, 12)*100,
+    Wage_Growth       = (avg_hourly_earnings - lag(avg_hourly_earnings, 12))/lag(avg_hourly_earnings, 12)*100,
+    GDP_Growth        = (Real_GDP - lag(Real_GDP, 12))/lag(Real_GDP, 12)*100,
+    Income_Growth     = (Disposable_Income - lag(Disposable_Income, 12))/lag(Disposable_Income, 12)*100,
+    Profit_Growth     = (Corporate_Profits - lag(Corporate_Profits, 12))/lag(Corporate_Profits, 12)*100,
+    Healthcare_Infl   = (Healthcare_Price_Index - lag(Healthcare_Price_Index, 12))/lag(Healthcare_Price_Index, 12)*100,
+    Gov_Spend_Growth  = (Gov_Spending - lag(Gov_Spending, 12))/lag(Gov_Spending, 12)*100,
+    Savings_Rate      = Personal_Saving_Rate,
+    
+    pres_start_date   = min(date[president == president], na.rm=TRUE), 
+    Months_in_Office  = interval(pres_start_date, date) %/% months(1),
+    Year_Index        = year(date),
+    
+    Honeymoon         = ifelse(Months_in_Office <= 6, 1, 0),
+    Party             = case_when(
+      president %in% c("Franklin D. Roosevelt", "Harry Truman", "John F. Kennedy", "Lyndon B. Johnson", "Jimmy Carter", "Bill Clinton", "Barack Obama", "Joe Biden") ~ "Democrat",
+      TRUE ~ "Republican"
+    )
+  ) %>%
+  group_by(president) %>%
+  mutate(pres_start_date = min(date)) %>%
+  ungroup() %>%
+  mutate(Months_in_Office = interval(pres_start_date, date) %/% months(1)) %>%
+  
+  mutate(
+    Approval_Lag1     = lag(approval_rating, 1),
+    Approval_Lag3     = lag(approval_rating, 3),
+    Unemployment_Lag3 = lag(Unemployment, 3),
+    Inflation_Lag3    = lag(Inflation_Rate, 3)
+  ) %>%
+  
+  filter(date >= "1965-01-01") %>%
+  select(date, approval_rating, Approval_Lag1, Approval_Lag3,
+         Unemployment, Inflation_Rate, Job_Growth, Wage_Growth, 
+         GDP_Growth, Income_Growth, Profit_Growth, Healthcare_Infl, 
+         Gov_Spend_Growth, Savings_Rate, 
+         Months_in_Office, Year_Index, Party, 
+         Unemployment_Lag3, Inflation_Lag3) %>%
+  na.omit()
+
+train_data <- rf_data %>% filter(date < "2017-01-01")
+test_data  <- rf_data %>% filter(date >= "2017-01-01")
+
+colnames(train_data)
+
+set.seed(123)
+rf_validation <- randomForest(
+  approval_rating ~ Approval_Lag3 + Approval_Lag1 +
+                    Unemployment + Inflation_Rate + Job_Growth + Wage_Growth + 
+                    GDP_Growth + Income_Growth + Profit_Growth + Healthcare_Infl + 
+                    Gov_Spend_Growth + Savings_Rate + 
+                    Months_in_Office + Year_Index + Party,
+  data = train_data,
+  ntree = 1000, nodesize = 12, importance = TRUE
+)
+
+test_preds <- predict(rf_validation, newdata = test_data)
+test_rmse <- sqrt(mean((test_data$approval_rating - test_preds)^2))
+print(paste("Validation RMSE (2017-2024):", round(test_rmse, 2), "%"))
+
+test_data$Predicted <- test_preds
+
+ggplot(test_data, aes(x = date)) +
+  geom_line(aes(y = approval_rating, color = "Actual Approval"), size = 1.2) +
+  geom_line(aes(y = Predicted, color = "Model Prediction"), size = 1.2, linetype = "dashed") +
+  scale_color_manual(values = c("Actual Approval" = "black", "Model Prediction" = "red")) +
+  labs(y = "Approval Rating (%)") +
+  theme_minimal()
+
+```
+
+```{r}
+
+set.seed(123)
+rf_final <- randomForest(
+  approval_rating ~ Approval_Lag3 + 
+                    Unemployment + Inflation_Rate + Job_Growth + Wage_Growth + 
+                    GDP_Growth + Income_Growth + Profit_Growth + Healthcare_Infl + 
+                    Gov_Spend_Growth + Savings_Rate + 
+                    Months_in_Office + Year_Index + Party,
+  data = rf_data,
+  ntree = 1000, nodesize = 12, importance = TRUE
+)
+
+
+trump_2025_existing <- final_combined_data %>%
+  filter(president == "Trump (2nd Term)" & !is.na(approval_rating)) %>%
+  select(date, approval_rating) %>%
+  mutate(Type = "Actual History")
+
+last_known_row <- tail(trump_2025_existing, 1)
+last_date <- last_known_row$date
+last_3_months <- tail(trump_2025_existing$approval_rating, 3)
+
+future_dates <- seq(last_date + months(1), as.Date("2027-12-01"), by = "month")
+n_future <- length(future_dates)
+
+forecast_data <- data.frame(
+  date = future_dates,
+  president = "Trump (2nd Term)",
+  Party = "Republican",
+  Year_Index = year(future_dates),
+  Months_in_Office = seq(nrow(trump_2025_existing) + 1, nrow(trump_2025_existing) + n_future),
+  Honeymoon = 0,
+  
+  # This is the interactive part for the dashboard!!
+  
+  Unemployment      = seq(4.5, 5.0, length.out = n_future),
+  Inflation_Rate    = rep(3.0, n_future),
+  Job_Growth        = rep(1.0, n_future),
+  Wage_Growth       = rep(3.5, n_future),
+  GDP_Growth        = rep(2.0, n_future),
+  Income_Growth     = rep(2.0, n_future),
+  Profit_Growth     = rep(4.0, n_future),
+  Healthcare_Infl   = rep(6.0, n_future),
+  Gov_Spend_Growth  = rep(1.0, n_future),
+  Savings_Rate      = rep(4.0, n_future),
+  
+  Approval_Lag3     = NA,
+  approval_rating   = NA
+)
+
+if(length(last_3_months) < 3) {
+  last_vals <- rep(tail(last_3_months, 1), 3)
+} else {
+  last_vals <- last_3_months
+}
+
+approval_buffer <- last_vals
+
+for(i in 1:nrow(forecast_data)) {
+  forecast_data$Approval_Lag3[i] <- approval_buffer[1]
+  
+  pred_val <- predict(rf_final, newdata = forecast_data[i, ])
+  forecast_data$approval_rating[i] <- pred_val
+  
+  approval_buffer <- c(approval_buffer[-1], pred_val)
+}
+
+forecast_data$Type <- "Forecast"
+
+bridge_point <- last_known_row
+bridge_point$Type <- "Forecast"
+
+final_plot_data <- bind_rows(trump_2025_existing, bridge_point, forecast_data %>% select(date, approval_rating, Type))
+
+ggplot(final_plot_data, aes(x = date, y = approval_rating, color = Type, linetype = Type)) +
+  geom_line(size = 1.5) +
+  geom_point(size = 2, alpha = 0.7) +
+  
+  geom_vline(xintercept = last_date, linetype = "dotted", color = "gray50") +
+  
+  scale_color_manual(values = c("Actual History" = "black", "Forecast" = "#D55E00")) +
+  scale_linetype_manual(values = c("Actual History" = "solid", "Forecast" = "dashed")) +
+  
+  theme_minimal() +
+  coord_cartesian(ylim = c(30, 55))
+
+```
+
+
 
 
 
