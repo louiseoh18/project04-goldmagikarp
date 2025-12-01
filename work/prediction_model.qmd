@@ -181,13 +181,14 @@ rf_data <- final_combined_data %>%
   
   mutate(
     Approval_Lag1     = lag(approval_rating, 1),
+    Approval_Lag2     = lag(approval_rating, 2),
     Approval_Lag3     = lag(approval_rating, 3),
     Unemployment_Lag3 = lag(Unemployment, 3),
     Inflation_Lag3    = lag(Inflation_Rate, 3)
   ) %>%
   
   filter(date >= "1965-01-01") %>%
-  select(date, approval_rating, Approval_Lag1, Approval_Lag3,
+  select(date, approval_rating, Approval_Lag1, Approval_Lag2, Approval_Lag3,
          Unemployment, Inflation_Rate, Job_Growth, Wage_Growth, 
          GDP_Growth, Income_Growth, Profit_Growth, Healthcare_Infl, 
          Gov_Spend_Growth, Savings_Rate, 
@@ -202,7 +203,7 @@ colnames(train_data)
 
 set.seed(123)
 rf_validation <- randomForest(
-  approval_rating ~ Approval_Lag3 + Approval_Lag1 +
+  approval_rating ~ Approval_Lag2 +
                     Unemployment + Inflation_Rate + Job_Growth + Wage_Growth + 
                     GDP_Growth + Income_Growth + Profit_Growth + Healthcare_Infl + 
                     Gov_Spend_Growth + Savings_Rate + 
@@ -224,13 +225,18 @@ ggplot(test_data, aes(x = date)) +
   labs(y = "Approval Rating (%)") +
   theme_minimal()
 
+# feature importance
+
+importance(rf_validation)
+
+
 ```
 
 ```{r}
 
 set.seed(123)
 rf_final <- randomForest(
-  approval_rating ~ Approval_Lag3 + 
+  approval_rating ~ Approval_Lag2 + 
                     Unemployment + Inflation_Rate + Job_Growth + Wage_Growth + 
                     GDP_Growth + Income_Growth + Profit_Growth + Healthcare_Infl + 
                     Gov_Spend_Growth + Savings_Rate + 
@@ -262,14 +268,14 @@ forecast_data <- data.frame(
   
   # This is the interactive part for the dashboard!!
   
-  Unemployment      = seq(4.5, 5.0, length.out = n_future),
-  Inflation_Rate    = rep(3.0, n_future),
-  Job_Growth        = rep(1.0, n_future),
+  Unemployment      = seq(4.5, 10.0, length.out = n_future),
+  Inflation_Rate    = seq(3, 20.0, length.out = n_future),
+  Job_Growth        = seq(1, 50.0, length.out = n_future),
   Wage_Growth       = rep(3.5, n_future),
-  GDP_Growth        = rep(2.0, n_future),
+  GDP_Growth        = seq(1, -50.0, length.out = n_future),
   Income_Growth     = rep(2.0, n_future),
-  Profit_Growth     = rep(4.0, n_future),
-  Healthcare_Infl   = rep(6.0, n_future),
+  Profit_Growth     = seq(1, -50.0, length.out = n_future),
+  Healthcare_Infl   = seq(1, 500.0, length.out = n_future),
   Gov_Spend_Growth  = rep(1.0, n_future),
   Savings_Rate      = rep(4.0, n_future),
   
@@ -286,7 +292,7 @@ if(length(last_3_months) < 3) {
 approval_buffer <- last_vals
 
 for(i in 1:nrow(forecast_data)) {
-  forecast_data$Approval_Lag3[i] <- approval_buffer[1]
+  forecast_data$Approval_Lag2[i] <- approval_buffer[1]
   
   pred_val <- predict(rf_final, newdata = forecast_data[i, ])
   forecast_data$approval_rating[i] <- pred_val
