@@ -93,3 +93,5 @@ print(colnames(final_combined_data))
 visdat::vis_miss(final_combined_data, warn_large_data = FALSE)
 
 save(final_combined_data, file = here("data/complete_data.rda"))
+
+tail(final_combined_data)

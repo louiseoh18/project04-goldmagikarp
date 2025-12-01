@@ -203,7 +203,7 @@ colnames(train_data)
 
 set.seed(123)
 rf_validation <- randomForest(
-  approval_rating ~ Approval_Lag2 +
+  approval_rating ~ Approval_Lag3 +
                     Unemployment + Inflation_Rate + Job_Growth + Wage_Growth + 
                     GDP_Growth + Income_Growth + Profit_Growth + Healthcare_Infl + 
                     Gov_Spend_Growth + Savings_Rate + 
@@ -315,7 +315,6 @@ ggplot(final_plot_data, aes(x = date, y = approval_rating, color = Type)) +
   geom_vline(xintercept = last_date, linetype = "dotted", color = "gray50") +
   
   scale_color_manual(values = c("Actual History" = "black", "Forecast" = "#D55E00")) +
-  scale_linetype_manual(values = c("Actual History" = "solid", "Forecast" = "dashed")) +
   
   theme_minimal() +
   coord_cartesian(ylim = c(30, 55))
