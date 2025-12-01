@@ -1,3 +1,4 @@
+library(here)
 library(shiny)
 library(tidyverse)
 library(lubridate)
@@ -32,16 +33,16 @@ ui <- fluidPage(
     
     mainPanel(
       tabsetPanel(
-        tabPanel("Approval Ratings",
-                 plotOutput("approval_plot")
+        fluidRow("Approval Ratings",
+                 column(12, plotOutput("approval_plot"))
         ),
-        tabPanel("Economic Indicators",
+        fluidRow("Economic Indicators",
                  selectInput(
                    inputId = "econ_var",
                    label = "Select Economic Indicator:",
                    choices = econ_labels
                  ),
-                 plotOutput("econ_plot") 
+                 column(10, plotOutput("econ_plot"))
         )
       )
     )
