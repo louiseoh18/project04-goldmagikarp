@@ -4,26 +4,28 @@ format: html
 ---
 Datasets we will be looking at:
 ```{r}
-load("./data/anes_clean.rda") #anes_data and anes_codebook
-load("./data/bls_data_clean.rda") #bls_data_clean
-load("./data/census_clean.rda") #census_clean
-load("./data/monthly_approval_clean.rda") #monthly_approval_clean
-load("./data/BEA_economic_data.rda") #final_economic_data
+library(here)
+library(tidyverse)
+load(here("data/anes_clean.rda")) #anes_data and anes_codebook
+load(here("data/bls_data_clean.rda")) #bls_data_clean
+load(here("data/census_clean.rda")) #census_clean
+load(here("data/monthly_approval_clean.rda")) #monthly_approval_clean
+load(here("data/BEA_economic_data.rda")) #final_economic_data
 ```
 
 Looking at ANES
 ```{r}
-variables_of_interest <- 
-    paste(anes_codebook$variable[-1],collapse = "|")
-
-anes_data_clean <- 
-    anes_data |> 
-    select(1, matches(variables_of_interest))
-
-visdat::vis_miss(anes_data_clean, warn_large_data = FALSE) + 
-    theme(axis.text.x = element_blank())
-
-colSums(is.na(anes_data_clean))
+# variables_of_interest <- 
+#     paste(anes_codebook$variable[-1],collapse = "|")
+# 
+# anes_data_clean <- 
+#     anes_data |> 
+#     select(1, matches(variables_of_interest))
+# 
+# visdat::vis_miss(anes_data_clean, warn_large_data = FALSE) + 
+#     theme(axis.text.x = element_blank())
+# 
+# colSums(is.na(anes_data_clean))
 ```
 
 Preparing to combine data frames

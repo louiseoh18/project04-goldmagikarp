@@ -4,8 +4,8 @@ format: html
 ---
 
 ```{r}
-
-load("./data/complete_data.rda") #final_combined_data
+library(here)
+load(here("data/complete_data.rda")) #final_combined_data
 
 head(final_combined_data)
 
