@@ -1,3 +1,4 @@
+
 library(shiny)
 library(dplyr)
 library(ggplot2)
@@ -10,7 +11,7 @@ tryCatch({
   rf_model <- readRDS(here("data/rf_approval_model.rds"))
   trump_history <- readRDS(here("data/trump_history.rds"))
 }, error = function(e) {
-  stop("Data files not found")
+  stop()
 })
 
 last_actual_row <- tail(trump_history, 1)
@@ -18,7 +19,6 @@ start_date <- last_actual_row$date
 start_approval <- last_actual_row$approval_rating
 
 last_3_approvals <- tail(trump_history$approval_rating, 3)
-
 if(length(last_3_approvals) < 3) {
   last_3_approvals <- rep(start_approval, 3)
 }
@@ -30,45 +30,60 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      width = 3,
-      h4("Economic Scenarios (2026-2027)"),
-      p(""),
+      width = 4, 
+      h4("Economic Trajectory (2026-2027)"),
+      p("Define the start and end points. The model simulates the trend between them."),
       hr(),
       
-      sliderInput("inflation", "Inflation Rate:", min = 0, max = 25, value = 3.0, step = 0.1),
-      sliderInput("unemployment", "Unemployment Rate:", min = 3, max = 20, value = 4.5, step = 0.1),
-      sliderInput("gdp", "GDP Growth:", min = -10, max = 10, value = 2.0, step = 0.1),
+      h5("1. Unemployment Rate (%)"),
+      splitLayout(
+        numericInput("unemp_start", "Start (Jan '26)", value = 4.5, step = 0.1),
+        numericInput("unemp_end", "End (Dec '27)", value = 5.0, step = 0.1)
+      ),
+      
+      h5("2. Inflation Rate (YoY %)"),
+      splitLayout(
+        numericInput("inf_start", "Start", value = 3.0, step = 0.1),
+        numericInput("inf_end", "End", value = 2.5, step = 0.1)
+      ),
+      
+      h5("3. GDP Growth (YoY %)"),
+      splitLayout(
+        numericInput("gdp_start", "Start", value = 2.5, step = 0.1),
+        numericInput("gdp_end", "End", value = 1.8, step = 0.1)
+      ),
       
       hr(),
-      h5("Secondary Indicators"),
-      sliderInput("wages", "Wage Growth (%):", min = 0, max = 8, value = 3.5, step = 0.1),
-      sliderInput("healthcare", "Healthcare Inflation (%):", min = 0, max = 15, value = 6.0, step = 0.5),
-      sliderInput("jobs", "Job Growth (%):", min = -2, max = 5, value = 1.0, step = 0.1),
-      sliderInput("market", "Corp. Profit Growth (%):", min = -10, max = 20, value = 4.0, step = 1),
+      
+      h5("Secondary Factors (Avg)"),
+      sliderInput("wages", "Wage Growth (%):", min = 0, max = 6, value = 3.5, step = 0.1),
+      sliderInput("healthcare", "Healthcare Inflation (%):", min = 0, max = 10, value = 6.0, step = 0.5),
+      sliderInput("jobs", "Job Growth (%):", min = -2, max = 4, value = 1.0, step = 0.1),
+      sliderInput("market", "Corp. Profit Growth (%):", min = -10, max = 15, value = 4.0, step = 1),
       
       hr(),
-      actionButton("reset", "Reset to Baseline", class = "btn-secondary", width = "100%")
+      actionButton("reset", "Reset Scenarios", class = "btn-secondary", width = "100%")
     ),
     
     mainPanel(
-      width = 9,
+      width = 8,
       plotOutput("forecastPlot", height = "500px"),
       br(),
       fluidRow(
-        column(4, 
+        column(6,
                div(class = "alert alert-info",
-                   h4("Predicted Approval (Dec 2027)"),
-                   h2(textOutput("final_score"))
+                   h4("Forecasted Approval (Dec 2027)"),
+                   h1(textOutput("final_score")),
+                   span(textOutput("change_score"), style = "font-size: 1.2em; color: gray;")
                )
         ),
-        column(8,
+        column(6,
                wellPanel(
-                 h5("Model Logic:"),
-                 p("This forecast uses a **Recursive Random Forest**. It predicts next month's approval based on:"),
+                 h5("How this works:"),
                  tags$ul(
-                   tags$li("The economic settings you chose on the left."),
-                   tags$li("The 'Inertia' of the previous 3 months (Approval Lag)."),
-                   tags$li("The Time in Office.")
+                   tags$li("The model linearly interpolates the economic values between your Start and End points."),
+                   tags$li("It recursively predicts approval month-by-month, carrying 'inertia' forward."),
+                   tags$li("The result shows how Trump's popularity might evolve if the economy cools down vs. heats up.")
                  )
                )
         )
@@ -80,40 +95,42 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   observeEvent(input$reset, {
-    updateSliderInput(session, "inflation", value = 3.0)
-    updateSliderInput(session, "unemployment", value = 4.5)
-    updateSliderInput(session, "gdp", value = 2.0)
-    updateSliderInput(session, "wages", value = 3.5)
-    updateSliderInput(session, "healthcare", value = 6.0)
-    updateSliderInput(session, "jobs", value = 1.0)
-    updateSliderInput(session, "market", value = 4.0)
+    updateNumericInput(session, "unemp_start", value = 4.5)
+    updateNumericInput(session, "unemp_end", value = 5.0)
+    updateNumericInput(session, "inf_start", value = 3.0)
+    updateNumericInput(session, "inf_end", value = 2.5)
+    updateNumericInput(session, "gdp_start", value = 2.5)
+    updateNumericInput(session, "gdp_end", value = 1.8)
   })
   
   forecast_data <- reactive({
     future_dates <- seq(start_date + months(1), as.Date("2027-12-01"), by = "month")
     n_months <- length(future_dates)
     
+    unemp_seq <- seq(input$unemp_start, input$unemp_end, length.out = n_months)
+    inf_seq   <- seq(input$inf_start, input$inf_end, length.out = n_months)
+    gdp_seq   <- seq(input$gdp_start, input$gdp_end, length.out = n_months)
+    
     df <- data.frame(
       date = future_dates,
       president = "Trump (2nd Term)", 
-      
       Party = "Republican",
       Year_Index = year(future_dates),
-  
       Months_in_Office = seq(11, 11 + n_months - 1),
       Honeymoon = 0,
       
-      Unemployment      = input$unemployment,
-      Inflation_Rate    = input$inflation,
-      GDP_Growth        = input$gdp,
-      Wage_Growth       = input$wages,
-      Healthcare_Infl   = input$healthcare,
-      Job_Growth        = input$jobs,
-      Profit_Growth     = input$market,
+      Unemployment      = unemp_seq,
+      Inflation_Rate    = inf_seq,
+      GDP_Growth        = gdp_seq,
       
-      Income_Growth     = 2.0, 
-      Gov_Spend_Growth  = 1.0,
-      Savings_Rate      = 4.0,
+      Wage_Growth       = rep(input$wages, n_months),
+      Healthcare_Infl   = rep(input$healthcare, n_months),
+      Job_Growth        = rep(input$jobs, n_months),
+      Profit_Growth     = rep(input$market, n_months),
+      
+      Income_Growth     = rep(2.0, n_months), 
+      Gov_Spend_Growth  = rep(1.0, n_months),
+      Savings_Rate      = rep(4.0, n_months),
       
       Approval_Lag3     = NA,
       approval_rating   = NA
@@ -123,16 +140,13 @@ server <- function(input, output, session) {
     
     for(i in 1:n_months) {
       df$Approval_Lag3[i] <- approval_buffer[1]
-      
       pred_val <- predict(rf_model, newdata = df[i, ])
       df$approval_rating[i] <- pred_val
-      
       approval_buffer <- c(approval_buffer[-1], pred_val)
     }
     
     first_pred <- df$approval_rating[1]
     anchor_gap <- start_approval - first_pred
-    
     df$approval_rating <- df$approval_rating + anchor_gap
     
     df$Type <- "Forecast"
@@ -140,11 +154,8 @@ server <- function(input, output, session) {
   })
   
   output$forecastPlot <- renderPlot({
-    
     fc <- forecast_data()
-    
     hist_plot <- trump_history %>% mutate(Type = "Actual History")
-    
     bridge <- last_actual_row
     bridge$Type <- "Forecast" 
     
@@ -152,7 +163,7 @@ server <- function(input, output, session) {
     
     ggplot(plot_df, aes(x = date, y = approval_rating, color = Type)) +
       geom_line(size = 1.5) +
-      geom_point(size = 3, alpha = 0.8) +
+      geom_point(data = filter(plot_df, Type == "Actual History"), size = 3, alpha = 0.8) +
       
       geom_vline(xintercept = start_date, linetype = "dotted", color = "gray50") +
       
@@ -167,6 +178,14 @@ server <- function(input, output, session) {
   output$final_score <- renderText({
     val <- tail(forecast_data()$approval_rating, 1)
     paste0(round(val, 1), "%")
+  })
+  
+  output$change_score <- renderText({
+    start_val <- start_approval
+    end_val <- tail(forecast_data()$approval_rating, 1)
+    diff <- end_val - start_val
+    sign <- ifelse(diff >= 0, "+", "")
+    paste0("(", sign, round(diff, 1), "% from today)")
   })
 }
 

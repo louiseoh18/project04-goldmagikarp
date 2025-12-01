@@ -268,7 +268,7 @@ forecast_data <- data.frame(
   
   # This is the interactive part for the dashboard!!
   
-  Unemployment      = seq(4.5, 30.0, length.out = n_future),
+  Unemployment      = seq(1, 30.0, length.out = n_future),
   Inflation_Rate    = seq(3, 20.0, length.out = n_future),
   Job_Growth        = seq(1, 50.0, length.out = n_future),
   Wage_Growth       = rep(3.5, n_future),
