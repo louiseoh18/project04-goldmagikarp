@@ -151,15 +151,14 @@ server <- function(input, output, session) {
     
     plot_df <- bind_rows(hist_plot, bridge, fc %>% select(date, approval_rating, Type))
     
-    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type)) +
+    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type)) +
       geom_line(size = 1.5) +
       geom_point(size = 3, alpha = 0.8) +
       
       geom_vline(xintercept = start_date, linetype = "dotted", color = "gray50") +
       
       scale_color_manual(values = c("Actual History" = "black", "Forecast" = "#D55E00")) +
-      scale_linetype_manual(values = c("Actual History" = "solid", "Forecast" = "dashed")) +
-      
+
       labs(y = "Approval Rating (%)", x = "Year") +
       theme_minimal(base_size = 16) +
       theme(legend.position = "bottom") +
