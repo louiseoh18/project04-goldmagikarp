@@ -86,14 +86,15 @@ output$econ_plot <- renderPlot({
   })
 ```
 
-## president {.toolbar}
+## {.toolbar}
 
 ```{r}
 selectInput(
         inputId = "president",
         label = "Choose a President:",
         choices = unique(final_combined_data$president)[!is.na(unique(final_combined_data$president))],
-        selected = "Franklin D. Roosevelt"
+        selected = "Franklin D. Roosevelt",
+        selectize = FALSE
       )
 ```
 
