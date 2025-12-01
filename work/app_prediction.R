@@ -69,8 +69,7 @@ ui <- fluidPage(
                    tags$li("The economic settings you chose on the left."),
                    tags$li("The 'Inertia' of the previous 3 months (Approval Lag)."),
                    tags$li("The Time in Office.")
-                 ),
-                 p("The forecast is automatically anchored to the last actual poll to ensure a seamless visual transition from history.")
+                 )
                )
         )
       )
@@ -91,7 +90,7 @@ server <- function(input, output, session) {
   })
   
   forecast_data <- reactive({
-    future_dates <- seq(start_date + months(1), as.Date("2027-12-01"), by = "month")
+    future_dates <- seq(start_date + months(1), as.Date("2028-12-01"), by = "month")
     n_months <- length(future_dates)
     
     df <- data.frame(
