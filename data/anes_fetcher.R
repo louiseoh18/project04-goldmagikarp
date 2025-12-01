@@ -19,9 +19,17 @@ anes2024 <- read_csv(here("data/anes_timeseries_2024_csv_20250808.csv"))
 
 anes_data <- bind_rows(anes2020, anes2024)
 
+glimpse(anes_data_year)
+
 # add codes to view data
 
-glimpse(anes_data)
+# summary of data by year with <30% missing data
+anes_data_year <- anes_data |> 
+  select(-matches("[A-Za-z]$")) |> 
+  group_by(VCF0004) |> 
+  summarize(across(everything(), ~ mean(.x, na.rm = TRUE))) |> 
+  select(where(~ mean(is.na(.x) | is.nan(.x)) <= 0.30)) |> 
+  filter(!is.na(VCF0004))
 
 
 anes2020_missing <- anes2020 |> 
@@ -63,42 +71,47 @@ skimr::skim(anes_combined)
 # little influence
 # - V242209 POST: How important that more blacks get elected to political office
 
-# missing data
-naniar::miss_var_summary(anes2020) |> DT::datatable()
-naniar::miss_var_summary(anes2024) |> DT::datatable()
-
-naniar::miss_var_summary(anes2024) |> 
-  filter(pct_miss < 20) |> 
-  pull(variable)
-
-var_2020 <- naniar::miss_var_summary(anes2020) |> 
-  filter(pct_miss < 20) |> 
-  pull(variable)
-
-
 # codebook
 
 anes_codebook <- tribble(
   ~variable,   ~label,
   "year",  "Study Year",
-  "VCF0706",  "Vote and Nonvote- President",
-  "VCF0731",  "Respondent Discuss Politics with Family and Friends",
-  "VCF0824",  "If Compelled to Choose Liberal or Conservative",
-  "VCF0878",  "Should Gays/Lesbians Be Able to Adopt Children",
-  "VCF9008",  "Which Party Would Best Handle Pollution and Protecting Environment",
-  "VCF9205",  "Which party would do a better job handling the nation’s economy",
-  "VCF9234",  "Abortion issue placement for Democratic Presidential candidate",
-  "VCF9235",  "Abortion issue placement for Republican Presidential candidate",
-  "VCF9238",  "Should the government make it more difficult or easier to buy a gun, or should the rules stay the same as they are now",
-  "VCF9275",  "In American politics, do blacks have too much, about the right amount of, or too little influence"
+  "vote_status",  "Vote and Nonvote- President",
+  "politics_",  "Respondent Discuss Politics with Family and Friends",
+  "choose_",  "If Compelled to Choose Liberal or Conservative",
+  "lg_adopt",  "Should Gays/Lesbians Be Able to Adopt Children",
+  "environment_",  "Which Party Would Best Handle Pollution and Protecting Environment",
+  "economy_",  "Which party would do a better job handling the nation’s economy",
+  "abortion_dem",  "Abortion issue placement for Democratic Presidential candidate",
+  "abortion_rep",  "Abortion issue placement for Republican Presidential candidate",
+  "gun_",  "Should the government make it more difficult or easier to buy a gun, or should the rules stay the same as they are now",
+  "black_",  "In American politics, do blacks have too much, about the right amount of, or too little influence"
 )
 
-anes_combined <- anes_combined |> 
-  rename(year = VCF0004)
+anes_yearly <- anes_combined |> 
+  # select(where(~ mean(is.na(.x) | is.nan(.x)) <= 0.80)) |> 
+  filter(!is.na(year)) |> 
+  rename(year = VCF0004,
+         vote_status = VCF0706,
+         politics_ = VCF0731,
+         choose_ = VCF0824,
+         lg_adopt = VCF0878,
+         environment_ = VCF9008,
+         economy_ = VCF9205,
+         abortion_dem = VCF9234,
+         abortion_rep = VCF9235,
+         gun_ = VCF9238,
+         black_ = VCF9275) |> 
+  group_by(year) |> 
+  summarize(across(everything(), ~ mean(.x, na.rm = TRUE)))
+
+anes_clean <- anes_yearly |> 
+  pivot_longer(cols = -year, names_to = "variable", values_to = "value") |> 
+  filter(!is.na(value))
 
 #################### SAVE DATASET INTO RDA ####################
 
-save(anes_combined, anes_codebook, file = here("data/anes_clean.rda"))
+save(anes_clean, anes_codebook, file = here("data/anes_clean.rda"))
 
 # naming: datasetname_clean
 # rda file: datasetname_clean.rda
