@@ -14,7 +14,8 @@ server: shiny
 library(shiny)
 library(ggplot2)
 library(tidyverse)
-
+load(here("data/complete_data.rda"))
+glimpse(final_combined_data)
 ```
 
 # Home
