@@ -236,11 +236,11 @@ importance(rf_validation)
 
 set.seed(123)
 rf_final <- randomForest(
-  approval_rating ~ Approval_Lag2 + 
+  approval_rating ~ Approval_Lag3 +
                     Unemployment + Inflation_Rate + Job_Growth + Wage_Growth + 
                     GDP_Growth + Income_Growth + Profit_Growth + Healthcare_Infl + 
                     Gov_Spend_Growth + Savings_Rate + 
-                    Months_in_Office + Year_Index + Party,
+                    Months_in_Office + Party,
   data = rf_data,
   ntree = 1000, nodesize = 12, importance = TRUE
 )
@@ -268,11 +268,11 @@ forecast_data <- data.frame(
   
   # This is the interactive part for the dashboard!!
   
-  Unemployment      = seq(4.5, 10.0, length.out = n_future),
+  Unemployment      = seq(4.5, 30.0, length.out = n_future),
   Inflation_Rate    = seq(3, 20.0, length.out = n_future),
   Job_Growth        = seq(1, 50.0, length.out = n_future),
   Wage_Growth       = rep(3.5, n_future),
-  GDP_Growth        = seq(1, -50.0, length.out = n_future),
+  GDP_Growth        = seq(1, 50.0, length.out = n_future),
   Income_Growth     = rep(2.0, n_future),
   Profit_Growth     = seq(1, -50.0, length.out = n_future),
   Healthcare_Infl   = seq(1, 500.0, length.out = n_future),
@@ -292,7 +292,7 @@ if(length(last_3_months) < 3) {
 approval_buffer <- last_vals
 
 for(i in 1:nrow(forecast_data)) {
-  forecast_data$Approval_Lag2[i] <- approval_buffer[1]
+  forecast_data$Approval_Lag3[i] <- approval_buffer[1]
   
   pred_val <- predict(rf_final, newdata = forecast_data[i, ])
   forecast_data$approval_rating[i] <- pred_val
@@ -305,9 +305,10 @@ forecast_data$Type <- "Forecast"
 bridge_point <- last_known_row
 bridge_point$Type <- "Forecast"
 
-final_plot_data <- bind_rows(trump_2025_existing, bridge_point, forecast_data %>% select(date, approval_rating, Type))
+final_plot_data <- bind_rows(trump_2025_existing, bridge_point, forecast_data 
+                             %>% select(date, approval_rating, Type))
 
-ggplot(final_plot_data, aes(x = date, y = approval_rating, color = Type, linetype = Type)) +
+ggplot(final_plot_data, aes(x = date, y = approval_rating, color = Type)) +
   geom_line(size = 1.5) +
   geom_point(size = 2, alpha = 0.7) +
   
@@ -318,6 +319,17 @@ ggplot(final_plot_data, aes(x = date, y = approval_rating, color = Type, linetyp
   
   theme_minimal() +
   coord_cartesian(ylim = c(30, 55))
+
+```
+
+```{r}
+
+trump_history <- final_combined_data %>%
+  filter(president == "Trump (2nd Term)" & !is.na(approval_rating)) %>%
+  select(date, approval_rating)
+
+saveRDS(rf_final, here("data/rf_approval_model.rds"))
+saveRDS(trump_history, here("data/trump_history.rds"))
 
 ```
 
