@@ -17,7 +17,8 @@ library(lubridate)
 library(ggplot2)
 library(tidyverse)
 
-# Name ideas: PocketbookPresident, WalletWatch, ApprovalIndex
+# Name ideas: PocketbookPresident, WalletWatch, ApprovalIndex, 
+# Presi-speculum, ExecutiveEconomics, Parralax View
 ```
 
 # Home
