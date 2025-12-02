@@ -71,7 +71,7 @@ div.csl-indent {
 
 </head>
 
-<body class="quarto-dashboard dashboard-fill fullcontent quarto-light">
+<body class="quarto-dashboard dashboard-fill dashboard-sidebar fullcontent quarto-light">
 
 <header id="quarto-dashboard-header">
 <nav class="navbar navbar-expand-md slim" data-bs-theme="dark">
@@ -223,14 +223,22 @@ Economic Indicators
 </div>
 </div></div>
 </div>
-<div id="prediction-and-modeling" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-prediction-and-modeling">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div id="prediction-and-modeling" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container dashboard-sidebar-container" data-orientation="rows" aria-labelledby="tab-prediction-and-modeling">
+<div class="bslib-sidebar-layout html-fill-item html-fill-container" data-bslib-sidebar-open="desktop" data-bslib-sidebar-init="true" data-bslib-sidebar-border="false" data-bslib-sidebar-border-radius="false"><div class="main html-fill-container html-fill-item"><div class="sidebar-content html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 80fr) minmax(3em, 20fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 75fr) minmax(3em, 25fr); grid-auto-columns: minmax(0, 1fr);">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div class="card html-fill-item html-fill-container bslib-card" data-title="Trumps 6-Month Approval Forecast" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
-<div class="card-header"><div class="card-title"><span style="display: inline">
-Trumps 6-Month Approval Forecast
+<div class="card cell html-fill-item html-fill-container bslib-card" data-title="Presidential Approval Forecaster: Trump 2nd Term" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header"><div class="card-title html-fill-item html-fill-container"><span style="display: inline">
+Presidential Approval Forecaster: Trump 2nd Term
 </span></div></div>
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="shiny-plot-output html-fill-item html-fill-container" id="forecastPlot" style="width:100%;height:500px;"></div>
+</div>
+</div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
     <template>Expand</template>
     <span class="bslib-full-screen-enter badge rounded-pill">
@@ -240,10 +248,19 @@ Trumps 6-Month Approval Forecast
 </div>
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div class="card html-fill-item html-fill-container bslib-card" data-title="Interactive Simulation" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
-<div class="card-header"><div class="card-title"><span style="display: inline">
-Interactive Simulation
-</span></div></div>
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<h5>Model Logic:</h5>
+</div>
+<div class="cell-output-display html-fill-item html-fill-container">
+<ul>
+<li>Blue Line: 'Status Quo' - Assumes current economic conditions persist indefinitely.</li>
+<li>Red Line: 'Scenario' - Your custom forecast based on the sliders.</li>
+<li>Anchoring: Both forecasts start at the last known approval rating (36%).</li>
+</ul>
+</div>
+</div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
     <template>Expand</template>
     <span class="bslib-full-screen-enter badge rounded-pill">
@@ -251,6 +268,167 @@ Interactive Simulation
     </span>
 </bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
 </div>
+</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 40fr) minmax(3em, 60fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="alert html-fill-item html-fill-container" style="background-color: #2980b9;">
+<h6>
+Status Quo (May '26)
+<div id="status_quo_score" class="shiny-text-output html-fill-item html-fill-container"></div>
+</h6>
+<p style="color: black; font-size: 0.9em;">Prediction if economy stays exactly as it is today.</p>
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="alert html-fill-item html-fill-container" style="background-color: #D55E00;">
+<h6>
+Scenario (May '26)
+
+<div id="six_month_score" class="shiny-text-output html-fill-item html-fill-container"></div>
+</h6>
+<p style="color:black; font-size: 0.9em;">Prediction based on your inputs.</p>
+<h6>
+
+
+Long-Term (Dec '27)
+
+<div id="final_score" class="shiny-text-output html-fill-item html-fill-container"></div>
+</h6>
+<span style="font-size: 0.9em; color: black;">
+<div id="change_score" class="shiny-text-output html-fill-item html-fill-container"></div>
+</span>
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+</div>
+</div></div><aside id="bslib-sidebar-1" class="sidebar html-fill-container html-fill-item"><div class="html-fill-item html-fill-container">
+<section id="economic-trajectory">
+<div class="h3">
+Economic
+
+Trajectory
+</div>
+<p>Define the start and end points. The model simulates the trend between them.</p>
+<div class="cell-output-display">
+<div>
+<h6>Unemployment Rate (%)</h6>
+<div class="shiny-split-layout">
+<div style="width: 50.000%;">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="unemp_start-label" for="unemp_start">Start (Jan '26)</label>
+<input id="unemp_start" type="number" class="shiny-input-number form-control" value="4.5" data-update-on="change" step="0.1">
+</div>
+</div>
+<div style="width: 50.000%;">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="unemp_end-label" for="unemp_end">End (Dec '27)</label>
+<input id="unemp_end" type="number" class="shiny-input-number form-control" value="5" data-update-on="change" step="0.1">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<h6>Inflation Rate (Year-over-Year %)</h6>
+<div class="shiny-split-layout">
+<div style="width: 50.000%;">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="inf_start-label" for="inf_start">Start</label>
+<input id="inf_start" type="number" class="shiny-input-number form-control" value="3" data-update-on="change" step="0.1">
+</div>
+</div>
+<div style="width: 50.000%;">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="inf_end-label" for="inf_end">End</label>
+<input id="inf_end" type="number" class="shiny-input-number form-control" value="2.5" data-update-on="change" step="0.1">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<h6>GDP Growth (Year-over-Year %)</h6>
+<div class="shiny-split-layout">
+<div style="width: 50.000%;">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="gdp_start-label" for="gdp_start">Start</label>
+<input id="gdp_start" type="number" class="shiny-input-number form-control" value="2.5" data-update-on="change" step="0.1">
+</div>
+</div>
+<div style="width: 50.000%;">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="gdp_end-label" for="gdp_end">End</label>
+<input id="gdp_end" type="number" class="shiny-input-number form-control" value="1.8" data-update-on="change" step="0.1">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<h6>Secondary Factors (Avg)</h6>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container no-baseline">
+<label class="control-label" id="wages-label" for="wages">Wage Growth (%):</label>
+<input class="js-range-slider" id="wages" data-skin="shiny" data-min="0" data-max="6" data-from="3.5" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container no-baseline">
+<label class="control-label" id="healthcare-label" for="healthcare">Healthcare Inflation (%):</label>
+<input class="js-range-slider" id="healthcare" data-skin="shiny" data-min="0" data-max="10" data-from="6" data-step="0.5" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container no-baseline">
+<label class="control-label" id="jobs-label" for="jobs">Job Growth (%):</label>
+<input class="js-range-slider" id="jobs" data-skin="shiny" data-min="-2" data-max="4" data-from="1" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container no-baseline">
+<label class="control-label" id="market-label" for="market">Corp. Profit Growth (%):</label>
+<input class="js-range-slider" id="market" data-skin="shiny" data-min="-10" data-max="15" data-from="4" data-step="1" data-grid="true" data-grid-num="8.33333333333333" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<button class="btn btn-default action-button btn-secondary" id="reset" style="width:100%;" type="button">Reset Scenarios</button>
+</div>
+</section>
+</div></aside>
+<button class="collapse-toggle" type="button" title="Toggle sidebar" aria-expanded="true" aria-controls="bslib-sidebar-1">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-chevron-left collapse-icon" style="fill:currentColor;" aria-hidden="true" role="img">
+      <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
+    </svg>
+</button>
+<script data-bslib-sidebar-init="">
+bslib.Sidebar.initCollapsibleAll()
+</script>
 </div>
 </div>
 <div id="references" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-references">
@@ -345,6 +523,197 @@ output$econ_plot <- renderPlot({
   })
 </script>
  
+<script type="application/shiny-prerendered" data-context="server-start">
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(randomForest)
+library(here)
+library(zoo)
+
+
+rf_model <- readRDS(here("data/rf_approval_model.rds"))
+trump_history <- readRDS(here("data/trump_history.rds"))
+
+
+last_actual_row <- tail(trump_history, 1)
+start_date <- last_actual_row$date
+start_approval <- last_actual_row$approval_rating
+
+last_3_approvals <- tail(trump_history$approval_rating, 3)
+if(length(last_3_approvals) < 3) {
+  last_3_approvals <- rep(start_approval, 3)
+}
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+observeEvent(input$reset, {
+    updateNumericInput(session, "unemp_start", value = 4.5)
+    updateNumericInput(session, "unemp_end", value = 5.0)
+    updateNumericInput(session, "inf_start", value = 3.0)
+    updateNumericInput(session, "inf_end", value = 2.5)
+    updateNumericInput(session, "gdp_start", value = 2.5)
+    updateNumericInput(session, "gdp_end", value = 1.8)
+    updateSliderInput(session, "wages", value = 3.5)
+    updateSliderInput(session, "healthcare", value = 6.0)
+    updateSliderInput(session, "jobs", value = 1.0)
+    updateSliderInput(session, "market", value = 4.0)
+  })
+  
+  forecast_data <- reactive({
+    future_dates <- seq(start_date + months(1), as.Date("2027-12-01"), by = "month")
+    n_months <- length(future_dates)
+    
+    unemp_seq <- seq(input$unemp_start, input$unemp_end, length.out = n_months)
+    inf_seq   <- seq(input$inf_start, input$inf_end, length.out = n_months)
+    gdp_seq   <- seq(input$gdp_start, input$gdp_end, length.out = n_months)
+    
+    df <- data.frame(
+      date = future_dates,
+      president = "Trump (2nd Term)", 
+      Party = "Republican",
+      Year_Index = year(future_dates),
+      Months_in_Office = seq(11, 11 + n_months - 1),
+      Honeymoon = 0,
+      
+      Unemployment      = unemp_seq,
+      Inflation_Rate    = inf_seq,
+      GDP_Growth        = gdp_seq,
+      Wage_Growth       = rep(input$wages, n_months),
+      Healthcare_Infl   = rep(input$healthcare, n_months),
+      Job_Growth        = rep(input$jobs, n_months),
+      Profit_Growth     = rep(input$market, n_months),
+      Income_Growth     = rep(2.0, n_months), 
+      Gov_Spend_Growth  = rep(1.0, n_months),
+      Savings_Rate      = rep(4.0, n_months),
+      
+      Approval_Lag3     = NA,
+      approval_rating   = NA
+    )
+    
+    approval_buffer <- last_3_approvals
+    
+    for(i in 1:n_months) {
+      df$Approval_Lag3[i] <- approval_buffer[1]
+      pred_val <- predict(rf_model, newdata = df[i, ])
+      df$approval_rating[i] <- pred_val
+      approval_buffer <- c(approval_buffer[-1], pred_val)
+    }
+    
+    first_pred <- df$approval_rating[1]
+    anchor_gap <- start_approval - first_pred
+    df$approval_rating <- df$approval_rating + anchor_gap
+    
+    df$Type <- "Custom Scenario"
+    return(df)
+  })
+  
+  baseline_forecast <- reactive({
+    future_dates <- seq(start_date + months(1), as.Date("2027-12-01"), by = "month")
+    n_months <- length(future_dates)
+    
+    df <- data.frame(
+      date = future_dates,
+      president = "Trump (2nd Term)", 
+      Party = "Republican",
+      Year_Index = year(future_dates),
+      Months_in_Office = seq(11, 11 + n_months - 1),
+      Honeymoon = 0,
+      
+      Unemployment      = rep(4.5, n_months),
+      Inflation_Rate    = rep(3.1, n_months),
+      GDP_Growth        = rep(2.3, n_months),
+      Wage_Growth       = rep(4.0, n_months),
+      Healthcare_Infl   = rep(5.5, n_months),
+      Job_Growth        = rep(1.1, n_months),
+      Profit_Growth     = rep(4.5, n_months),
+      Income_Growth     = rep(2.0, n_months), 
+      Gov_Spend_Growth  = rep(1.0, n_months),
+      Savings_Rate      = rep(4.5, n_months),
+      
+      Approval_Lag3     = NA,
+      approval_rating   = NA
+    )
+    
+    approval_buffer <- last_3_approvals
+    
+    for(i in 1:n_months) {
+      df$Approval_Lag3[i] <- approval_buffer[1]
+      pred_val <- predict(rf_model, newdata = df[i, ])
+      df$approval_rating[i] <- pred_val
+      approval_buffer <- c(approval_buffer[-1], pred_val)
+    }
+    
+    first_pred <- df$approval_rating[1]
+    anchor_gap <- start_approval - first_pred
+    df$approval_rating <- df$approval_rating + anchor_gap
+    
+    df$Type <- "Status Quo"
+    return(df)
+  })
+  
+  output$forecastPlot <- renderPlot({
+    fc_custom <- forecast_data()
+    fc_base <- baseline_forecast()
+    
+    hist_plot <- trump_history %>% mutate(Type = "Actual History")
+    bridge_custom <- last_actual_row; bridge_custom$Type <- "Custom Scenario"
+    bridge_base <- last_actual_row; bridge_base$Type <- "Status Quo"
+    
+    plot_df <- bind_rows(
+      hist_plot, 
+      bridge_custom, fc_custom %>% select(date, approval_rating, Type),
+      bridge_base, fc_base %>% select(date, approval_rating, Type)
+    )
+    
+    six_month_date <- start_date + months(6)
+    
+    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type, size = Type)) +
+      geom_line() +
+      geom_point(data = filter(plot_df, Type == "Actual History"), size = 3, alpha = 0.8) +
+      
+      geom_vline(xintercept = start_date, linetype = "dotted", color = "gray50") +
+      geom_vline(xintercept = six_month_date, linetype = "dashed", color = "#f39c12", alpha = 0.6) +
+      annotate("text", x = six_month_date, y = max(plot_df$approval_rating, na.rm=T), 
+               label = "6 Months", angle = 90, vjust = -1, color = "#f39c12") +
+      
+      scale_color_manual(values = c("Actual History" = "black", "Custom Scenario" = "#D55E00", "Status Quo" = "#2980b9")) +
+      scale_linetype_manual(values = c("Actual History" = "solid", "Custom Scenario" = "dashed", "Status Quo" = "dotted")) +
+      scale_size_manual(values = c("Actual History" = 1.5, "Custom Scenario" = 1.5, "Status Quo" = 1.2)) +
+      
+      labs(y = "Approval Rating (%)", x = "Year") +
+      theme_minimal(base_size = 16) +
+      theme(legend.position = "bottom") +
+      coord_cartesian(ylim = c(25, 60))
+  })
+  
+  output$six_month_score <- renderText({
+    val <- forecast_data()$approval_rating[6]
+    paste0(round(val, 1), "%")
+  })
+  
+  output$status_quo_score <- renderText({
+    val <- baseline_forecast()$approval_rating[6]
+    paste0(round(val, 1), "%")
+  })
+  
+  output$final_score <- renderText({
+    val <- tail(forecast_data()$approval_rating, 1)
+    paste0(round(val, 1), "%")
+  })
+  
+  output$change_score <- renderText({
+    start_val <- start_approval
+    end_val <- tail(forecast_data()$approval_rating, 1)
+    diff <- end_val - start_val
+    sign <- ifelse(diff >= 0, "+", "")
+    paste0("(", sign, round(diff, 1), "% from today)")
+  })
+
+</script>
+ 
 <script type="application/shiny-prerendered" data-context="server-extras">
 ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
   quos <- rlang::enquos(...)
@@ -387,12 +756,12 @@ ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
 </p>
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
-{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]}]}
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.11.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]}]}
 </script>
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69]}},"value":[{"type":"character","attributes":{},"value":["base","bslib","cachem","cli","compiler","cowsay","crayon","datasets","digest","dplyr","evaluate","farver","fastmap","forcats","fortunes","generics","ggplot2","glue","graphics","grDevices","grid","gtable","here","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lifecycle","lubridate","magrittr","memoise","methods","mime","pillar","pkgconfig","praiseMX","promises","purrr","R6","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","S7","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["4.5.1","0.9.0","1.1.0","3.6.5","4.5.1","1.2.0","1.5.3","4.5.1","0.6.37","1.1.4","1.0.4","2.1.2","1.2.0","1.0.0","1.5-4","0.1.4","4.0.0","1.8.0","4.5.1","4.5.1","4.5.1","0.3.6","1.0.1","1.1.4","0.5.8.1","1.6.4","1.6.16","0.1.4","2.0.0","1.50","1.4.4","1.0.4","1.9.4","2.0.4","2.0.1","4.5.1","0.13","1.11.1","2.0.3","0.0.0.9000","1.3.3","1.2.0","2.6.1","1.1-3","1.1.0","2.1.6","1.1.6","2.30","2.1.1","0.2.0","0.4.10","1.4.0","1.11.1","4.5.1","1.8.7","1.5.2","3.3.0","1.3.1","1.2.1","2.0.0","0.3.0","4.5.1","0.5.0","4.5.1","0.6.5","3.0.2","0.54","1.8-4","2.3.10"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68]}},"value":[{"type":"character","attributes":{},"value":["base","bslib","cachem","cli","compiler","datasets","digest","dplyr","evaluate","farver","fastmap","forcats","generics","ggplot2","glue","graphics","grDevices","grid","gtable","here","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lattice","lifecycle","lubridate","magrittr","memoise","methods","mime","pillar","pkgconfig","promises","purrr","R6","randomForest","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","withr","xfun","xtable","yaml","zoo"]},{"type":"character","attributes":{},"value":["4.5.1","0.9.0","1.1.0","3.6.5","4.5.1","4.5.1","0.6.37","1.1.4","1.0.4","2.1.2","1.2.0","1.0.0","0.1.4","3.5.2","1.8.0","4.5.1","4.5.1","4.5.1","0.3.6","1.0.1","1.1.3","0.5.8.1","1.6.4","1.6.16","0.1.4","2.0.0","1.50","1.4.2","0.22-7","1.0.4","1.9.4","2.0.3","2.0.1","4.5.1","0.13","1.11.0","2.0.3","1.3.3","1.1.0","2.6.1","4.7-1.2","1.1-3","1.1.0","2.1.5","1.1.6","2.29","2.1.1","0.17.1","0.4.10","1.4.0","1.11.1","4.5.1","1.8.7","1.5.1","3.3.0","1.3.1","1.2.1","2.0.0","0.3.0","4.5.1","0.5.0","4.5.1","0.6.5","3.0.2","0.52","1.8-4","2.3.10","1.8-14"]}]}]}
 </script>
 <!--/html_preserve-->
 
