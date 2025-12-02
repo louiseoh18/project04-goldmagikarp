@@ -7,6 +7,9 @@ format:
       - icon: github
         href: https://github.com/louiseoh18/project04-goldmagikarp.git
 server: shiny
+bibliography: my-refs.bib
+nocite: |
+  @*
 ---
 
 ```{r}
@@ -161,3 +164,7 @@ plotOutput("econ_plot")
 
 # References
 
+The data was pulled from a variety of databases using API's
+
+::: {#refs}
+:::
