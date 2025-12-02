@@ -1,0 +1,32 @@
+---
+title: "APPROVAL RATING DASHBOARD FOR U.S. PRESIDENTS"
+subtitle: |
+  | Final Write Up
+author:
+  - name: Team Gold MagiKarp
+  - name: Mia Silva, Louise Oh, Lidio Jaimes, Oliver Brown
+date: today
+
+format:
+  pdf:
+    toc: true
+    toc-location: body
+    embed-resources: true
+    
+execute:
+  echo: false
+  warning: false
+  message: false
+
+from: markdown+emoji
+---
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+[Project 4 GitHub Repo](https://github.com/louiseoh18/project04-goldmagikarp.git)
+
+:::
+
+\pagebreak
