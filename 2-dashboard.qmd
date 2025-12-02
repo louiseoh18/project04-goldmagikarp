@@ -103,11 +103,10 @@ selectInput(
 
 ## Approval Rating Card
 
-::: {.card title = "Presidential Approval Ratings"}
 ```{r}
+#| title: "Presidential Approval Ratings"
 plotOutput("approval_plot")
 ```
-:::
 
 ## Economic Indicator Card
 
@@ -134,12 +133,11 @@ selectInput(inputId = "econ_var",
 
 ### Economic Plot {width = "80%"}
 
-::: {.card title = "Economic Indicators"}
 ```{r}
+#| title: "Economic Indicators"
 plotOutput("econ_plot")
 
 ```
-:::
 
 # Prediction and Modeling
 
