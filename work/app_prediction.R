@@ -1,4 +1,3 @@
-# --- SHINY DASHBOARD: PRESIDENTIAL APPROVAL FORECASTER ---
 library(shiny)
 library(dplyr)
 library(ggplot2)
