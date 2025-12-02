@@ -22,6 +22,10 @@ library(tidyverse)
 
 # Name ideas: PocketbookPresident, WalletWatch, ApprovalIndex, 
 # ExecutiveEconomics, Parralax View
+
+# Another note: we need graphics for all pages (namely home page, historical data, and references)
+
+# Reference page so maybe describe how the different data was used. We didn't end up using some of the data in the actual dashboard but we still analyzed it (which viewers won't see but can be made aware of)
 ```
 
 # Home
@@ -384,6 +388,9 @@ observeEvent(input$reset, {
 Define the start and end points. The model simulates the trend between them.
 
 ```{r}
+
+hr()
+
 # "1. Unemployment Rate (%)"
 div(
   h6("Unemployment Rate (%)"),
@@ -411,6 +418,8 @@ div(
         numericInput("gdp_end", "End", value = 1.8, step = 0.1)
       ),
 )
+
+hr()
 
 # "Secondary Factors (Avg)")
 h6("Secondary Factors (Avg)")
