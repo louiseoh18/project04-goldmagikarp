@@ -446,7 +446,8 @@ tags$ul(
 ```{r}
 div(class = "alert",
     style = "background-color: #2980b9;",
-    h6("Status Quo (May '26)", textOutput("status_quo_score")),
+    h6("Status Quo (May '26)\n", 
+       span(textOutput("status_quo_score", inline = TRUE), style = "font-weight: bold; font-size: 2.0em;")),
     p("Prediction if economy stays exactly as it is today.", style = "color: black; font-size: 0.9em;"))
 ```
 
@@ -454,9 +455,11 @@ div(class = "alert",
 ```{r}
 div(class = "alert",
     style = "background-color: #D55E00;",
-    h6("Scenario (May '26)\n", textOutput("six_month_score")),
+    h6("Scenario (May '26)\n", 
+       span(textOutput("six_month_score", inline = TRUE), style = "font-weight: bold; font-size: 2.0em;")),
     p("Prediction based on your inputs.", style = "color:black; font-size: 0.9em;"),
-    h6("\n\nLong-Term (Dec '27)\n", textOutput("final_score")),
+    h6("\n\n\nLong-Term (Dec '27)\n", 
+       span(textOutput("final_score", inline = TRUE), style = "font-weight: bold; font-size: 2.0em;")),
     span(textOutput("change_score"), style = "font-size: 0.9em; color: black;"))
 ```
 
