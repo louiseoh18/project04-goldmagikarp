@@ -1,9 +1,9 @@
 
 ## Project
 
-Team: GoldMagiKarp\n
+Team: GoldMagiKarp
 
-Members: Mia Silva, Louise Oh, Lidio Jaimes, Oliver Brown\n
+Members: Mia Silva, Louise Oh, Lidio Jaimes, Oliver Brown
 
 Final Product Delivery: An Interactive Dashboard
 
