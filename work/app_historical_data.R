@@ -5,16 +5,16 @@ library(lubridate)
 load(here("data/complete_data.rda"))
 
 econ_labels <- c(
-  "Unemployment Rate" = "unemployment_rate",
-  "Consumer Price Index" = "consumer_p_index",
-  "Total Jobs" = "total_nonfarm_jobs",
-  "Average Hourly Earnings" = "avg_hourly_earnings",
   "Real GDP" = "Real_GDP",
   "Disposable Income" = "Disposable_Income",
   "Corporate Profits" = "Corporate_Profits",
   "Healthcare Price Index" = "Healthcare_Price_Index",
   "Government Spending" = "Gov_Spending",
-  "Personal Savings Rate" = "Personal_Saving_Rate"
+  "Personal Savings Rate" = "Personal_Saving_Rate",
+  "Unemployment Rate" = "unemployment_rate",
+  "Consumer Price Index" = "consumer_p_index",
+  "Total Jobs" = "total_nonfarm_jobs",
+  "Average Hourly Earnings" = "avg_hourly_earnings"
 )
 
 # UI
@@ -26,8 +26,9 @@ ui <- fluidPage(
       selectInput(
         inputId = "president",
         label = "Choose a President:",
-        choices = unique(final_combined_data$president),
-        selected = "Franklin D. Roosevelt"
+        choices = rev(unique(final_combined_data$president)[!is.na(unique(final_combined_data$president))]),
+        selected = "Trump (2nd Term)",
+        selectize = FALSE
       )
     ),
     
@@ -61,9 +62,10 @@ server <- function(input, output, session) {
   output$approval_plot <- renderPlot({
     pres_data() |>
       ggplot(aes(x = date)) +
-      geom_line(aes(y = approval_rating, color = "Approval")) +
-      geom_line(aes(y = disapproval_rating, color = "Disapproval")) +
-      geom_line(aes(y = unsure_rating, color = "Unsure")) +
+      geom_line(aes(y = approval_rating, color = "Approval"), size = 1) +
+      geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
+      geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
+      scale_color_manual(values = c("#61D04F", "#DF536B", "#2297E6")) +
       labs(y = "Rating (%)", x = "Date", color = "Legend") +
       theme_minimal()
   })
@@ -74,7 +76,7 @@ server <- function(input, output, session) {
     friendly_label <- names(econ_labels)[econ_labels == var]
     pres_data() |>
       ggplot(aes(x = date, y = .data[[var]])) +
-      geom_line(color = "steelblue") +
+      geom_line(size = 1) +
       labs(y = friendly_label, x = "Date") +
       theme_minimal()
   })
