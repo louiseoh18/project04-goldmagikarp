@@ -47,29 +47,25 @@ approval_comparison_data <-
 
 # UI
 ui <- fluidPage(
-  titlePanel("U.S. Presidential Approval Ratings"),
+  titlePanel("Comparison of U.S. Presidential Approval Ratings"),
 
   sidebarLayout(
     sidebarPanel(
       selectInput(
         inputId = "president",
-        label = "Choose a President:",
+        label = "Choose Presidents",
         choices = replace(
           rev(unique(approval_comparison_data$president)),
           c(1, 2),
           rev(unique(approval_comparison_data$president))[c(2, 1)]
         ),
-        selected = "Donald Trump",
-        #multiple = TRUE,
+        selected = c("Donald Trump", "Joe Biden"),
+        multiple = TRUE,
         selectize = FALSE
       )
     ),
 
-    mainPanel(
-      tabsetPanel(
-        fluidRow("Approval Ratings", column(12, plotOutput("approval_plot"))),
-      )
-    )
+    mainPanel(plotOutput("approval_plot"))
   )
 )
 
@@ -108,7 +104,9 @@ server <- function(input, output, session) {
         )
       ) +
       labs(y = "Rating (%)", x = "Time in Office (months)", color = "Legend") +
-      theme_minimal()
+      theme_minimal() +
+      ggtitle("Approval Ratings for Presidents") +
+      theme(plot.title = element_text(hjust = 0.5, face = "bold"))
   })
 }
 
