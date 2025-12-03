@@ -5,12 +5,27 @@ library(lubridate)
 load(here("data/complete_data.rda"))
 
 final_combined_data |>
-  select(1:5) |>
-  drop_na() |>
+  drop_na(1:5) |>
   group_by(president) |>
   mutate(
-    months_in_office = interval(min(date), date) %/% months(1)
+    months_in_office = case_when(
+      month(min(date)) == 1 ~ interval(min(date), date) %/% months(1),
+      month(min(date)) != 1 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 1),
+    ),
+    president = case_when(
+      str_detect(president, "Trump") ~ "Donald Trump",
+      TRUE ~ president
+    ),
+    months_in_office = case_when(
+      date < "2025-01-01" ~ months_in_office,
+      president == "Donald Trump" & date >= "2025-01-01" ~ months_in_office +
+        49,
+      president == "Joe Biden" & date == "2025-01-01" ~ 48
+    )
   ) |>
+  select(1, 2, 17) |>
   print(n = Inf)
 
 # UI
