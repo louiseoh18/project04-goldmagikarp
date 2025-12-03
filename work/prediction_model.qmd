@@ -11,6 +11,8 @@ head(final_combined_data, 20)
 
 tail(final_combined_data)
 
+unique(final_combined_data$president)
+
 ```
 
 ```{r}

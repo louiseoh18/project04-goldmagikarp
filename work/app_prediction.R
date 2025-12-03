@@ -54,9 +54,9 @@ ui <- fluidPage(
       
       h5("Secondary Factors (Avg)"),
       sliderInput("wages", "Wage Growth (%):", min = 0, max = 6, value = 3.5, step = 0.1),
-      sliderInput("healthcare", "Healthcare Inflation (%):", min = 0, max = 10, value = 6.0, step = 0.5),
-      sliderInput("jobs", "Job Growth (%):", min = -2, max = 4, value = 1.0, step = 0.1),
-      sliderInput("market", "Corp. Profit Growth (%):", min = -10, max = 15, value = 4.0, step = 1),
+      sliderInput("healthcare", "Healthcare Inflation (%):", min = 0, max = 100, value = 6.0, step = 0.5),
+      sliderInput("jobs", "Job Growth (%):", min = -2, max = 10, value = 1.0, step = 0.1),
+      sliderInput("market", "Corp. Profit Growth (%):", min = -10, max = 150, value = 4.0, step = 1),
       
       hr(),
       actionButton("reset", "Reset Scenarios", class = "btn-secondary", width = "100%")

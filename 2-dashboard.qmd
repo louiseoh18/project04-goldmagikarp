@@ -21,7 +21,7 @@ library(ggplot2)
 library(tidyverse)
 
 # Name ideas: PocketbookPresident, WalletWatch, ApprovalIndex, 
-# Presi-speculum, ExecutiveEconomics, Parralax View
+# ExecutiveEconomics, Parralax View
 ```
 
 # Home
