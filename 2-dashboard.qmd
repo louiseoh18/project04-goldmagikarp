@@ -79,24 +79,25 @@ pres_data <- reactive({
     final_combined_data |> filter(president == input$president)
   })
   
-  # Approval rating plot
+# Approval rating plot
 output$approval_plot <- renderPlot({
   pres_data() |>
     ggplot(aes(x = date)) +
-    geom_line(aes(y = approval_rating, color = "Approval")) +
-    geom_line(aes(y = disapproval_rating, color = "Disapproval")) +
-    geom_line(aes(y = unsure_rating, color = "Unsure")) +
+    geom_line(aes(y = approval_rating, color = "Approval"), size = 1) +
+    geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
+    geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
     scale_color_manual(values = c("#61D04F", "#DF536B", "#2297E6")) +
     labs(y = "Rating (%)", x = "Date", color = "Legend") +
     theme_minimal()
   })
 
+# Economic indicator plot
 output$econ_plot <- renderPlot({
     var <- input$econ_var
     friendly_label <- names(econ_labels)[econ_labels == var]
     pres_data() |>
       ggplot(aes(x = date, y = .data[[var]])) +
-      geom_line(color = "mediumpurple1") +
+      geom_line(color = "mediumpurple", size = 1) +
       labs(y = friendly_label, x = "Date") +
       theme_minimal()
   })
@@ -126,7 +127,7 @@ h4("filler for graphic")
 ### Approval plot {width="80%"}
 
 ```{r}
-#| title: "Presidential Approval Ratings"
+#| title: "U.S. Presidential Approval Ratings"
 plotOutput("approval_plot")
 ```
 
