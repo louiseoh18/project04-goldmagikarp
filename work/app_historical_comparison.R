@@ -10,9 +10,21 @@ final_combined_data |>
   mutate(
     months_in_office = case_when(
       month(min(date)) == 1 ~ interval(min(date), date) %/% months(1),
-      month(min(date)) != 1 ~ interval(min(date), date) %/%
+      month(min(date)) == 2 ~ interval(min(date), date) %/%
         months(1) +
-        (month(min(date)) - 1),
+        (month(min(date)) - 1), # presi's missing first month
+      month(min(date)) == 8 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 8), # Ford
+      month(min(date)) == 6 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 4), # Truman
+      month(min(date)) == 12 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 11), # LBJ
+      month(min(date)) == 7 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 1), # FDR 3rd term
     ),
     president = case_when(
       str_detect(president, "Trump") ~ "Donald Trump",
@@ -25,8 +37,12 @@ final_combined_data |>
       president == "Joe Biden" & date == "2025-01-01" ~ 48
     )
   ) |>
-  select(1, 2, 17) |>
-  print(n = Inf)
+  select(1:5, 17)
+
+# notes to add:
+# FDR only has approval data for his third term
+# Trump combined (added a month)
+# going based off day 01
 
 # UI
 ui <- fluidPage(
