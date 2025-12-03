@@ -22,13 +22,10 @@ library(tidyverse)
 
 # Name ideas: PocketbookPresident, WalletWatch, ApprovalIndex, 
 # ExecutiveEconomics, Parralax View
-<<<<<<< HEAD
-=======
 
 # Another note: we need graphics for all pages (namely home page, historical data, and references)
 
 # Reference page so maybe describe how the different data was used. We didn't end up using some of the data in the actual dashboard but we still analyzed it (which viewers won't see but can be made aware of)
->>>>>>> 723bb1c41c15b677f971ac415e2388dbfa682858
 ```
 
 # Home
