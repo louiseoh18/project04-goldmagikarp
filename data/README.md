@@ -1,3 +1,4 @@
+
 ## Data
 
 **Final Dataset**
@@ -11,15 +12,15 @@
 - `anes_clean.rda`
 - `anes_timeseries_2024_csv_20250808.csv`
 
-**BLS Dataset**
-
-- `bls_data_fetcher.R`
-- `bls_data_clean.rda`
-
 **Census Dataset**
 
 - `census_fetcher.R`
 - `census_clean.rda`
+
+**BLS Dataset**
+
+- `bls_data_fetcher.R`
+- `bls_data_clean.rda`
 
 **BEA Economic Dataset**
 

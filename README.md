@@ -10,20 +10,16 @@ Final Product Delivery: An Interactive Dashboard
 
 ## Files
 
-- `1-proposal.qmd`: 
+- `1-proposal.pdf`: Initial project proposal outline
 
-- `1-proposal.html`: 
+- `2-dashboard.qmd`: Source code for the interactive dashboard.
 
-- `2-dashboard.qmd`: 
+- `3-presentation.pdf`: Final presentation summarizing the project
 
-- `2-dashboard.html`: 
+- `4-writeup.html`: Written report describing objectives, methods, results, and reflections in detail
 
-- `3-presentation.pdf`:
+- `/data`: Folder containing all codes and files relating to the data and models used.
 
-- `4-writeup.html`:
-
-- `/data`: 
-
-- `/work`: 
+- `/work`: Workspace folder with scripts, EDA, and preprocessing steps used for developing the product.
 
 
