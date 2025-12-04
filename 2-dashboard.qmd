@@ -45,10 +45,13 @@ This dashboard is designed to provide an accessible overview of historical presi
     - Since both the approval rating graph and indicator graph span the same time frame, you can directly compare the two.
     - See how approval ratings and economic indicators were different between various presidents.
     
-3. **Comparing Presidents**
-    - *insert description...
+2. **Comparing Presidents**
+    - Select two U.S. presidents to compare. Use Ctrl (Windows) or Command (Mac) to select the second president.
+    - The graph below will display approval ratings for both presidents over their time in office (measured in months).
+    - The solid line represents the first selected president, and the dotted line represents the second.
+    - Because both lines appear on the same graph, you can easily compare differences in approval ratings between the two leaders.
 
-2. **Prediction and Modeling**
+3. **Prediction and Modeling**
     - The graph displays our pre-trained model's prediction for the current president's approval rating for the next 6 months (status quo). This model was trained based on the historical approval ratings and economic indicators from the dashboard's previous page.
     - The dotted blue line shows the status quo which is predicted approval rating assuming most recent economic data stays consistent indefinitely.
     - The red line shows the simulated prediction based on your own "what-if" scenarios. You can modify the economic indicators in the side panel to the left to see how each one may change the president's approval rating.
@@ -64,16 +67,16 @@ load(here("data/complete_data.rda"))
 ```{r}
 #| context: server
 econ_labels <- c(
-  "Unemployment Rate" = "unemployment_rate",
-  "Consumer Price Index" = "consumer_p_index",
-  "Total Jobs" = "total_nonfarm_jobs",
-  "Average Hourly Earnings" = "avg_hourly_earnings",
   "Real GDP" = "Real_GDP",
   "Disposable Income" = "Disposable_Income",
   "Corporate Profits" = "Corporate_Profits",
   "Healthcare Price Index" = "Healthcare_Price_Index",
   "Government Spending" = "Gov_Spending",
-  "Personal Savings Rate" = "Personal_Saving_Rate"
+  "Personal Savings Rate" = "Personal_Saving_Rate",
+  "Unemployment Rate" = "unemployment_rate",
+  "Consumer Price Index" = "consumer_p_index",
+  "Total Jobs" = "total_nonfarm_jobs",
+  "Average Hourly Earnings" = "avg_hourly_earnings"
 )
 pres_data <- reactive({
     final_combined_data |> filter(president == input$president)
@@ -109,8 +112,8 @@ output$econ_plot <- renderPlot({
 selectInput(
         inputId = "president",
         label = "Choose a President:",
-        choices = rev(unique(final_combined_data$president))
-        [!is.na(unique(final_combined_data$president))],
+        choices = rev(unique(final_combined_data$president)
+        [!is.na(unique(final_combined_data$president))]),
         selected = "Trump (2nd Term)",
         selectize = FALSE
       )
