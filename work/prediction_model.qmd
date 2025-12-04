@@ -82,15 +82,12 @@ library(lme4)
 
 load(here("data/complete_data.rda"))
 
-pres_starts <- final_combined_data %>%
-  group_by(president) %>%
-  summarize(Start_Date = min(date), .groups = "drop")
+
 
 model_data <- final_combined_data %>%
   left_join(pres_starts, by = "president") %>%
   arrange(date) %>%
   mutate(
-    Months_in_Office  = interval(Start_Date, date) %/% months(1),
 
     Unemployment      = unemployment_rate,
     Inflation_Rate    = (consumer_p_index - lag(consumer_p_index, 12)) / lag(consumer_p_index, 12) * 100,
@@ -237,6 +234,7 @@ importance(rf_validation)
 ```{r}
 
 set.seed(123)
+
 rf_final <- randomForest(
   approval_rating ~ Approval_Lag3 +
                     Unemployment + Inflation_Rate + Job_Growth + Wage_Growth + 
@@ -336,6 +334,9 @@ saveRDS(trump_history, here("data/trump_history.rds"))
 
 
 
+```{r}
 
+
+```
 
 

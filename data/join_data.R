@@ -4,11 +4,11 @@ library(zoo)
 library(janitor)
 library(here)
 
-load("./data/anes_clean.rda") #anes_data and anes_codebook
-load("./data/bls_data_clean.rda") #bls_data_clean
-load("./data/census_clean.rda") #census_clean
-load("./data/monthly_approval_clean.rda") #monthly_approval_clean
-load("./data/BEA_economic_data.rda") #final_economic_data
+load(here("./data/anes_clean.rda")) #anes_data and anes_codebook
+load(here("./data/bls_data_clean.rda")) #bls_data_clean
+load(here("./data/census_clean.rda")) #census_clean
+load(here("./data/monthly_approval_clean.rda")) #monthly_approval_clean
+load(here("./data/BEA_economic_data.rda")) #final_economic_data
 
 bls_wide <- bls_data_clean %>%
   filter(date >= "1941-07-01") %>% 
@@ -77,7 +77,12 @@ final_combined_data <- final_combined_data %>%
     .direction = "up"
   )
 
+pres_starts <- final_combined_data %>%
+  group_by(president) %>%
+  summarize(Start_Date = min(date), .groups = "drop")
+
 final_combined_data <- final_combined_data %>%
+  left_join(pres_starts, by = "president") %>%
   mutate(Party = case_when(
     president %in% c("Franklin D. Roosevelt", "Harry Truman", 
                      "John F. Kennedy", "Lyndon B. Johnson", 
@@ -85,7 +90,8 @@ final_combined_data <- final_combined_data %>%
                      "Joe Biden") ~ "Democrat",
     TRUE ~ "Republican"
   ),
-  Party = factor(Party)
+  Party = factor(Party),
+  Months_in_Office  = interval(Start_Date, date) %/% months(1)
   )
 
 print(colnames(final_combined_data))
