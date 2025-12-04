@@ -90,7 +90,7 @@ output$approval_plot <- renderPlot({
     geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
     geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
     scale_color_manual(values = c("#61D04F", "#DF536B", "#2297E6")) +
-    labs(y = "Rating (%)", x = "Date", color = "Legend") +
+    labs(y = "Rating (%)", x = "Date", color = "Rating") +
     theme_minimal()
   })
 
@@ -226,7 +226,8 @@ output$comparison_approval_plot <- renderPlot({
     scale_linetype_manual(values = 
                             c("solid", "dashed", "dotted", "dotdash", "longdash", "twodash",
                               "12", "21", "13", "31", "14", "41", "1122", "2211", "F2")) +
-      labs(y = "Rating (%)", x = "Time in Office (months)", color = "Legend") +
+      labs(y = "Rating (%)", x = "Time in Office (months)", 
+           color = "Rating", linetype = "Presidents") +
       theme_minimal()
   })
 ```
