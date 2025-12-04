@@ -1,14 +1,14 @@
 ---
-title: "APPROVAL RATING DASHBOARD FOR U.S. PRESIDENTS"
+title: "White House Wallet: U.S. Presidents Approval Rating Dashabord"
 subtitle: |
-  | Final Write Up
+  | Project 4 Write Up
 author:
   - name: Team Gold MagiKarp
   - name: Mia Silva, Louise Oh, Lidio Jaimes, Oliver Brown
 date: today
 
 format:
-  pdf:
+  html:
     toc: true
     toc-location: body
     embed-resources: true
@@ -29,4 +29,87 @@ from: markdown+emoji
 
 :::
 
+
 \pagebreak
+
+### Project Overview
+
+The **White House Wallet** is an interactive dashboard designed to explore the historical approval ratings of U.S. presidents in relation to economic indicators. The project aims to provide a user-friendly interface for visualizing presidential approval trends, comparing the performance of different presidents, and modeling future approval ratings based on economic scenarios. By integrating historical data with predictive modeling, the dashboard allows users to investigate how economic and policy factors influence public perception over time, facilitating both exploration and analysis.
+
+### Objectives
+
+::: {.callout-tip icon=false}
+
+## Question
+
+To what extent can a predictive model, using key economic indicators such as inflation and unemployment along with major political events, accurately forecast near-term U.S. presidential approval ratings?
+
+edit this?
+
+:::
+
+The objective is to quantify how economic conditions influence public perception of a president, while also examining the lag between economic changes and shifts in approval. By integrating historical approval data with economic metrics, this project provides a framework for understanding both past trends and the potential drivers of future public opinion.
+
+
+To address this question, the dashboard is structured around three specific goals: 
+
+1. The **Historical Data** section visualizes approval rating trends alongside economic indicators to identify correlations and the timing of public responses to economic shifts. 
+2. The **Comparing Presidents** section allows evaluation of differences between two presidents’ approval trajectories, to provide context for how economic and political conditions may alter public sentiment across administrations. 
+3. The **Prediction and Modeling** section uses a simulation model to forecast approval ratings under both status quo and user-defined economic scenarios, to offer a forward-looking tool to explore “what-if” conditions and the proportional impact of economic changes on public perception.
+
+### Existing Work
+
+Past work on presidential approval is in two main areas. The first is public-facing data dashboards. The most famous was Nate Silver's (and later owned by ABC) FiveThirtyEight, which was a statistical product in itself. Its "work" was running a proprietary weighted-averaging model on polls, giving more credibility to pollsters with better historical accuracy. Other dashboards, like The Economist's approval tracker, RealClearPolitics, and Gallup's Presidential Job Approval Center, serve as aggregators or historical archives. These present demographic breakdowns or simple rolling averages to show how support differs by group and to track the most current trends.
+
+The second area is the academic statistical modeling that provides the blueprint for these predictions. This research, from pioneers like Edward Tufte and Ray Fair, established that approval is not random. It is overwhelmingly driven by the economy (like inflation and GDP growth). These models evolved to include other key, non-economic variables. For instance, John Mueller's work identified the “rally 'round the flag” effect (a temporary spike in approval after a crisis), while Alan Abramowitz's "Time for a Change" model quantified the predictable "erosion of support" that a president experiences over time.
+
+### Data 
+
+The dashboard integrates multiple public data sources:
+
+- Presidential Approval Ratings: Data from The American Presidency Project (Woolley & Peters, 2025) providing historical approval, disapproval, and unsure ratings.
+- Economic Data:
+  - Census Data API for demographic and population context (U.S. Census Bureau, 2025).
+  - Bureau of Labor Statistics (BLS) API for unemployment, wages, job growth, and other labor indicators (BLS, 2016).
+  - Bureau of Economic Analysis (BEA) API for GDP, corporate profits, and other macroeconomic data (BEA, 2025).
+- Additional Documentation: Guidance from tidycensus for using Census data efficiently (Walker & Herman, 2023).
+The data were cleaned, merged, and processed to align time frames across presidents and indicators, enabling robust visualizations and predictive modeling.
+
+### Tools
+
+The dashboard was developed using R, Shiny, and the tidyverse suite of packages. Visualization relied heavily on ggplot2, while reactive programming in Shiny allowed for interactivity such as selecting presidents, toggling economic indicators, and adjusting scenario sliders. The predictive modeling leveraged a random forest model trained on historical approval ratings and economic indicators to generate both status quo and custom forecasts.
+Challenges & Accomplishments
+
+### Dashboard Overview
+
+The dashboard has three main components, each addressing a core objective.
+
+1. The **Historical Data** section allows users to explore approval ratings over a president’s tenure alongside economic indicators. This satisfies the goal of understanding trends and context for individual presidencies.
+2. The **Comparing Presidents** section provides side-by-side approval rating comparisons between two presidents, facilitating historical benchmarking and evaluation of differences in public perception.
+3. The **Prediction and Modeling** section enables scenario-based forecasts of approval ratings, allowing users to explore potential impacts of economic changes on public opinion, fulfilling the objective of modeling future outcomes.
+
+### Functionality
+
+The dashboard is user-friendly and interactive, allowing users to explore presidential approval ratings alongside economic indicators using tools to select presidents, compare approval trends, and run “what-if” scenario simulations. Users can easily toggle between visualizations and customize inputs to analyze different scenarios.
+
+### Usability and Documentation
+
+The dashboard emphasizes ease of use with intuitive controls and clear visualizations suitable for beginners. All code and data are well-documented for easy understanding, reproducibility, and extended analyses. Instructions and tutorials guide users through each section of the dashboard.
+
+### Originality and Complexity
+
+The project uniquely integrates diverse datasets, including presidential approval ratings, economic indicators, and demographic data. Combining visualization, comparison, and predictive modeling showcases technical skill and analytical depth, while scenario forecasts provide a forward-looking perspective.
+
+### Lessons Learned
+
+Accumulating and cleaning data from multiple sources takes a significant amount of time, as real-world data often comes in inconsistent formats and contains many missing values. It is crucial to understand what each variable truly represents, since the people collecting and analyzing the data are often different, and thorough documentation is needed to avoid misinterpretation or bias. Effectively handling these challenges is essential for extracting meaningful insights from complex, real-world datasets.
+
+prediction stuff
+
+### Limitations and Future Steps
+
+- **Better real-time data**: Access to more up-to-date data would improve the accuracy and relevance of the dashboard’s visualizations and predictions. Incorporating real-time economic and approval data could make the tool more responsive to current events.
+- **More functionalities**: Additional interactive features, such as filtering by specific events or economic conditions, could enhance user exploration. Integrating more visualization types, like heatmaps or correlation plots, would allow deeper insights.
+- **Advanced predictive models**: Using more sophisticated models, such as time-series or machine learning ensembles, could improve forecast accuracy. Incorporating uncertainty estimates would also provide users with a clearer sense of confidence in predictions.
+- **Customization for users**: User-specific settings and saved scenario profiles could make the tool more practical for repeated use. Tailoring the dashboard for different audiences, such as students, analysts, or policymakers, would also increase accessibility. 
+
