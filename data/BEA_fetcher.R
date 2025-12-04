@@ -9,14 +9,11 @@ library(here)
 BEA_KEY <- "C77A6C27-03FD-4B8A-996F-CAA388B4ABF1"
 base_url <- "https://apps.bea.gov/api/data/"
 
-# UPDATED CONFIG: Corrected Line Descriptions for Savings and Profits
 bea_config <- list(
   list(name = "Real_GDP",                   table = "T10106", line_desc = "Gross domestic product"),
   list(name = "Gov_Spending",               table = "T10106", line_desc = "Government consumption expenditures and gross investment"),
   list(name = "Disposable_Income",          table = "T20100", line_desc = "Disposable personal income"),
-  # FIX: Updated description to match BEA API text
   list(name = "Personal_Saving_Rate",       table = "T20100", line_desc = "Personal saving as a percentage"),
-  # FIX: Shortened to ensure match (avoiding potential "IVA" abbreviation mismatches)
   list(name = "Corporate_Profits",          table = "T11200", line_desc = "Corporate profits"),
   list(name = "Healthcare_Price_Index",     table = "T20304", line_desc = "Health care")
 )
