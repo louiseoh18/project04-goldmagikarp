@@ -232,6 +232,7 @@ output$comparison_approval_plot <- renderPlot({
   })
 ```
 
+## {.sidebar}
 ```{r}
 selectInput(
   inputId = "president",
@@ -247,7 +248,9 @@ selectInput(
   )
 ```
 
+## Plot
 ```{r}
+#| title: "Comparing Approval Ratings for U.S. Presidents"
 # plot outputs
 plotOutput("comparison_approval_plot")
 ```
