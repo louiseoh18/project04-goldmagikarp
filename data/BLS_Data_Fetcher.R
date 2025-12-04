@@ -100,8 +100,7 @@ bls_data_clean <- bls_data_clean1 %>%
   relocate(variable, .after = series_id)
 
 head(bls_data_clean)
-
-nrow(bls_data_clean)
+tail(bls_data_clean)
 
 #################### SAVE DATASET INTO RDA ####################
 
