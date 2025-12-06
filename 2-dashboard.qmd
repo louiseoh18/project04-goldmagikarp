@@ -89,7 +89,8 @@ output$approval_plot <- renderPlot({
     geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
     scale_color_manual(values = c("#61D04F", "#DF536B", "#2297E6")) +
     labs(y = "Rating (%)", x = "Date", color = "Rating") +
-    theme_minimal()
+    theme_minimal(base_size = 16) +
+    theme(legend.position = "bottom")
   })
 
 # Economic indicator plot
@@ -100,7 +101,7 @@ output$econ_plot <- renderPlot({
       ggplot(aes(x = date, y = .data[[var]])) +
       geom_line(color = "mediumpurple", size = 1) +
       labs(y = friendly_label, x = "Date") +
-      theme_minimal()
+      theme_minimal(base_size = 16)
   })
 ```
 
@@ -220,13 +221,14 @@ output$comparison_approval_plot <- renderPlot({
     geom_line(aes(y = approval_rating, color = "Approval"), size = 1) +
     geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
     geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
-    scale_color_manual(values = c("#61D04F", "#DF536B", "#2297E6")) +
-    scale_linetype_manual(values = 
-                            c("solid", "dotted", "dashed", "dotdash", "longdash", "twodash",
-                              "12", "21", "13", "31", "14", "41", "1122", "2211", "F2")) +
-      labs(y = "Rating (%)", x = "Time in Office (months)", 
+    scale_color_manual(values = c("Approval" = "#61D04F", 
+                                  "Disapproval" = "#DF536B", 
+                                  "Unsure" = "#2297E6")) +
+    scale_linetype_manual(values = rep(c("solid", "dotted", "dashed", "dotdash", "longdash", "twodash"), 
+                                       length.out = 15)) +
+    labs(y = "Rating (%)", x = "Time in Office (months)", 
            color = "Rating", linetype = "Presidents") +
-      theme_minimal()
+    theme_minimal()
   })
 ```
 
@@ -524,7 +526,7 @@ tags$ul(
 ```{r}
 div(class = "alert",
     style = "background-color: #2980b9;",
-    h6("Status Quo (May '26)\n", 
+    h6(HTML("Status Quo (May '26)<br>"), 
        span(textOutput("status_quo_score", inline = TRUE), style = "font-weight: bold; font-size: 2.0em;")),
     p("Prediction if economy stays exactly as it is today.", style = "color: black; font-size: 0.9em;"))
 ```
@@ -533,10 +535,10 @@ div(class = "alert",
 ```{r}
 div(class = "alert",
     style = "background-color: #D55E00;",
-    h6("Scenario (May '26)\n", 
+    h6(HTML("Scenario (May '26)<br>"), 
        span(textOutput("six_month_score", inline = TRUE), style = "font-weight: bold; font-size: 2.0em;")),
     p("Prediction based on your inputs.", style = "color:black; font-size: 0.9em;"),
-    h6("\n\n\nLong-Term (Dec '27)\n", 
+    h6(HTML("<br><br>Long-Term (Dec '27)<br>"), 
        span(textOutput("final_score", inline = TRUE), style = "font-weight: bold; font-size: 2.0em;")),
     span(textOutput("change_score"), style = "font-size: 0.9em; color: black;"))
 ```
