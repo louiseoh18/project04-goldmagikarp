@@ -322,6 +322,9 @@ Comparing Approval Ratings for U.S. Presidents
 </div>
 </div>
 </div>
+<div class="cell-output-display">
+<span class="help-block">Click to add more presidents. Use Backspace to remove them.</span>
+</div>
 </div></aside>
 <button class="collapse-toggle" type="button" title="Toggle sidebar" aria-expanded="true" aria-controls="bslib-sidebar-1">
     <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-chevron-left collapse-icon" style="fill:currentColor;" aria-hidden="true" role="img">
@@ -598,7 +601,6 @@ library(zoo)
 
 # TO-DO:
 # Home page: review description and tutorial to make sure everything is clear
-# Comparing presidents page: plot no longer rendering, needs to be debugged; also add instructions in sidebar
 # Prediction page: provide model explanation --> if it's better for space, can also include on home page
 # Reference page: maybe describe how the different data was used. We didn't end up using some of the data in the actual dashboard but we still analyzed it (which viewers won't see but can be made aware of)
 </script>
@@ -723,7 +725,7 @@ approval_comparison_data <-
     )
   ) |>
   select(president, date, approval_rating, disapproval_rating, unsure_rating, months_in_office, Party)
-#will move to data folder later, currently just seeing if it works in dashboard
+
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -736,20 +738,35 @@ presi_data <- reactive({
 output$comparison_approval_plot <- renderPlot({
   req(nrow(presi_data()) > 0)
   
-  presi_data() |>
-    ggplot(aes(x = months_in_office, linetype = president)) +
-    geom_line(aes(y = approval_rating, color = "Approval"), linewidth = 1) +
-    geom_line(aes(y = disapproval_rating, color = "Disapproval"), linewidth = 1) +
-    geom_line(aes(y = unsure_rating, color = "Unsure"), linewidth = 1) +
-    scale_color_manual(values = c("Approval" = "#61D04F", 
-                                  "Disapproval" = "#DF536B", 
-                                  "Unsure" = "#2297E6")) +
-    scale_linetype_manual(values = rep(c("solid", "dotted", "dashed", "dotdash", "longdash", "twodash"), 
-                                       length.out = 15)) +
-    labs(y = "Rating (%)", x = "Time in Office (months)", 
-         color = "Rating", linetype = "Presidents") +
-    theme_minimal()
+  # 1. Pivot data to make it "tidy" for ggplot
+  # This puts Approval, Disapproval, and Unsure into one 'value' column
+  plot_data <- presi_data() |>
+    pivot_longer(
+      cols = c(approval_rating, disapproval_rating, unsure_rating),
+      names_to = "rating_type",
+      values_to = "value"
+    ) |>
+    mutate(
+      rating_type = factor(rating_type, 
+                           levels = c("approval_rating", "disapproval_rating", "unsure_rating"),
+                           labels = c("Approval", "Disapproval", "Unsure"))
+    )
+
+  # 2. Plot with Facets
+  ggplot(plot_data, aes(x = months_in_office, y = value, color = president)) +
+    geom_line(linewidth = 1) +
+    
+    # Creates 3 side-by-side panels
+    facet_wrap(~rating_type, nrow = 3) + 
+    
+    # Now use Color for Presidents (Distinct & Clear)
+    scale_color_brewer(palette = "Set1") + 
+    
+    labs(y = "Rating (%)", x = "Months in Office", color = "President") +
+    theme_minimal(base_size = 14) +
+    theme(legend.position = "bottom")
 })
+
 </script>
  
 <script type="application/shiny-prerendered" data-context="server-start">
