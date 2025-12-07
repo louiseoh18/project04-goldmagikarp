@@ -97,34 +97,34 @@ final_combined_data <- final_combined_data |>
       date == ym("1969-07") ~ "Moon landing",
       
       date == ym("1973-10") ~ "Oil Crisis",
-      date == ym("1974-08") ~ "Nixon resigns (Watergate)",
+      date == ym("1974-08") ~ "Watergate",
       date == ym("1975-04") ~ "E: Vietnam War",
       
-      date == ym("1981-03") ~ "Reagan assassination attempt",
-      date == ym("1987-10") ~ "Black Monday (stock market crash)",
+      date == ym("1981-03") ~ "Assassination attempt",
+      date == ym("1987-10") ~ "Black Monday",
       date == ym("1989-11") ~ "Berlin Wall falls",
       
       date == ym("1991-12") ~ "E: Cold War",
       date == ym("1998-12") ~ "Clinton impeachment",
       
       date == ym("2001-09") ~ "9/11",
-      date == ym("2003-03") ~ "Invasion of Iraq",
+      date == ym("2003-03") ~ "Iraq Invasion",
       date == ym("2008-09") ~ "Financial crisis peaks",
       
-      date == ym("2010-03") ~ "Affordable Care Act passed"
-      date == ym("2011-05") ~ "Osama bin Laden killed",
-      date == ym("2019-12") ~ "1st Trump Impeachment",
+      date == ym("2010-03") ~ "Affordable Care Act"
+      date == ym("2011-05") ~ "bin Laden killed",
+      date == ym("2019-12") ~ "1st Trump impeachment",
       
-      date == ym("2020-03") ~ "COVID-19 emergency declared",
+      date == ym("2020-03") ~ "COVID-19 pandemic",
       date == ym("2020-05") ~ "George Floyd Death",
-      date == ym("2021-01") ~ "Capitol Attack (Jan 6)",
-      date == ym("2021-01") ~ "2nd Trump Impeachment",
-      date == ym("2021-04") ~ "Afghanistan withdrawal announced",
+      date == ym("2021-01") ~ "Capitol Attack",
+      date == ym("2021-01") ~ "2nd Trump impeachment",
+      date == ym("2021-04") ~ "Afghanistan withdrawal",
       date == ym("2021-01") ~ "2nd Trump impeachment",
       date == ym("2022-02") ~ "S: Russia-Ukraine war",
       date == ym("2023-10") ~ "S: Gaza war",
       date == ym("2023-12") ~ "Peak border crisis",
-      date == ym("2025-06") ~ "ICE raids in LA",
+      date == ym("2025-06") ~ "ICE raids LA",
       date == ym("2025-09") ~ "Gaza peace plan",
       TRUE ~ NA
     ),
