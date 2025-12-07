@@ -79,7 +79,7 @@ selectInput(
         label = "Choose a President:",
         choices = unique(final_combined_data$president)[!is.na(unique(final_combined_data$president))],
         selectize = FALSE,
-        selected = "Joe Biden" # having Trump (2nd Term) pre-selected was not working
+        selected = "Trump (2nd Term)"
       )
 ```
 
