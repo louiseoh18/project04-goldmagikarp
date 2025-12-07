@@ -201,7 +201,7 @@ approval_comparison_data <-
       president == "Joe Biden" & date == "2025-01-01" ~ 48
     )
   ) |>
-  dplyr::select(1:5, 19)
+  dplyr::select(1:5, months_in_office)
 
 print(colnames(final_combined_data))
 
