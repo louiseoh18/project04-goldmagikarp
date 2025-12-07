@@ -1,10 +1,19 @@
 
-## Data
+# Data
 
-**Final Dataset**
+## Final Dataset
 
 - `join_data.R`
-- `compete_data.rda`
+- `complete_data.rda`
+- `comparison_data.rda`
+- `rf_approval_model.rds`
+- `trump_history.rds`
+
+## Data Fetchers
+
+**American Presidency Project Dataset**
+- `Approval_Rating_Fetcher.R`
+- `monthly_approval_clean.rda`
 
 **ANES Dataset**
 
@@ -19,11 +28,11 @@
 
 **BLS Dataset**
 
-- `bls_data_fetcher.R`
+- `BLS_Data_Fetcher.R`
 - `bls_data_clean.rda`
 
 **BEA Economic Dataset**
 
-- `bea_fetcher.R`
-- `bea_economic_data.rda`
+- `BEA_fetcher.R`
+- `BEA_economic_data.rda`
 
