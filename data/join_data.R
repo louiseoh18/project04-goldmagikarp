@@ -94,12 +94,15 @@ final_combined_data <- final_combined_data |>
       date == ym("1962-10") ~ "Cuban Missile Crisis",
       date == ym("1963-11") ~ "JFK Assassination",
       date == ym("1964-07") ~ "Civil Rights Act",
+      date == ym("1965-08") ~ "Voting Rights Act Signed",
+      date == ym("1968-04") ~ "MLK Assassinated",
       date == ym("1969-07") ~ "Moon landing",
 
       date == ym("1972-02") ~ "Nixon visits China",
       date == ym("1972-06") ~ "Watergate break-in",
       date == ym("1973-10") ~ "Oil Crisis",
       date == ym("1974-08") ~ "Nixon resigns",
+      date == ym("1974-09") ~ "Nixon is Pardoned",
       date == ym("1975-04") ~ "E: Vietnam War",
 
       date == ym("1981-03") ~ "Assassination attempt",
@@ -114,7 +117,7 @@ final_combined_data <- final_combined_data |>
       date == ym("2008-09") ~ "Financial crisis peaks",
 
       date == ym("2010-03") ~ "Affordable Care Act",
-      date == ym("2011-05") ~ "bin Laden killed",
+      date == ym("2011-05") ~ "Bin Laden killed",
       date == ym("2019-12") ~ "1st Trump impeachment",
 
       date == ym("2020-03") ~ "COVID-19 pandemic",
@@ -127,7 +130,8 @@ final_combined_data <- final_combined_data |>
       date == ym("2023-10") ~ "S: Gaza war",
       date == ym("2023-12") ~ "Peak border crisis",
       date == ym("2025-06") ~ "ICE raids LA",
-      date == ym("2025-09") ~ "Gaza peace plan",
+      date == ym("2025-09") ~ "Charlie Kirk assassination",
+      date == ym("2025-10") ~ "Gaza peace plan",
       TRUE ~ NA
     ),
     important_event_dates = if_else(!is.na(important_events), date, as.Date(NA))
