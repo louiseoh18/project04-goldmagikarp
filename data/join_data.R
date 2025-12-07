@@ -81,42 +81,42 @@ final_combined_data <- final_combined_data %>%
 final_combined_data <- final_combined_data |>
   mutate(
     important_events = case_when(
-      date == ym("1945-05") ~ "End of WW2 in Europe",
+      date == ym("1945-05") ~ "E: WW2 in Europe",
       date == ym("1945-08") ~ "Atomic bombs",
-      date == ym("1945-09") ~ "End of WW2",
-      date == ym("1947-03") ~ "Start: Cold War",
-      
-      date == ym("1950-06") ~ "Start: Korean War",
-      date == ym("1953-07") ~ "End: Korean War", 
-      
-      date == ym("1955-11") ~ "Start: Vietnam War",
+      date == ym("1945-09") ~ "E: WW2",
+      date == ym("1947-03") ~ "S: Cold War",
+      date == ym("1950-06") ~ "S: Korean War",
+      date == ym("1950-06") ~ "E: Korean War",
+      date == ym("1955-11") ~ "S: Vietnam War",
       date == ym("1957-10") ~ "Sputnik launched",
       date == ym("1962-10") ~ "Cuban Missile Crisis",
       date == ym("1963-11") ~ "JFK Assassination",
+      date == ym("1964-07") ~ "Civil Rights Act",
       date == ym("1969-07") ~ "Moon landing",
       date == ym("1974-08") ~ "Nixon resigns (Watergate)",
-      date == ym("1975-04") ~ "End: Vietnam War",
+      date == ym("1975-04") ~ "E: Vietnam War",
       date == ym("1981-03") ~ "Reagan assassination attempt",
+      date == ym("1987-10") ~ "Black Monday (stock market crash)",
       date == ym("1989-11") ~ "Berlin Wall falls",
-      date == ym("1991-12") ~ "End: Cold War",
+      date == ym("1991-12") ~ "E: Cold War",
       date == ym("1998-12") ~ "Clinton impeachment",
       date == ym("2001-09") ~ "9/11",
       date == ym("2003-03") ~ "Invasion of Iraq",
       date == ym("2008-09") ~ "Financial crisis peaks",
       date == ym("2011-05") ~ "Osama bin Laden killed",
       date == ym("2019-12") ~ "1st Trump Impeachment",
-      date == ym("2020-03") ~ "COVID-19 emergency",
-      
-      date == ym("2021-01") ~ "Jan 6 / 2nd Impeachment", 
-      
-      date == ym("2021-04") ~ "Afghan withdrawal announced",
-      date == ym("2022-02") ~ "Start: Russia-Ukraine war",
-      date == ym("2023-10") ~ "Start: Israel-Palestine conflict",
+      date == ym("2020-03") ~ "COVID-19 emergency declared",
+      date == ym("2020-05") ~ "George Floyd Death",
+      date == ym("2021-01") ~ "Capitol Attack (Jan 6)",
+      date == ym("2021-01") ~ "2nd Trump Impeachment",
+      date == ym("2021-04") ~ "Afghanistan withdrawal announced",
+      date == ym("2021-01") ~ "2nd Trump impeachment",
+      date == ym("2022-02") ~ "S: Russia-Ukraine war",
+      date == ym("2023-10") ~ "S: Gaza war",
       date == ym("2023-12") ~ "Peak border crisis",
-      
-      date == ym("2025-06") ~ "ICE raids in LA", 
-      
-      TRUE ~ NA_character_ 
+      date == ym("2025-06") ~ "ICE raids in LA",
+      date == ym("2025-09") ~ "Gaza peace plan",
+      TRUE ~ NA
     ),
     important_event_dates = if_else(!is.na(important_events), date, as.Date(NA))
   )
@@ -132,9 +132,10 @@ final_combined_data <- final_combined_data %>%
     .direction = "down"
   ) %>%
   filter(
-    !(is.na(unemployment_rate) & is.na(approval_rating) & is.na(Real_GDP)) | !is.na(important_events)
+    !(is.na(unemployment_rate) & is.na(approval_rating) & is.na(Real_GDP)) |
+      !is.na(important_events)
   ) %>%
-  
+
   group_by(president) %>%
   mutate(
     approval_rating = na.approx(approval_rating, na.rm = FALSE),
@@ -142,7 +143,7 @@ final_combined_data <- final_combined_data %>%
     unsure_rating = na.approx(unsure_rating, na.rm = FALSE)
   ) %>%
   ungroup() %>%
-  
+
   fill(
     Real_GDP,
     Disposable_Income,
