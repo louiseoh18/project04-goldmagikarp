@@ -1,5 +1,5 @@
 ---
-title: "White House Wallet: U.S. Presidents Approval Rating Dashabord"
+title: "Executive Economics: An Interactive Dashboard for U.S. Presidential Approval Ratings"
 subtitle: |
   | Project 4 Write Up
 author:
@@ -8,7 +8,7 @@ author:
 date: today
 
 format:
-  html:
+  pdf:
     toc: true
     toc-location: body
     embed-resources: true
@@ -34,7 +34,7 @@ from: markdown+emoji
 
 ### Project Overview
 
-The **White House Wallet** is an interactive dashboard designed to explore the historical approval ratings of U.S. presidents in relation to economic indicators. The project aims to provide a user-friendly interface for visualizing presidential approval trends, comparing the performance of different presidents, and modeling future approval ratings based on economic scenarios. By integrating historical data with predictive modeling, the dashboard allows users to investigate how economic and policy factors influence public perception over time, facilitating both exploration and analysis.
+The **Executive Economics** is an interactive dashboard designed to explore the historical approval ratings of U.S. presidents in relation to economic indicators. The project aims to provide a user-friendly interface for visualizing presidential approval trends, comparing the performance of different presidents, and modeling future approval ratings based on economic scenarios. By integrating historical data with predictive modeling, the dashboard allows users to investigate how economic and policy factors influence public perception over time, facilitating both exploration and analysis.
 
 ### Objectives
 
@@ -69,11 +69,16 @@ The dashboard integrates multiple public data sources:
 
 - Presidential Approval Ratings: Data from The American Presidency Project (Woolley & Peters, 2025) providing historical approval, disapproval, and unsure ratings.
 - Economic Data:
-  - Census Data API for demographic and population context (U.S. Census Bureau, 2025).
-  - Bureau of Labor Statistics (BLS) API for unemployment, wages, job growth, and other labor indicators (BLS, 2016).
-  - Bureau of Economic Analysis (BEA) API for GDP, corporate profits, and other macroeconomic data (BEA, 2025).
+  - Bureau of Labor Statistics (BLS) API for unemployment rate, consumer price index (inflation), total nonfarm employment (jobs), and average hourly earnings (BLS, 2016).
+  - Bureau of Economic Analysis (BEA) API for GDP, government spending, disposable income, personal savings rate, corporate profits, and healthcare price index (BEA, 2025).
+
+Exploratory data analysis was done on the above, but also included the following which was ultimately not used in the final dashboard due to data frequency limitations:
+
+- Census Data API for median household income, healthcare status, poverty (U.S. Census Bureau, 2025).
+- American National Election Studies (ANES): time series survey data on political attitudes and behaviors (ANES, 2024).
 - Additional Documentation: Guidance from tidycensus for using Census data efficiently (Walker & Herman, 2023).
-The data were cleaned, merged, and processed to align time frames across presidents and indicators, enabling robust visualizations and predictive modeling.
+
+All data were cleaned, merged, and processed to align time frames across presidents and indicators, enabling robust visualizations and predictive modeling.
 
 ### Tools
 
@@ -87,6 +92,8 @@ The dashboard has three main components, each addressing a core objective.
 1. The **Historical Data** section allows users to explore approval ratings over a president’s tenure alongside economic indicators. This satisfies the goal of understanding trends and context for individual presidencies.
 2. The **Comparing Presidents** section provides side-by-side approval rating comparisons between two presidents, facilitating historical benchmarking and evaluation of differences in public perception.
 3. The **Prediction and Modeling** section enables scenario-based forecasts of approval ratings, allowing users to explore potential impacts of economic changes on public opinion, fulfilling the objective of modeling future outcomes.
+
+edit this --> repeats what is already said above under "Question"
 
 ### Functionality
 
