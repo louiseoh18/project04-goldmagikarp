@@ -182,7 +182,7 @@ output$approval_plot <- renderPlot({
     
     geom_text(data = events_data, 
               aes(x = date, y = 30, label = important_events), 
-              angle = 90, vjust = -0.5, size = 4, color = "gray30") +
+              angle = 90, vjust = -0.6, size = 4, color = "gray30") +
     
     scale_color_manual(values = c("#61D04F", "#DF536B", "#2297E6")) +
     labs(y = "Rating (%)", x = "Date", color = "Rating") +
