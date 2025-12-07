@@ -87,10 +87,11 @@ pres_data <- reactive({
 
 # Summary table
 output$snapshot_tbl <- renderTable({
-    pres_data() |>
-      select(approval_rating, disapproval_rating, input$econ_var, Party) |>
-      rename("Approval Rating (%)" = approval_rating,
-             "Disapproval Rating (%)" = disapproval_rating)
+  req(input$president)
+  pres_data() |>
+    select(approval_rating, disapproval_rating, input$econ_var) |>
+    rename("Approval Rating (%)" = approval_rating,
+           "Disapproval Rating (%)" = disapproval_rating)
   })
   
 # Approval rating plot
@@ -104,6 +105,13 @@ output$approval_plot <- renderPlot({
     labs(y = "Rating (%)", x = "Date", color = "Rating") +
     theme_minimal(base_size = 16) +
     theme(legend.position = "bottom")
+  })
+
+# Presidential Party
+output$party_text <- renderText({
+  req(input$president)
+  party <- pres_data()$Party[1]
+  paste(party)
   })
 
 # Economic indicator plot
@@ -124,8 +132,7 @@ output$econ_plot <- renderPlot({
 selectInput(
         inputId = "president",
         label = "Choose a President:",
-        choices = rev(unique(final_combined_data$president)
-        [!is.na(unique(final_combined_data$president))]),
+        choices = rev(unique(final_combined_data$president)[!is.na(unique(final_combined_data$president))]),
         selected = "Trump (2nd Term)",
         selectize = FALSE
       )
@@ -150,6 +157,13 @@ plotOutput("approval_plot")
 ## Economic Indicator Card
 
 ### Econ selection {width="20%"}
+
+```{r}
+div(class = "alert-primary", 
+    style = "display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80px; text-align: center;",
+    h6(HTML("Party:<br>"), style = "color: white; margin: 0;",
+       span(textOutput("party_text", inline = TRUE), style = "color: white; font-weight: bold; font-size: 1.5em;")))
+```
 
 ```{r}
 econ_labels <- c(
