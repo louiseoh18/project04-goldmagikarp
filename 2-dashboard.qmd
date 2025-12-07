@@ -105,10 +105,9 @@ plotOutput("approval_plot")
 ### Econ selection {width="20%"}
 
 ```{r}
-div(class = "alert-primary", 
-    style = "display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80px; text-align: center;",
-    h6(HTML("Party:<br>"), style = "color: white; margin: 0;",
-       span(textOutput("party_text", inline = TRUE), style = "color: white; font-weight: bold; font-size: 1.5em;")))
+
+uiOutput("party_banner")
+
 ```
 
 ```{r}
@@ -180,11 +179,28 @@ output$approval_plot <- renderPlot({
   })
 
 # Presidential Party
-output$party_text <- renderText({
-  req(input$president)
-  party <- pres_data()$Party[1]
-  paste(party)
-  })
+output$party_banner <- renderUI({
+  
+  party <- pres_data()$Party[1] 
+  
+  if (!is.na(party) && party == "Republican") {
+    bg_color <- "#EE0000" # Republican Red
+  } else {
+    bg_color <- "#4F94CD" # Democratic Blue
+  }
+  div(
+    class = "alert", 
+    style = paste0("background-color: ", bg_color, "; ",
+                   "display: flex; flex-direction: column; justify-content: center; ",
+                   "align-items: center; height: 80px; text-align: center; border: none;"),
+    
+    h6(HTML("Party:<br>"), 
+       style = "color: white; margin: 0;",
+       span(party, 
+            style = "color: white; font-weight: bold; font-size: 1.5em;")
+    )
+  )
+})
 
 # Economic indicator plot
 output$econ_plot <- renderPlot({
@@ -192,10 +208,14 @@ output$econ_plot <- renderPlot({
     friendly_label <- names(econ_labels)[econ_labels == var]
     pres_data() |>
       ggplot(aes(x = date, y = .data[[var]])) +
-      geom_line(color = "mediumpurple", size = 1) +
+      geom_line(color = "mediumpurple", linewidth = 1) +
       labs(y = friendly_label, x = "Date") +
       theme_minimal(base_size = 16)
   })
+
+
+
+
 ```
 
 
@@ -276,9 +296,9 @@ presi_data <-
 output$comparison_approval_plot <- renderPlot({
   presi_data() |>
     ggplot(aes(x = months_in_office, linetype = president)) +
-    geom_line(aes(y = approval_rating, color = "Approval"), size = 1) +
-    geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
-    geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
+    geom_line(aes(y = approval_rating, color = "Approval"), linewidth = 1) +
+    geom_line(aes(y = disapproval_rating, color = "Disapproval"), linewidth = 1) +
+    geom_line(aes(y = unsure_rating, color = "Unsure"), linewidth = 1) +
     scale_color_manual(values = c("Approval" = "#61D04F", 
                                   "Disapproval" = "#DF536B", 
                                   "Unsure" = "#2297E6")) +
@@ -321,9 +341,9 @@ presi_data <-
 output$comparison_approval_plot <- renderPlot({
   presi_data() |>
     ggplot(aes(x = months_in_office, linetype = president)) +
-    geom_line(aes(y = approval_rating, color = "Approval"), size = 1) +
-    geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
-    geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
+    geom_line(aes(y = approval_rating, color = "Approval"), linewidth = 1) +
+    geom_line(aes(y = disapproval_rating, color = "Disapproval"), linewidth = 1) +
+    geom_line(aes(y = unsure_rating, color = "Unsure"), linewidth = 1) +
     scale_color_manual(values = c("Approval" = "#61D04F", 
                                   "Disapproval" = "#DF536B", 
                                   "Unsure" = "#2297E6")) +
@@ -551,7 +571,7 @@ observeEvent(input$reset, {
     
     six_month_date <- start_date + months(6)
     
-    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type, size = Type)) +
+    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type, linewidth = Type)) +
       geom_line() +
       geom_point(data = filter(plot_df, Type == "Actual History"), size = 3, alpha = 0.8) +
       
