@@ -25,7 +25,6 @@ library(zoo)
 
 # TO-DO:
 # Home page: review description and tutorial to make sure everything is clear
-# Prediction page: provide model explanation --> if it's better for space, can also include on home page
 # Reference page: maybe describe how the different data was used. We didn't end up using some of the data in the actual dashboard but we still analyzed it (which viewers won't see but can be made aware of)
 ```
 
