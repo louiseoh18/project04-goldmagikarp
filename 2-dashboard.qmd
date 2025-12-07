@@ -239,7 +239,7 @@ load(here("data/comparison_data.rda"))
 ```{r}
 
 selectInput(
-  inputId = "president",
+  inputId = "pres",
   label = "Choose Presidents",
   choices = replace(
     unique(approval_comparison_data$president),
@@ -266,8 +266,8 @@ plotOutput("comparison_approval_plot")
 
 
 presi_data <- reactive({
-  req(input$president)
-  approval_comparison_data |> filter(president %in% input$president)
+  req(input$pres)
+  approval_comparison_data |> filter(president %in% input$pres)
 })
 
 output$comparison_approval_plot <- renderPlot({
