@@ -1,7 +1,5 @@
 
-# Executive Economics: An Interactive Dashboard 
-
-<img src="./images/Executive_Economics_Logo.png" alt="" width="75" />
+# <img src="./images/Executive_Economics_Logo.png" alt="" width="75" /> Executive Economics: An Interactive Dashboard 
 
 ## Project 4
 
