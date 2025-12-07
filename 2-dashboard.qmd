@@ -229,8 +229,6 @@ output$econ_plot <- renderPlot({
 
 ```
 
-
-
 # Comparing Presidents
 
 ```{r}
