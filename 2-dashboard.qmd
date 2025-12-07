@@ -25,7 +25,6 @@ library(zoo)
 
 # TO-DO:
 # Home page: review description and tutorial to make sure everything is clear
-# Comparing presidents page: plot no longer rendering, needs to be debugged; also add instructions in sidebar
 # Prediction page: provide model explanation --> if it's better for space, can also include on home page
 # Reference page: maybe describe how the different data was used. We didn't end up using some of the data in the actual dashboard but we still analyzed it (which viewers won't see but can be made aware of)
 ```
@@ -105,10 +104,9 @@ plotOutput("approval_plot")
 ### Econ selection {width="20%"}
 
 ```{r}
-div(class = "alert-primary", 
-    style = "display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80px; text-align: center;",
-    h6(HTML("Party:<br>"), style = "color: white; margin: 0;",
-       span(textOutput("party_text", inline = TRUE), style = "color: white; font-weight: bold; font-size: 1.5em;")))
+
+uiOutput("party_banner")
+
 ```
 
 ```{r}
@@ -180,11 +178,27 @@ output$approval_plot <- renderPlot({
   })
 
 # Presidential Party
-output$party_text <- renderText({
-  req(input$president)
-  party <- pres_data()$Party[1]
-  paste(party)
-  })
+output$party_banner <- renderUI({
+  party <- pres_data()$Party[1] 
+  
+  if (!is.na(party) && party == "Republican") {
+    bg_color <- "#EE0000" # Republican Red
+  } else {
+    bg_color <- "#4F94CD" # Democratic Blue
+  }
+  div(
+    class = "alert", 
+    style = paste0("background-color: ", bg_color, "; ",
+                   "display: flex; flex-direction: column; justify-content: center; ",
+                   "align-items: center; height: 80px; text-align: center; border: none;"),
+    
+    h6(HTML("Party:<br>"), 
+       style = "color: white; margin: 0;",
+       span(party, 
+            style = "color: white; font-weight: bold; font-size: 1.5em;")
+    )
+  )
+})
 
 # Economic indicator plot
 output$econ_plot <- renderPlot({
@@ -192,10 +206,14 @@ output$econ_plot <- renderPlot({
     friendly_label <- names(econ_labels)[econ_labels == var]
     pres_data() |>
       ggplot(aes(x = date, y = .data[[var]])) +
-      geom_line(color = "mediumpurple", size = 1) +
+      geom_line(color = "mediumpurple", linewidth = 1) +
       labs(y = friendly_label, x = "Date") +
       theme_minimal(base_size = 16)
   })
+
+
+
+
 ```
 
 
@@ -239,12 +257,13 @@ approval_comparison_data <-
       president == "Joe Biden" & date == "2025-01-01" ~ 48
     )
   ) |>
-  select(1:5, 17)
-#will move to data folder later, currently just seeing if it works in dashboard
+  select(president, date, approval_rating, disapproval_rating, unsure_rating, months_in_office, Party)
+
 ```
 
 ## {.sidebar}
 ```{r}
+
 selectInput(
   inputId = "president",
   label = "Choose Presidents",
@@ -255,8 +274,11 @@ selectInput(
     ),
   selected = c("Donald Trump", "Joe Biden"),
   multiple = TRUE,
-  selectize = FALSE
+  selectize = TRUE
   )
+
+helpText("Click to add more presidents. Use Backspace to remove them.")
+
 ```
 
 ## Plot
@@ -268,26 +290,44 @@ plotOutput("comparison_approval_plot")
 ```{r}
 #| context: server
 
-presi_data <- 
-  reactive({
-    approval_comparison_data |> filter(president %in% input$president)
-  })
+
+presi_data <- reactive({
+  req(input$president)
+  approval_comparison_data |> filter(president %in% input$president)
+})
 
 output$comparison_approval_plot <- renderPlot({
-  presi_data() |>
-    ggplot(aes(x = months_in_office, linetype = president)) +
-    geom_line(aes(y = approval_rating, color = "Approval"), size = 1) +
-    geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
-    geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
-    scale_color_manual(values = c("Approval" = "#61D04F", 
-                                  "Disapproval" = "#DF536B", 
-                                  "Unsure" = "#2297E6")) +
-    scale_linetype_manual(values = c("solid", "dotted", "dashed", "dotdash", "longdash", "twodash",
-                                     "12", "21", "13", "31", "14", "41", "1122", "2211", "F2")) +
-    labs(y = "Rating (%)", x = "Time in Office (months)", 
-           color = "Rating", linetype = "Presidents") +
-    theme_minimal()
-  })
+  req(nrow(presi_data()) > 0)
+  
+  # 1. Pivot data to make it "tidy" for ggplot
+  # This puts Approval, Disapproval, and Unsure into one 'value' column
+  plot_data <- presi_data() |>
+    pivot_longer(
+      cols = c(approval_rating, disapproval_rating, unsure_rating),
+      names_to = "rating_type",
+      values_to = "value"
+    ) |>
+    mutate(
+      rating_type = factor(rating_type, 
+                           levels = c("approval_rating", "disapproval_rating", "unsure_rating"),
+                           labels = c("Approval", "Disapproval", "Unsure"))
+    )
+
+  # 2. Plot with Facets
+  ggplot(plot_data, aes(x = months_in_office, y = value, color = president)) +
+    geom_line(linewidth = 1) +
+    
+    # Creates 3 side-by-side panels
+    facet_wrap(~rating_type, nrow = 3) + 
+    
+    # Now use Color for Presidents (Distinct & Clear)
+    scale_color_brewer(palette = "Set1") + 
+    
+    labs(y = "Rating (%)", x = "Months in Office", color = "President") +
+    theme_minimal(base_size = 14) +
+    theme(legend.position = "bottom")
+})
+
 ```
 
 # Prediction and Modeling
@@ -310,30 +350,6 @@ if(length(last_3_approvals) < 3) {
 
 ```
 
-```{r}
-#| context: server
-
-presi_data <- 
-  reactive({
-    approval_comparison_data |> filter(president %in% input$president)
-  })
-
-output$comparison_approval_plot <- renderPlot({
-  presi_data() |>
-    ggplot(aes(x = months_in_office, linetype = president)) +
-    geom_line(aes(y = approval_rating, color = "Approval"), size = 1) +
-    geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
-    geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
-    scale_color_manual(values = c("Approval" = "#61D04F", 
-                                  "Disapproval" = "#DF536B", 
-                                  "Unsure" = "#2297E6")) +
-    scale_linetype_manual(values = rep(c("solid", "dotted", "dashed", "dotdash", "longdash", "twodash"), 
-                                       length.out = 15)) +
-    labs(y = "Rating (%)", x = "Time in Office (months)", 
-           color = "Rating", linetype = "Presidents") +
-    theme_minimal()
-  })
-```
 
 ## {.sidebar}
 
@@ -353,7 +369,6 @@ div(
     numericInput("unemp_end", "End (Dec '27)", value = 5.0, step = 0.1)
   )
 )
-
 
 # "2. Inflation Rate (Year-over-Year %)"
 div(
@@ -551,7 +566,7 @@ observeEvent(input$reset, {
     
     six_month_date <- start_date + months(6)
     
-    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type, size = Type)) +
+    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type, linewidth = Type)) +
       geom_line() +
       geom_point(data = filter(plot_df, Type == "Actual History"), size = 3, alpha = 0.8) +
       
