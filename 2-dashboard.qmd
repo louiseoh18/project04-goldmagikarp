@@ -402,20 +402,33 @@ actionButton("reset", "Reset Scenarios", class = "btn-secondary", width = "100%"
 
 ## Main panels {width="80%"}
 
-### Plot {height="75%"}
+### Plot {height="65%"}
 ```{r}
 #| title: "Presidential Approval Forecaster: Trump 2nd Term"
 plotOutput("forecastPlot", height = "500px")
 ```
 
-### Model logic {height="25%"}
+### Model Methodology {height="35%"}
 ```{r}
-h5("Model Logic:")
-tags$ul(
-  tags$li("Blue Line: 'Status Quo' - Assumes current economic conditions persist indefinitely."),
-  tags$li("Red Line: 'Scenario' - Your custom forecast based on the sliders."),
-  tags$li("Anchoring: Both forecasts start at the last known approval rating (36%).")
-  )
+div(
+  style = "overflow-y: scroll; height: 100%; padding-right: 10px;", # Adds scroll if text gets too long
+  
+  h5("Algorithm: Recursive Random Forest"),
+  p("This dashboard uses a Random Forest regressor, an ensemble learning method that aggregates predictions from multiple decision trees. Unlike linear models, it captures complex, non-linear relationships (e.g., voters may punish high inflation differently than they reward low inflation).", 
+    style = "font-size: 0.9em; color: #555;"),
+  
+  h6("How the Forecast Works:"),
+  tags$ul(
+    style = "font-size: 0.9em; color: #555;",
+    tags$li(tags$b("Recursive Step:"), " The model predicts one month ahead (t+1). It then assumes that prediction is fact and uses it to predict month t+2. This allows long-term forecasting but means uncertainty compounds over time."),
+    tags$li(tags$b("Anchoring:"), " To prevent jumps, the forecast is 'anchored' to the last known actual approval rating."),
+    tags$li(tags$b("Economic Inputs:"), " The red line reacts to the 10 economic levers on the left. The blue line assumes today's economy stays frozen forever.")
+  ),
+  
+  h6("Limitations & Uncertainty:"),
+  p("This model is purely economistic. It does not account for exogenous shocks such as geopolitical conflicts, scandals, or social unrest. Prediction intervals are not shown, but users should assume wider uncertainty ranges as the forecast moves further into 2027.",
+    style = "font-size: 0.85em; font-style: italic; color: #777;")
+)
 ```
 
 ## Other Cards {width="20%"}
@@ -566,7 +579,7 @@ observeEvent(input$reset, {
     
     six_month_date <- start_date + months(6)
     
-    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type, linewidth = Type)) +
+    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type, size = Type)) +
       geom_line() +
       geom_point(data = filter(plot_df, Type == "Actual History"), size = 3, alpha = 0.8) +
       

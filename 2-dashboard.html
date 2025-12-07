@@ -340,7 +340,7 @@ bslib.Sidebar.initCollapsibleAll()
 <div class="bslib-sidebar-layout html-fill-item html-fill-container" data-bslib-sidebar-open="desktop" data-bslib-sidebar-init="true"><div class="main html-fill-container html-fill-item"><div class="sidebar-content html-fill-item html-fill-container">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 80fr) minmax(3em, 20fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 75fr) minmax(3em, 25fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 65fr) minmax(3em, 35fr); grid-auto-columns: minmax(0, 1fr);">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
 <div class="card cell html-fill-item html-fill-container bslib-card" data-title="Presidential Approval Forecaster: Trump 2nd Term" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
@@ -364,14 +364,27 @@ grid-auto-rows: minmax(0, 1fr);">
 <div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-body html-fill-item html-fill-container">
 <div class="cell-output-display html-fill-item html-fill-container">
-<h5>Model Logic:</h5>
-</div>
-<div class="cell-output-display html-fill-item html-fill-container">
-<ul>
-<li>Blue Line: 'Status Quo' - Assumes current economic conditions persist indefinitely.</li>
-<li>Red Line: 'Scenario' - Your custom forecast based on the sliders.</li>
-<li>Anchoring: Both forecasts start at the last known approval rating (36%).</li>
+<div style="overflow-y: scroll; height: 100%; padding-right: 10px;" class="html-fill-item html-fill-container">
+<h5>Algorithm: Recursive Random Forest</h5>
+<p style="font-size: 0.9em; color: #555;">This dashboard uses a Random Forest regressor, an ensemble learning method that aggregates predictions from multiple decision trees. Unlike linear models, it captures complex, non-linear relationships (e.g., voters may punish high inflation differently than they reward low inflation).</p>
+<h6>How the Forecast Works:</h6>
+<ul style="font-size: 0.9em; color: #555;">
+<li>
+<b>Recursive Step:</b>
+ The model predicts one month ahead (t+1). It then assumes that prediction is fact and uses it to predict month t+2. This allows long-term forecasting but means uncertainty compounds over time.
+</li>
+<li>
+<b>Anchoring:</b>
+ To prevent jumps, the forecast is 'anchored' to the last known actual approval rating.
+</li>
+<li>
+<b>Economic Inputs:</b>
+ The red line reacts to the 10 economic levers on the left. The blue line assumes today's economy stays frozen forever.
+</li>
 </ul>
+<h6>Limitations &amp; Uncertainty:</h6>
+<p style="font-size: 0.85em; font-style: italic; color: #777;">This model is purely economistic. It does not account for exogenous shocks such as geopolitical conflicts, scandals, or social unrest. Prediction intervals are not shown, but users should assume wider uncertainty ranges as the forecast moves further into 2027.</p>
+</div>
 </div>
 </div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
@@ -907,7 +920,7 @@ observeEvent(input$reset, {
     
     six_month_date <- start_date + months(6)
     
-    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type, linewidth = Type)) +
+    ggplot(plot_df, aes(x = date, y = approval_rating, color = Type, linetype = Type, size = Type)) +
       geom_line() +
       geom_point(data = filter(plot_df, Type == "Actual History"), size = 3, alpha = 0.8) +
       
