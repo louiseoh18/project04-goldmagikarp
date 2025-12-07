@@ -85,36 +85,36 @@ final_combined_data <- final_combined_data |>
       date == ym("1945-08") ~ "Atomic bombs",
       date == ym("1945-09") ~ "E: WW2",
       date == ym("1947-03") ~ "S: Cold War",
-      
+
       date == ym("1950-06") ~ "S: Korean War",
       date == ym("1950-06") ~ "E: Korean War",
       date == ym("1955-11") ~ "S: Vietnam War",
       date == ym("1957-10") ~ "Sputnik launched",
-      
+
       date == ym("1962-10") ~ "Cuban Missile Crisis",
       date == ym("1963-11") ~ "JFK Assassination",
       date == ym("1964-07") ~ "Civil Rights Act",
       date == ym("1969-07") ~ "Moon landing",
-      
+
       date == ym("1973-10") ~ "Oil Crisis",
       date == ym("1974-08") ~ "Watergate",
       date == ym("1975-04") ~ "E: Vietnam War",
-      
+
       date == ym("1981-03") ~ "Assassination attempt",
       date == ym("1987-10") ~ "Black Monday",
       date == ym("1989-11") ~ "Berlin Wall falls",
-      
+
       date == ym("1991-12") ~ "E: Cold War",
       date == ym("1998-12") ~ "Clinton impeachment",
-      
+
       date == ym("2001-09") ~ "9/11",
       date == ym("2003-03") ~ "Iraq Invasion",
       date == ym("2008-09") ~ "Financial crisis peaks",
-      
-      date == ym("2010-03") ~ "Affordable Care Act"
+
+      date == ym("2010-03") ~ "Affordable Care Act",
       date == ym("2011-05") ~ "bin Laden killed",
       date == ym("2019-12") ~ "1st Trump impeachment",
-      
+
       date == ym("2020-03") ~ "COVID-19 pandemic",
       date == ym("2020-05") ~ "George Floyd Death",
       date == ym("2021-01") ~ "Capitol Attack",
