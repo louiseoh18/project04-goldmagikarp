@@ -1,5 +1,5 @@
 
-# <img src="./images/Executive_Economics_Logo.png" alt="" width="75" /> Executive Economics: An Interactive Dashboard 
+# <img src="./images/Executive_Economics_Logo.png" alt="" width="50" /> Executive Economics: An Interactive Dashboard 
 
 ## Project 4
 
@@ -9,9 +9,7 @@
 
 ## Product Overview
 
-**Final Product Delivery**: 
-
-An Interactive Dashboard for U.S. Presidential Approval Ratings
+**Final Product Delivery**: An Interactive Dashboard for U.S. Presidential Approval Ratings
 
 **Product Overview**:
 
