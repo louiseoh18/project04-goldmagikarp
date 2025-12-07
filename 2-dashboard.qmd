@@ -32,24 +32,26 @@ library(zoo)
 
 ## Welcome message
 
-**Welcome to Executive Economics!**\n
+**Welcome to Executive Economics!**<br>
 
 This dashboard is designed to provide an accessible overview of historical presidential approval ratings, and explore how different economic indicators may play a role in a leader's public perception. The dashboard is interactive and user-friendly, allowing users to select different presidents, toggle between economic indicators of interest, and even modify values of economic indicators to predict how they will influence the approval rating of the current U.S. president. 
 
-**TUTORIAL**\n
+**TUTORIAL**<br>
 
 1. **Historical Data**
-    - Select a U.S. president you would like to examine
-    - The graph immediately below your selection will display all available approval ratings over the course of the president's service.
-    - On the bottom graph, you can toggle between economic indicators which will display how those indicators changed over the course of the president's service.
+    - Select a U.S. president you would like to examine.
+    - The graph immediately below your selection will display all available approval ratings over the course of the president's term(s). This graph also includes important historical events to give context to potential changes in ratings.
+    - On the bottom graph, you can toggle between economic indicators which will display how those indicators changed over the course of the president's term(s).
     - Since both the approval rating graph and indicator graph span the same time frame, you can directly compare the two.
     - See how approval ratings and economic indicators were different between various presidents.
-    
+    - A summary table and party affiliation banner are also provided to the left for reference.
+<br><br>
+
 2. **Comparing Presidents**
-    - Select two U.S. presidents to compare. Use Ctrl (Windows) or Command (Mac) to select the second president.
-    - The graph below will display approval ratings for both presidents over their time in office (measured in months).
-    - The solid line represents the first selected president, and the dotted line represents the second.
-    - Because both lines appear on the same graph, you can easily compare differences in approval ratings between the two leaders.
+    - Select two or more U.S. presidents to compare.
+    - The graphs below will display approval, disapproval, and unsure ratings respectively for all presidents over their time in office (measured in months).
+    - Because presidents' data are displayed together, you can easily compare differences in approval ratings between leaders.
+<br><br>
 
 3. **Prediction and Modeling**
     - The graph displays our pre-trained model's prediction for the current president's approval rating for the next 6 months (status quo). This model was trained based on the historical approval ratings and economic indicators from the dashboard's previous page.
@@ -251,7 +253,7 @@ selectInput(
   selectize = TRUE
   )
 
-helpText("Click to add more presidents. Use Backspace to remove them.")
+helpText("To add more presidents, click box above to expand drop down menu and select name(s). Use Backspace to remove presidents. If you want to remove a specific president, only select that president and use backspace.")
 
 ```
 
