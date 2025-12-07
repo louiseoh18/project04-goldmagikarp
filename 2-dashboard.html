@@ -303,21 +303,21 @@ Comparing Approval Ratings for U.S. Presidents
 <div class="form-group shiny-input-container">
 <label class="control-label" id="president-label" for="president">Choose Presidents</label>
 <div>
-<select id="president" class="shiny-input-select" multiple="multiple"><option value="Joe Biden" selected="">Joe Biden</option>
-<option value="Donald Trump" selected="">Donald Trump</option>
-<option value="Barack Obama">Barack Obama</option>
-<option value="George W. Bush">George W. Bush</option>
-<option value="Bill Clinton">Bill Clinton</option>
-<option value="George Bush">George Bush</option>
-<option value="Ronald Reagan">Ronald Reagan</option>
-<option value="Jimmy Carter">Jimmy Carter</option>
-<option value="Gerald Ford">Gerald Ford</option>
-<option value="Richard Nixon">Richard Nixon</option>
-<option value="Lyndon B. Johnson">Lyndon B. Johnson</option>
-<option value="John F. Kennedy">John F. Kennedy</option>
+<select id="president" class="shiny-input-select" multiple="multiple"><option value="Harry Truman">Harry Truman</option>
+<option value="Franklin D. Roosevelt">Franklin D. Roosevelt</option>
 <option value="Dwight D. Eisenhower">Dwight D. Eisenhower</option>
-<option value="Harry Truman">Harry Truman</option>
-<option value="Franklin D. Roosevelt">Franklin D. Roosevelt</option></select>
+<option value="John F. Kennedy">John F. Kennedy</option>
+<option value="Lyndon B. Johnson">Lyndon B. Johnson</option>
+<option value="Richard Nixon">Richard Nixon</option>
+<option value="Gerald Ford">Gerald Ford</option>
+<option value="Jimmy Carter">Jimmy Carter</option>
+<option value="Ronald Reagan">Ronald Reagan</option>
+<option value="George Bush">George Bush</option>
+<option value="Bill Clinton">Bill Clinton</option>
+<option value="George W. Bush">George W. Bush</option>
+<option value="Barack Obama">Barack Obama</option>
+<option value="Donald Trump" selected="">Donald Trump</option>
+<option value="Joe Biden" selected="">Joe Biden</option></select>
 <script type="application/json" data-for="president">{"plugins":["selectize-plugin-a11y"]}</script>
 </div>
 </div>
@@ -652,16 +652,35 @@ output$snapshot_tbl <- renderTable({
   
 # Approval rating plot
 output$approval_plot <- renderPlot({
-  pres_data() |>
-    ggplot(aes(x = date)) +
+  plot_data <- pres_data()
+  
+  # 2. Filter for ONLY the rows that have an event (remove NAs)
+  events_data <- plot_data |>
+    filter(!is.na(important_events))
+  
+  # 3. Build the plot
+  ggplot(plot_data, aes(x = date)) +
+    # Main Lines
     geom_line(aes(y = approval_rating, color = "Approval"), size = 1) +
     geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
     geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
+    
+    # Event Lines (Only use the filtered 'events_data')
+    geom_vline(data = events_data, 
+               aes(xintercept = date), 
+               linetype = "dashed", color = "gray50", alpha = 0.6) +
+    
+    # Event Labels
+    geom_text(data = events_data, 
+              aes(x = date, y = 85, label = important_events), 
+              angle = 90, vjust = -0.5, size = 4, color = "gray30") +
+    
+    # Styling
     scale_color_manual(values = c("#61D04F", "#DF536B", "#2297E6")) +
     labs(y = "Rating (%)", x = "Date", color = "Rating") +
     theme_minimal(base_size = 16) +
     theme(legend.position = "bottom")
-  })
+})
 
 # Presidential Party
 output$party_banner <- renderUI({
@@ -703,42 +722,7 @@ output$econ_plot <- renderPlot({
 </script>
  
 <script type="application/shiny-prerendered" data-context="server-start">
-approval_comparison_data <-
-  final_combined_data |>
-  drop_na(1:5) |>
-  group_by(president) |>
-  mutate(
-    months_in_office = case_when(
-      month(min(date)) == 1 ~ interval(min(date), date) %/% months(1),
-      month(min(date)) == 2 ~ interval(min(date), date) %/%
-        months(1) +
-        (month(min(date)) - 1), # presi's missing first month
-      month(min(date)) == 8 ~ interval(min(date), date) %/%
-        months(1) +
-        (month(min(date)) - 8), # Ford
-      month(min(date)) == 6 ~ interval(min(date), date) %/%
-        months(1) +
-        (month(min(date)) - 4), # Truman
-      month(min(date)) == 12 ~ interval(min(date), date) %/%
-        months(1) +
-        (month(min(date)) - 11), # LBJ
-      month(min(date)) == 7 ~ interval(min(date), date) %/%
-        months(1) +
-        (month(min(date)) - 1), # FDR 3rd term
-    ),
-    president = case_when(
-      str_detect(president, "Trump") ~ "Donald Trump",
-      TRUE ~ president
-    ),
-    months_in_office = case_when(
-      date < "2025-01-01" ~ months_in_office,
-      president == "Donald Trump" & date >= "2025-01-01" ~ months_in_office +
-        49,
-      president == "Joe Biden" & date == "2025-01-01" ~ 48
-    )
-  ) |>
-  select(president, date, approval_rating, disapproval_rating, unsure_rating, months_in_office, Party)
-
+load(here("data/comparison_data.rda"))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
