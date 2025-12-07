@@ -599,11 +599,14 @@ library(shiny)
 library(lubridate)
 library(ggplot2)
 library(tidyverse)
+library(randomForest)
+library(zoo)
 
-
-# Another note: we need graphics for all pages (namely home page, historical data, and references)
-
-# Reference page so maybe describe how the different data was used. We didn't end up using some of the data in the actual dashboard but we still analyzed it (which viewers won't see but can be made aware of)
+# TO-DO:
+# Home page: review description and tutorial to make sure everything is clear
+# Comparing presidents page: plot no longer rendering, needs to be debugged; also add instructions in sidebar
+# Prediction page: provide model explanation --> if it's better for space, can also include on home page
+# Reference page: maybe describe how the different data was used. We didn't end up using some of the data in the actual dashboard but we still analyzed it (which viewers won't see but can be made aware of)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server-start">
@@ -724,8 +727,8 @@ output$comparison_approval_plot <- renderPlot({
     scale_color_manual(values = c("Approval" = "#61D04F", 
                                   "Disapproval" = "#DF536B", 
                                   "Unsure" = "#2297E6")) +
-    scale_linetype_manual(values = rep(c("solid", "dotted", "dashed", "dotdash", "longdash", "twodash"), 
-                                       length.out = 15)) +
+    scale_linetype_manual(values = c("solid", "dotted", "dashed", "dotdash", "longdash", "twodash",
+                                     "12", "21", "13", "31", "14", "41", "1122", "2211", "F2")) +
     labs(y = "Rating (%)", x = "Time in Office (months)", 
            color = "Rating", linetype = "Presidents") +
     theme_minimal()
@@ -733,15 +736,6 @@ output$comparison_approval_plot <- renderPlot({
 </script>
  
 <script type="application/shiny-prerendered" data-context="server-start">
-library(shiny)
-library(dplyr)
-library(ggplot2)
-library(lubridate)
-library(randomForest)
-library(here)
-library(zoo)
-
-
 rf_model <- readRDS(here("data/rf_approval_model.rds"))
 trump_history <- readRDS(here("data/trump_history.rds"))
 
