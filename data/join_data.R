@@ -154,10 +154,49 @@ final_combined_data <-
     )
   )
 
+# adding comparison data
+approval_comparison_data <-
+  final_combined_data |>
+  drop_na(1:5) |>
+  group_by(president) |>
+  mutate(
+    months_in_office = case_when(
+      month(min(date)) == 1 ~ interval(min(date), date) %/% months(1),
+      month(min(date)) == 2 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 1), # presi's missing first month
+      month(min(date)) == 8 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 8), # Ford
+      month(min(date)) == 6 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 4), # Truman
+      month(min(date)) == 12 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 11), # LBJ
+      month(min(date)) == 7 ~ interval(min(date), date) %/%
+        months(1) +
+        (month(min(date)) - 1), # FDR 3rd term
+    ),
+    president = case_when(
+      str_detect(president, "Trump") ~ "Donald Trump",
+      TRUE ~ president
+    ),
+    months_in_office = case_when(
+      date < "2025-01-01" ~ months_in_office,
+      president == "Donald Trump" & date >= "2025-01-01" ~ months_in_office +
+        49,
+      president == "Joe Biden" & date == "2025-01-01" ~ 48
+    )
+  ) |>
+  select(1:5, 19)
+
 print(colnames(final_combined_data))
 
 visdat::vis_miss(final_combined_data, warn_large_data = FALSE)
 
 save(final_combined_data, file = here("data/complete_data.rda"))
+save(approval_comparison_data, file = here("data/comparison_data.rda"))
+
 
 tail(final_combined_data)
