@@ -9,7 +9,7 @@
 
 **Members**: Mia Silva, Louise Oh, Lidio Jaimes, Oliver Brown
 
-## Product Overview
+## Product
 
 **Final Product Delivery**: An Interactive Dashboard for U.S. Presidential Approval Ratings
 
