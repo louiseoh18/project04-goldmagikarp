@@ -5,7 +5,7 @@
 
 ## Executive Economics: An Interactive Dashboard 
 
-**Team**: GoldMagiKarp
+**Team**: Gold MagiKarp
 
 **Members**: Mia Silva, Louise Oh, Lidio Jaimes, Oliver Brown
 
