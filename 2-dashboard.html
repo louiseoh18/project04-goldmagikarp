@@ -654,28 +654,22 @@ output$snapshot_tbl <- renderTable({
 output$approval_plot <- renderPlot({
   plot_data <- pres_data()
   
-  # 2. Filter for ONLY the rows that have an event (remove NAs)
   events_data <- plot_data |>
     filter(!is.na(important_events))
   
-  # 3. Build the plot
   ggplot(plot_data, aes(x = date)) +
-    # Main Lines
     geom_line(aes(y = approval_rating, color = "Approval"), size = 1) +
     geom_line(aes(y = disapproval_rating, color = "Disapproval"), size = 1) +
     geom_line(aes(y = unsure_rating, color = "Unsure"), size = 1) +
     
-    # Event Lines (Only use the filtered 'events_data')
     geom_vline(data = events_data, 
                aes(xintercept = date), 
                linetype = "dashed", color = "gray50", alpha = 0.6) +
     
-    # Event Labels
     geom_text(data = events_data, 
-              aes(x = date, y = 85, label = important_events), 
+              aes(x = date, y = 30, label = important_events), 
               angle = 90, vjust = -0.5, size = 4, color = "gray30") +
     
-    # Styling
     scale_color_manual(values = c("#61D04F", "#DF536B", "#2297E6")) +
     labs(y = "Rating (%)", x = "Date", color = "Rating") +
     theme_minimal(base_size = 16) +
