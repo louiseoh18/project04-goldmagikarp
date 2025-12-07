@@ -96,8 +96,10 @@ final_combined_data <- final_combined_data |>
       date == ym("1964-07") ~ "Civil Rights Act",
       date == ym("1969-07") ~ "Moon landing",
 
+      date == ym("1972-02") ~ "Nixon visits China",
+      date == ym("1972-06") ~ "Watergate break-in",
       date == ym("1973-10") ~ "Oil Crisis",
-      date == ym("1974-08") ~ "Watergate",
+      date == ym("1974-08") ~ "Nixon resigns",
       date == ym("1975-04") ~ "E: Vietnam War",
 
       date == ym("1981-03") ~ "Assassination attempt",
