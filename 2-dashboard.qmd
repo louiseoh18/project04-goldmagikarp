@@ -56,9 +56,9 @@ This dashboard is designed to provide an accessible overview of historical presi
     - The red line shows the simulated prediction based on your own "what-if" scenarios. You can modify the economic indicators in the side panel to the left to see how each one may change the president's approval rating.
     - You can see summaries of these predicted approval ratings in the right-most panels for the status quo and the simulation (6-month and long-term predictions).
 
-## Images
-
-
+### Images {width="22%"}
+![](images/Executive_Economics_Logo.png)
+![](images/Money.png)
 
 # Historical Data
 
@@ -83,6 +83,14 @@ econ_labels <- c(
 )
 pres_data <- reactive({
     final_combined_data |> filter(president == input$president)
+  })
+
+# Summary table
+output$snapshot_tbl <- renderTable({
+    pres_data() |>
+      select(approval_rating, disapproval_rating, input$econ_var, Party) |>
+      rename("Approval Rating (%)" = approval_rating,
+             "Disapproval Rating (%)" = disapproval_rating)
   })
   
 # Approval rating plot
@@ -128,7 +136,8 @@ selectInput(
 ### Historical page graphic {width="20%"}
 
 ```{r}
-h4("filler for graphic")
+#| title: "Summary"
+tableOutput("snapshot_tbl")
 ```
 
 ### Approval plot {width="80%"}
