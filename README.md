@@ -1,7 +1,7 @@
 
-# <img src="./images/Executive_Economics_Logo.png" alt="" width="50" /> Executive Economics: An Interactive Dashboard 
+# Project 4
 
-## Project 4
+## <img src="./images/Executive_Economics_Logo.png" alt="" width="50" /> Executive Economics: An Interactive Dashboard 
 
 **Team**: GoldMagiKarp
 
