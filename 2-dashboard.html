@@ -584,10 +584,40 @@ grid-auto-rows: minmax(0, 1fr);">
 grid-auto-rows: minmax(0, 1fr);">
 <div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-body html-fill-item html-fill-container">
-<p><strong>Citations</strong> <br></p>
+<p><strong>All Data Sources and Software Packages</strong> <br></p>
+<style>
+/* 1. Remove extra vertical space, using a small margin to stabilize layout */
+.csl-entry {
+  margin-bottom: 2px !important; 
+  padding-bottom: 0 !important;
+}
+
+/* 2. TARGET THE GENERATED LIST (<ol>) TO FORCE COLUMNS */
+.references ol {
+  /* Critical: Forces the list into a block that supports columns */
+  display: block !important; 
+  
+  /* Apply column rules to the list itself */
+  column-count: 3 !important;
+  column-gap: 50px !important; 
+  
+  /* Prevent breaks within a citation item */
+  break-inside: avoid !important;
+  
+  /* Set max height for scrolling */
+  max-height: 80vh !important;
+  overflow: auto !important;
+}
+</style>
 <div id="refs" class="references csl-bib-body hanging-indent html-fill-item html-fill-container" data-entry-spacing="0" role="list">
 <div id="ref-bea_api" class="csl-entry html-fill-item html-fill-container" role="listitem">
 Bureau of Economic Analysis (BEA). 2025. <span>“BEA Data API.”</span> <a href="https://apps.bea.gov/API/signup/">https://apps.bea.gov/API/signup/</a>.
+</div>
+<div id="ref-@shiny" class="csl-entry html-fill-item html-fill-container" role="listitem">
+Chang, Winston, Joe Cheng, JJ Allaire, Carson Sievert, Barret Schloerke, Yihui Xie, Jeff Allen, Jonathan McPherson, Alan Dipert, and Barbara Borges. 2025. <em>Shiny: Web Application Framework for r</em>. <a href="https://doi.org/10.32614/CRAN.package.shiny">https://doi.org/10.32614/CRAN.package.shiny</a>.
+</div>
+<div id="ref-@randomForest" class="csl-entry html-fill-item html-fill-container" role="listitem">
+Liaw, Andy, and Matthew Wiener. 2002. <span>“Classification and Regression by randomForest.”</span> <em>R News</em> 2 (3): 18–22. <a href="https://CRAN.R-project.org/doc/Rnews/">https://CRAN.R-project.org/doc/Rnews/</a>.
 </div>
 <div id="ref-bls_api" class="csl-entry html-fill-item html-fill-container" role="listitem">
 United States Bureau of Labor Statistics (BLS). 2016. <span>“BLS Public Data API.”</span> <a href="https://www.bls.gov/developers/home.htm">https://www.bls.gov/developers/home.htm</a>.
@@ -597,6 +627,12 @@ United States Census Bureau. 2025. <span>“Census Data API Key.”</span> <a hr
 </div>
 <div id="ref-tidycensus_help" class="csl-entry html-fill-item html-fill-container" role="listitem">
 Walker, Kyle, and Matt Herman. 2023. <span>“Basic Usage of Tidycensus.”</span> <a href="https://walker-data.com/tidycensus/articles/basic-usage.html">https://walker-data.com/tidycensus/articles/basic-usage.html</a>.
+</div>
+<div id="ref-@ggplot2" class="csl-entry html-fill-item html-fill-container" role="listitem">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+<div id="ref-@dplyr" class="csl-entry html-fill-item html-fill-container" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, and Davis Vaughan. 2023. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://doi.org/10.32614/CRAN.package.dplyr">https://doi.org/10.32614/CRAN.package.dplyr</a>.
 </div>
 <div id="ref-approval_ratings" class="csl-entry html-fill-item html-fill-container" role="listitem">
 Woolley, John, and Gerhard Peters. 2025. <span>“The American Presidency Project.”</span> <a href="https://www.presidency.ucsb.edu/">https://www.presidency.ucsb.edu/</a>.
