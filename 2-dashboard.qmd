@@ -4,12 +4,11 @@ format:
   dashboard:
     logo: images/Executive_Economics_Logo.png
     theme: flatly
-    # css: refs.css
     nav-buttons:
       - icon: github
         href: https://github.com/louiseoh18/project04-goldmagikarp.git
 server: shiny
-bibliography: mix-refs.bib
+bibliography: data-refs.bib
 nocite: |
   @*
 ---
