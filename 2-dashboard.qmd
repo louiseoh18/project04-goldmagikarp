@@ -609,30 +609,5 @@ The data was pulled from a variety of databases using API's and web scraping tec
 
 **All Data Sources and Software Packages** <br>
 
-<style>
-/* 1. Remove extra vertical space, using a small margin to stabilize layout */
-.csl-entry {
-  margin-bottom: 2px !important; 
-  padding-bottom: 0 !important;
-}
-
-/* 2. TARGET THE GENERATED LIST (<ol>) TO FORCE COLUMNS */
-.references ol {
-  /* Critical: Forces the list into a block that supports columns */
-  display: block !important; 
-  
-  /* Apply column rules to the list itself */
-  column-count: 3 !important;
-  column-gap: 50px !important; 
-  
-  /* Prevent breaks within a citation item */
-  break-inside: avoid !important;
-  
-  /* Set max height for scrolling */
-  max-height: 80vh !important;
-  overflow: auto !important;
-}
-</style>
-
 ::: {#refs}
 :::
