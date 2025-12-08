@@ -8,7 +8,9 @@ format:
       - icon: github
         href: https://github.com/louiseoh18/project04-goldmagikarp.git
 server: shiny
-bibliography: my-refs.bib
+bibliography:
+  - my-refs.bib
+  #- package-refs.bib
 nocite: |
   @*
 ---
@@ -21,7 +23,7 @@ library(lubridate)
 library(ggplot2)
 library(tidyverse)
 library(randomForest)
-library(zoo)
+library(zoo)bib
 
 # TO-DO:
 # Reference page: Add remaining reference (missing ANES) + packages. Can maybe format into columns for better aesthetics (minimize white space).
