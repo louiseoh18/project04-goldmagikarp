@@ -606,7 +606,7 @@ The data was pulled from a variety of databases using API's and web scraping tec
 
 ## Citations
 
-**All Data Sources and Software Packages** <br>
+**All Data Sources** <br>
 
 ::: {#refs}
 :::
