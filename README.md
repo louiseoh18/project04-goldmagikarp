@@ -19,7 +19,7 @@ This dashboard is designed to provide an accessible overview of historical presi
 
 **Dashboard Link**:
 
-[insert link here]
+[](https://msilva21-jh.shinyapps.io/2-dashboard/)
 
 ## Main Files
 
