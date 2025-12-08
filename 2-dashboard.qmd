@@ -10,7 +10,6 @@ format:
 server: shiny
 bibliography:
   - my-refs.bib
-  #- package-refs.bib
 nocite: |
   @*
 ---
@@ -23,7 +22,7 @@ library(lubridate)
 library(ggplot2)
 library(tidyverse)
 library(randomForest)
-library(zoo)bib
+library(zoo)
 
 # TO-DO:
 # Reference page: Add remaining reference (missing ANES) + packages. Can maybe format into columns for better aesthetics (minimize white space).
