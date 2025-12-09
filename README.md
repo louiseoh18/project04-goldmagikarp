@@ -11,15 +11,14 @@
 
 ## Product
 
-**Final Product Delivery**: An Interactive Dashboard for U.S. Presidential Approval Ratings
+**Final Product Delivery**: <br>
+An Interactive Dashboard for U.S. Presidential Approval Ratings
 
-**Product Overview**:
-
+**Product Overview**: <br>
 This dashboard is designed to provide an accessible overview of historical presidential approval ratings, and explore how different economic indicators may play a role in a leader’s public perception. The dashboard is interactive and user-friendly, allowing users to select different presidents, toggle between economic indicators of interest, and even modify values of economic indicators to predict how they will influence the approval rating of the current U.S. president.
 
-**Dashboard Link**:
-
-[](https://msilva21-jh.shinyapps.io/2-dashboard/)
+**Dashboard Link**: <br>
+https://msilva21-jh.shinyapps.io/2-dashboard/
 
 ## Main Files
 
