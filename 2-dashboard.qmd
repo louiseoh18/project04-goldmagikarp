@@ -157,11 +157,13 @@ pres_data <- reactive({
 
 # Summary table
 output$snapshot_tbl <- renderTable({
+  var <- input$econ_var
   req(input$president)
   pres_data() |>
     select(approval_rating, disapproval_rating, input$econ_var) |>
     rename("Approval Rating (%)" = approval_rating,
-           "Disapproval Rating (%)" = disapproval_rating)
+           "Disapproval Rating (%)" = disapproval_rating,
+           !!names(econ_labels)[econ_labels == var]:= all_of(var))
   })
   
 # Approval rating plot
