@@ -21,14 +21,11 @@ execute:
 from: markdown+emoji
 ---
 
-::: {.callout-tip icon=false}
-
+::: {.callout-tip icon="false"}
 ## Github Repo Link
 
 [Project 4 GitHub Repo](https://github.com/louiseoh18/project04-goldmagikarp.git)
-
 :::
-
 
 \pagebreak
 
@@ -38,24 +35,21 @@ The **Executive Economics** is an interactive dashboard designed to explore the 
 
 ### Objectives
 
-::: {.callout-tip icon=false}
-
+::: {.callout-tip icon="false"}
 ## Question
 
 To what extent can a predictive model, using key economic indicators such as inflation and unemployment along with major political events, accurately forecast near-term U.S. presidential approval ratings?
 
 edit this?
-
 :::
 
 The objective is to quantify how economic conditions influence public perception of a president, while also examining the lag between economic changes and shifts in approval. By integrating historical approval data with economic metrics, this project provides a framework for understanding both past trends and the potential drivers of future public opinion.
 
+To address this question, the dashboard is structured around three specific goals:
 
-To address this question, the dashboard is structured around three specific goals: 
-
-1. The **Historical Data** section visualizes approval rating trends alongside economic indicators to identify correlations and the timing of public responses to economic shifts. 
-2. The **Comparing Presidents** section allows evaluation of differences between two presidents’ approval trajectories, to provide context for how economic and political conditions may alter public sentiment across administrations. 
-3. The **Prediction and Modeling** section uses a simulation model to forecast approval ratings under both status quo and user-defined economic scenarios, to offer a forward-looking tool to explore “what-if” conditions and the proportional impact of economic changes on public perception.
+1.  The **Historical Data** section visualizes approval rating trends alongside economic indicators to identify correlations and the timing of public responses to economic shifts.
+2.  The **Comparing Presidents** section allows evaluation of differences between two presidents’ approval trajectories, to provide context for how economic and political conditions may alter public sentiment across administrations.
+3.  The **Prediction and Modeling** section uses a simulation model to forecast approval ratings under both status quo and user-defined economic scenarios, to offer a forward-looking tool to explore “what-if” conditions and the proportional impact of economic changes on public perception.
 
 ### Existing Work
 
@@ -63,37 +57,36 @@ Past work on presidential approval is in two main areas. The first is public-fac
 
 The second area is the academic statistical modeling that provides the blueprint for these predictions. This research, from pioneers like Edward Tufte and Ray Fair, established that approval is not random. It is overwhelmingly driven by the economy (like inflation and GDP growth). These models evolved to include other key, non-economic variables. For instance, John Mueller's work identified the “rally 'round the flag” effect (a temporary spike in approval after a crisis), while Alan Abramowitz's "Time for a Change" model quantified the predictable "erosion of support" that a president experiences over time.
 
-### Data 
+### Data
 
 The dashboard integrates multiple public data sources:
 
-- Presidential Approval Ratings: Data from The American Presidency Project (Woolley & Peters, 2025) providing historical approval, disapproval, and unsure ratings.
-- Economic Data:
-  - Bureau of Labor Statistics (BLS) API for unemployment rate, consumer price index (inflation), total nonfarm employment (jobs), and average hourly earnings (BLS, 2016).
-  - Bureau of Economic Analysis (BEA) API for GDP, government spending, disposable income, personal savings rate, corporate profits, and healthcare price index (BEA, 2025).
+-   Presidential Approval Ratings: Data from The American Presidency Project (Woolley & Peters, 2025) providing historical approval, disapproval, and unsure ratings.
+-   Economic Data:
+    -   Bureau of Labor Statistics (BLS) API for unemployment rate, consumer price index (inflation), total nonfarm employment (jobs), and average hourly earnings (BLS, 2016).
+    -   Bureau of Economic Analysis (BEA) API for GDP, government spending, disposable income, personal savings rate, corporate profits, and healthcare price index (BEA, 2025).
 
 Exploratory data analysis was done on the above, but also included the following which was ultimately not used in the final dashboard due to data frequency limitations:
 
-- Census Data API for median household income, healthcare status, poverty (U.S. Census Bureau, 2025).
-- American National Election Studies (ANES): time series survey data on political attitudes and behaviors (ANES, 2024).
-- Additional Documentation: Guidance from tidycensus for using Census data efficiently (Walker & Herman, 2023).
+-   Census Data API for median household income, healthcare status, poverty (U.S. Census Bureau, 2025).
+-   American National Election Studies (ANES): time series survey data on political attitudes and behaviors (ANES, 2024).
+-   Additional Documentation: Guidance from tidycensus for using Census data efficiently (Walker & Herman, 2023).
 
 All data were cleaned, merged, and processed to align time frames across presidents and indicators, enabling robust visualizations and predictive modeling.
 
 ### Tools
 
-The dashboard was developed using R, Shiny, and the tidyverse suite of packages. Visualization relied heavily on ggplot2, while reactive programming in Shiny allowed for interactivity such as selecting presidents, toggling economic indicators, and adjusting scenario sliders. The predictive modeling leveraged a random forest model trained on historical approval ratings and economic indicators to generate both status quo and custom forecasts.
-Challenges & Accomplishments
+The dashboard was developed using R, Shiny, and the tidyverse suite of packages. Visualization relied heavily on ggplot2, while reactive programming in Shiny allowed for interactivity such as selecting presidents, toggling economic indicators, and adjusting scenario sliders. The predictive modeling leveraged a random forest model trained on historical approval ratings and economic indicators to generate both status quo and custom forecasts. Challenges & Accomplishments
 
 ### Dashboard Overview
 
 The dashboard has three main components, each addressing a core objective.
 
-1. The **Historical Data** section allows users to explore approval ratings over a president’s tenure alongside economic indicators. This satisfies the goal of understanding trends and context for individual presidencies.
-2. The **Comparing Presidents** section provides side-by-side approval rating comparisons between two presidents, facilitating historical benchmarking and evaluation of differences in public perception.
-3. The **Prediction and Modeling** section enables scenario-based forecasts of approval ratings, allowing users to explore potential impacts of economic changes on public opinion, fulfilling the objective of modeling future outcomes.
+1.  The **Historical Data** section allows users to explore approval ratings over a president’s tenure alongside economic indicators. This satisfies the goal of understanding trends and context for individual presidencies.
+2.  The **Comparing Presidents** section provides side-by-side approval rating comparisons between two presidents, facilitating historical benchmarking and evaluation of differences in public perception.
+3.  The **Prediction and Modeling** section enables scenario-based forecasts of approval ratings, allowing users to explore potential impacts of economic changes on public opinion, fulfilling the objective of modeling future outcomes.
 
-edit this --> repeats what is already said above under "Question"
+edit this --\> repeats what is already said above under "Question"
 
 ### Functionality
 
@@ -115,27 +108,49 @@ Data cleaning involved addressing missing values, aligning date formats, and ver
 
 Developing clear visualizations required iterative decision-making about how best to represent long historical timelines and key political events. For example, we compared different design choices—such as linetype versus color—to distinguish approval and disapproval ratings effectively. On the modeling side, choosing a ML approach that captures how economic indicators interact—without simply memorizing the past—was a key challenge. Models also needed to account for the “stickiness” of public opinion, where approval ratings often change slowly even when economic conditions shift.
 
-
 ### Limitations and Future Steps
 
-- **Better real-time data**: Access to more up-to-date data would improve the accuracy and relevance of the dashboard’s visualizations and predictions. Incorporating real-time economic and approval data could make the tool more responsive to current events.
-- **More functionalities**: Additional interactive features, such as filtering by specific events or economic conditions, could enhance user exploration. Integrating more visualization types, like heatmaps or correlation plots, would allow deeper insights.
-- **Advanced predictive models**: Using more sophisticated models, such as time-series or machine learning ensembles, could improve forecast accuracy. Incorporating uncertainty estimates would also provide users with a clearer sense of confidence in predictions.
-- **Customization for users**: User-specific settings and saved scenario profiles could make the tool more practical for repeated use. Tailoring the dashboard for different audiences, such as students, analysts, or policymakers, would also increase accessibility. 
-
+-   **Better real-time data**: Access to more up-to-date data would improve the accuracy and relevance of the dashboard’s visualizations and predictions. Incorporating real-time economic and approval data could make the tool more responsive to current events.
+-   **More functionalities**: Additional interactive features, such as filtering by specific events or economic conditions, could enhance user exploration. Integrating more visualization types, like heatmaps or correlation plots, would allow deeper insights.
+-   **Advanced predictive models**: Using more sophisticated models, such as time-series or machine learning ensembles, could improve forecast accuracy. Incorporating uncertainty estimates would also provide users with a clearer sense of confidence in predictions.
+-   **Customization for users**: User-specific settings and saved scenario profiles could make the tool more practical for repeated use. Tailoring the dashboard for different audiences, such as students, analysts, or policymakers, would also increase accessibility.
 
 ### Product Demonstration
 
-Link to our dashboard: https://msilva21-jh.shinyapps.io/2-dashboard/
-Link to our codes: https://github.com/louiseoh18/project04-goldmagikarp.git
+Link to our dashboard: https://msilva21-jh.shinyapps.io/2-dashboard/ Link to our codes: https://github.com/louiseoh18/project04-goldmagikarp.git
 
 Below are figures from the demo to show dashboard functionalities.
 
-Figure 1.
+Figure 1. Historical Data tab of the dashboard.
 
-Figure 2.
+![](images/historical_data.png)
 
-Figure 3.
+1.  Select a U.S. president you would like to examine.
 
-Figure 4.
+2.  The graph immediately below your selection will display all available approval ratings over the course of the president’s term(s). This graph also includes important historical events to give context to potential changes in ratings.
 
+3.  On the bottom graph, you can toggle between economic indicators which will display how those indicators changed over the course of the president’s term(s).
+
+4.  Since both the approval rating graph and indicator graph span the same time frame, you can directly compare the two.
+
+5.  A summary table and party affiliation banner are also provided to the left for reference.
+
+Figure 2. Comparing Presidents tab of the dashboard.
+
+![](images/comparing_presidents.png)
+
+1.  Select two or more U.S. presidents to compare their approval ratings.
+
+2.  The graphs below will display approval, disapproval, and unsure ratings respectively for all presidents over their time in office (measured in months).
+
+Figure 3. Prediction Modeling tab of the dashboard.
+
+![](images/prediction_modeling.png)
+
+1.  The graph displays our pre-trained model’s prediction for the current president’s approval rating for the next 6 months (status quo). This model was trained based on the historical approval ratings and economic indicators from the dashboard’s previous page.
+
+2.  The dotted blue line shows the status quo which is predicted approval rating assuming most recent economic data stays consistent indefinitely.
+
+3.  The red line shows the simulated prediction based on your own “what-if” scenarios. You can modify the economic indicators in the side panel to the left to see how each one may change the president’s approval rating.
+
+4.  You can see summaries of these predicted approval ratings in the right-most panels for the status quo and the simulation (6-month and long-term predictions).
