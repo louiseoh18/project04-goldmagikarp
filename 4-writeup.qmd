@@ -129,11 +129,13 @@ Developing clear visualizations required iterative decision-making about how bes
 Link to our dashboard: https://msilva21-jh.shinyapps.io/2-dashboard/
 Link to our codes: https://github.com/louiseoh18/project04-goldmagikarp.git
 
-Below we also attach some plots from the demo to show dashboard functionalities.
+Below are figures from the demo to show dashboard functionalities.
 
 Figure 1.
 
 Figure 2.
 
 Figure 3.
+
+Figure 4.
 
