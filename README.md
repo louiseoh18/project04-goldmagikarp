@@ -32,7 +32,7 @@ https://msilva21-jh.shinyapps.io/2-dashboard/
 
 - `/data`: Folder containing all codes and files relating to the data and models used.
 
-- `/images`: Folder containing images used in the dashboard, including custom logo.
+- `/images`: Folder containing images used in the dashboard and write up, including custom logo.
 
 - `/work`: Workspace folder with scripts, EDA, and preprocessing steps used for developing the product.
 
