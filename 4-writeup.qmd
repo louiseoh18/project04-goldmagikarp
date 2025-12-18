@@ -31,16 +31,14 @@ from: markdown+emoji
 
 ### Project Overview
 
-The **Executive Economics** is an interactive dashboard designed to explore the historical approval ratings of U.S. presidents in relation to economic indicators. The project aims to provide a user-friendly interface for visualizing presidential approval trends, comparing the performance of different presidents, and modeling future approval ratings based on economic scenarios. By integrating historical data with predictive modeling, the dashboard allows users to investigate how economic and policy factors influence public perception over time, facilitating both exploration and analysis.
+**Executive Economics** is an interactive dashboard designed to explore the historical approval ratings of U.S. presidents in relation to economic indicators. The project aims to provide a user-friendly interface for visualizing presidential approval trends, comparing the performance of different presidents, and modeling future approval ratings based on economic scenarios. By integrating historical data with predictive modeling, the dashboard allows users to investigate how economic and policy factors influence public perception over time, facilitating both exploration and analysis.
 
 ### Objectives
 
 ::: {.callout-tip icon="false"}
 ## Question
 
-To what extent can a predictive model, using key economic indicators such as inflation and unemployment along with major political events, accurately forecast near-term U.S. presidential approval ratings?
-
-edit this?
+To what extent can a predictive model, using key economic indicators such as inflation and unemployment, accurately forecast near-term U.S. presidential approval ratings?
 :::
 
 The objective is to quantify how economic conditions influence public perception of a president, while also examining the lag between economic changes and shifts in approval. By integrating historical approval data with economic metrics, this project provides a framework for understanding both past trends and the potential drivers of future public opinion.
@@ -74,19 +72,31 @@ Exploratory data analysis was done on the above, but also included the following
 
 All data were cleaned, merged, and processed to align time frames across presidents and indicators, enabling robust visualizations and predictive modeling.
 
+### Modeling
+
+To forecast future approval ratings, we developed a recursive Random Forest regressor. Unlike linear models, this approach captures complex, non-linear interactions between economic indicators (e.g., inflation, unemployment) and public approval. To evaluate the reliability of this tool, we utilized a time-series split validation strategy, training the model on historical presidencies from 1948 to 2016 and reserving the 2017–2024 period for out-of-sample testing. When applied to this unseen validation set, the model achieved a Root Mean Square Error (RMSE) of 6.47%, indicating that our forecasts typically fell within approximately 6.5 percentage points of the actual approval rating. A subsequent analysis of variable importance confirmed that public opinion possesses significant momentum; the "Approval_Lag3" variable—representing the president's rating three months prior—was by far the most dominant predictor, suggesting that a president's current popularity is heavily anchored to their recent past. Following this autoregressive trend, "Months in Office" emerged as the second most critical factor, quantifying the "cost of ruling" or the natural erosion of support over time. Among the economic levers, metrics related to the labor market such as Job Growth and Unemployment proved to be stronger drivers of prediction accuracy than Inflation or Wage Growth, while the president’s political party was the least influential variable, implying that voters tend to penalize or reward economic outcomes regardless of party affiliation.
+
 ### Tools
 
-The dashboard was developed using R, Shiny, and the tidyverse suite of packages. Visualization relied heavily on ggplot2, while reactive programming in Shiny allowed for interactivity such as selecting presidents, toggling economic indicators, and adjusting scenario sliders. The predictive modeling leveraged a random forest model trained on historical approval ratings and economic indicators to generate both status quo and custom forecasts. Challenges & Accomplishments
+The dashboard was developed using R, Shiny, and the tidyverse suite of packages. Visualization relied heavily on ggplot2, while reactive programming in Shiny allowed for interactivity such as selecting presidents, toggling economic indicators, and adjusting scenario sliders. The predictive modeling leveraged a random forest model trained on historical approval ratings and economic indicators to generate both status quo and custom forecasts.
+
+### Challenges
+
+Working with real-world data presented several obstacles throughout this project. Gathering economic, political, and historical information from multiple sources required substantial time, especially because each dataset came in a different structure, frequency, or format. Some indicators, such as those from the U.S. Census or ANES, were only available annually, making them unsuitable for tracking month-to-month changes and ultimately excluding them from our analysis. Additionally, our dataset was constrained by available approval ratings, meaning the earliest president we were able to include was Franklin D. Roosevelt during his third term in 1941.
+
+Data cleaning involved addressing missing values, aligning date formats, and verifying that each variable accurately reflected what it claimed to measure. In several cases, dates across sources were misaligned, requiring careful adjustment to maintain consistency. These issues highlight the broader challenge of working with large integrated datasets: the individuals who collect data are often different from those who analyze it, making it essential to understand definitions, maintain documentation, and avoid misinterpretation or bias.
+
+Developing clear visualizations required iterative decision-making about how best to represent long historical timelines and key political events. For example, we compared different design choices—such as linetype versus color—to distinguish approval and disapproval ratings effectively. 
+
+We also encountered significant challenges in predictive modeling. Specifically, recursive error propagation meant that small inaccuracies in the first month of a forecast compounded over the 18-month horizon. Additionally, we had to balance the model to prevent autoregressive dominance, where past approval ratings were so predictive that they drowned out the impact of economic changes. Finally, we learned the extrapolation limits of Random Forests; the model struggles to predict outcomes for extreme economic scenarios (e.g., 20% inflation) that fall outside the bounds of historical training data.
 
 ### Dashboard Overview
 
-The dashboard has three main components, each addressing a core objective.
+The Executive Economics interface is organized into a three-tab workflow designed to guide users from retrospective analysis to future forecasting. The layout prioritizes accessibility, placing high-level summaries and controls in a sidebar while dedicating the main view to interactive visualizations.
 
-1.  The **Historical Data** section allows users to explore approval ratings over a president’s tenure alongside economic indicators. This satisfies the goal of understanding trends and context for individual presidencies.
-2.  The **Comparing Presidents** section provides side-by-side approval rating comparisons between two presidents, facilitating historical benchmarking and evaluation of differences in public perception.
-3.  The **Prediction and Modeling** section enables scenario-based forecasts of approval ratings, allowing users to explore potential impacts of economic changes on public opinion, fulfilling the objective of modeling future outcomes.
+1. **Retrospective Analysis:** The first two tabs focus on historical context, using synchronized timelines to overlay approval ratings directly onto economic trend lines, allowing users to visually spot correlations (e.g., a dip in approval matching a spike in inflation).
 
-edit this --\> repeats what is already said above under "Question"
+2.  **Forward-Looking Simulation**: The final tab shifts from analysis to interaction, providing a "control room" interface where users can manipulate ten different economic levers to generate real-time predictive scenarios.
 
 ### Functionality
 
@@ -99,14 +109,6 @@ The dashboard emphasizes ease of use with intuitive controls and clear visualiza
 ### Originality and Complexity
 
 The project uniquely integrates diverse datasets, including presidential approval ratings, economic indicators, and demographic data. Combining visualization, comparison, and predictive modeling showcases technical skill and analytical depth, while scenario forecasts provide a forward-looking perspective.
-
-### Challenges (edit this)
-
-Working with real-world data presented several obstacles throughout this project. Gathering economic, political, and historical information from multiple sources required substantial time, especially because each dataset came in a different structure, frequency, or format. Some indicators, such as those from the U.S. Census or ANES, were only available annually, making them unsuitable for tracking month-to-month changes and ultimately excluding them from our analysis. Additionally, our dataset was constrained by available approval ratings, meaning the earliest president we were able to include was Franklin D. Roosevelt during his third term in 1941.
-
-Data cleaning involved addressing missing values, aligning date formats, and verifying that each variable accurately reflected what it claimed to measure. In several cases, dates across sources were misaligned, requiring careful adjustment to maintain consistency. These issues highlight the broader challenge of working with large integrated datasets: the individuals who collect data are often different from those who analyze it, making it essential to understand definitions, maintain documentation, and avoid misinterpretation or bias.
-
-Developing clear visualizations required iterative decision-making about how best to represent long historical timelines and key political events. For example, we compared different design choices—such as linetype versus color—to distinguish approval and disapproval ratings effectively. On the modeling side, choosing a ML approach that captures how economic indicators interact—without simply memorizing the past—was a key challenge. Models also needed to account for the “stickiness” of public opinion, where approval ratings often change slowly even when economic conditions shift.
 
 ### Limitations and Future Steps
 
